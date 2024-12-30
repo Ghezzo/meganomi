@@ -7,6 +7,8 @@
 // @match        https://beta.nomi.ai/nomis*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=nomi.ai
 // @grant        none
+// @downloadURL  https://github.com/Ghezzo/meganomi/raw/refs/heads/main/meganomi.user.js
+// @updateURL    https://github.com/Ghezzo/meganomi/raw/refs/heads/main/meganomi.user.js
 // ==/UserScript==
 
 (function() {
