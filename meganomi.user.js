@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Mega Nomi Script
 // @namespace    https://ghezzo.net/
-// @version      0.2
+// @version      0.3
 // @description  Everything in one :)
 // @author       Ghezzo
 // @match        https://beta.nomi.ai/nomis*
@@ -172,7 +172,7 @@
     hideCallButton();
     scrollBars();
     setImageDimensions();
-    hideNews();
+    //hideNews();
     let lastCallTime = 0;
     const observer = new MutationObserver(mutations => {
         for (const mutation of mutations) {
@@ -183,7 +183,7 @@
                 chatBubbleColor();
                 hideCallButton();
                 setImageDimensions();
-                hideNews();
+                //hideNews();
             /* } */
         }
     });
