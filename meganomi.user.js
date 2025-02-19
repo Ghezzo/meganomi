@@ -172,7 +172,7 @@
     hideCallButton();
     scrollBars();
     //setImageDimensions();
-    hideNews();
+    //hideNews();
     let lastCallTime = 0;
     const observer = new MutationObserver(mutations => {
         for (const mutation of mutations) {
@@ -183,7 +183,7 @@
                 chatBubbleColor();
                 hideCallButton();
                 //setImageDimensions();
-                hideNews();
+                //hideNews();
             /* } */
         }
     });
