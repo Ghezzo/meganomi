@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Mega Nomi Script
 // @namespace    https://ghezzo.net/
-// @version      0.4
+// @version      0.5
 // @description  Everything in one :)
 // @author       Ghezzo
 // @match        https://beta.nomi.ai/nomis*
