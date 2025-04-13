@@ -46,7 +46,7 @@
     <label>
         Asterisk Style:<br>
         
-        <textarea id="asteriskStyle" rows="5" class="textbox">${GM_getValue('asteriskColor') ?? ''}</textarea>
+        <textarea id="asteriskStyle" rows="5" class="textbox" placeholder=".text{color:#fff;text-shadow:1px 1px 10px #fc03e3,1px 1px 10px #ccc;text-align:center};">${GM_getValue('asteriskColor') ?? ''}</textarea>
     </label>
     <br>
     <label>
@@ -61,7 +61,7 @@
     <br>
     <label>
         Font Size:<br>
-        <input type="text" id="fontSize" class="textbox" value="${GM_getValue('fontSize') ?? ''}">
+        <input type="text" id="fontSize" class="textbox" value="${GM_getValue('fontSize') ?? ''}" placeholder="20">
     </label>
     <br>
     `;
@@ -167,7 +167,6 @@
     console.log('Settings saved!');
     });
 
-    //addGlobalStyle("#hideCallBtn,#saveSettingsButton{display:block}#hideCallBtn{margin-bottom:20px}");
     var settings = {
         mySetting: {
           label: 'My Setting',
@@ -192,83 +191,35 @@
 
     if (await GM_getValue('asteriskColor') === "") {
         GM_setValue('asteriskColor', GM_getValue('defaultAsteriskColor'));
-        addGlobalStyle(GM_getValue('asteriskColor'));
-    } else {
-        GM_setValue('asteriskColor', GM_getValue('asteriskColor'));
-        addGlobalStyle(GM_getValue('asteriskColor'));
     }
+    addGlobalStyle(GM_getValue('asteriskColor'));
 
     if (await GM_getValue('bubbleColor') === "") {
         GM_setValue('bubbleColor', GM_getValue('defaultBubbleColor'));
-        addGlobalStyle(GM_getValue('bubbleColor'));
-    } else {
-        GM_setValue('bubbleColor', GM_getValue('bubbleColor'));
-        addGlobalStyle(GM_getValue('bubbleColor'));
     }
+    addGlobalStyle(GM_getValue('bubbleColor'));
 
     if (await GM_getValue('nomiBubbleColor') === "") {
         GM_setValue('nomiBubbleColor', GM_getValue('defaultNomiBubbleColor'));
-        addGlobalStyle(GM_getValue('nomiBubbleColor'));
-    } else {
-        GM_setValue('nomiBubbleColor', GM_getValue('nomiBubbleColor'));
-        addGlobalStyle(GM_getValue('nomiBubbleColor'));
     }
+    addGlobalStyle(GM_getValue('nomiBubbleColor'));
 
     if (await GM_getValue('fontSize') === "") {
         GM_setValue('fontSize', GM_getValue('defaultFontSize'));
-        addGlobalStyle(GM_getValue('fontSize'));
-    } else {
-        GM_setValue('fontSize', GM_getValue('fontSize'));
-        addGlobalStyle(GM_getValue('fontSize'));
     }
+    addGlobalStyle(GM_getValue('fontSize'));
 
-    // Get the current state of the checkbox
-    var checkboxState = GM_getValue('hideCallButton', false);
+    checkbox.checked = GM_getValue('hideCallButton', false);
+    checkbox.addEventListener('change', () => GM_setValue('hideCallButton', checkbox.checked));
 
-    // Set the state of the checkbox
-    checkbox.checked = checkboxState;
+    checkbox2.checked = GM_getValue('italicTextCheckbox', false);
+    checkbox2.addEventListener('change', () => GM_setValue('italicTextCheckbox', checkbox2.checked));
 
-    // Add an event listener to the checkbox
-    checkbox.addEventListener('change', function() {
-    // Store the new state of the checkbox
-    GM_setValue('hideCallButton', checkbox.checked);
-    });
+    checkbox3.checked = GM_getValue('asterisksCheckbox', false);
+    checkbox3.addEventListener('change', () => GM_setValue('asterisksCheckbox', checkbox3.checked));
 
-    // Get the current state of the checkbox
-    var checkboxState2 = GM_getValue('italicTextCheckbox', false);
-
-    // Set the state of the checkbox
-    checkbox2.checked = checkboxState2;
-
-    // Add an event listener to the checkbox
-    checkbox2.addEventListener('change', function() {
-    // Store the new state of the checkbox
-    GM_setValue('italicTextCheckbox', checkbox2.checked);
-    });
-
-    // Get the current state of the checkbox
-    var checkboxState3 = GM_getValue('asterisksCheckbox', false);
-
-    // Set the state of the checkbox
-    checkbox3.checked = checkboxState3;
-
-    // Add an event listener to the checkbox
-    checkbox3.addEventListener('change', function() {
-    // Store the new state of the checkbox
-    GM_setValue('asterisksCheckbox', checkbox3.checked);
-    });
-
-    // Get the current state of the checkbox
-    var checkboxState4 = GM_getValue('hideNewsCheckbox', false);
-
-    // Set the state of the checkbox
-    checkbox4.checked = checkboxState4;
-
-    // Add an event listener to the checkbox
-    checkbox4.addEventListener('change', function() {
-    // Store the new state of the checkbox
-    GM_setValue('hideNewsCheckbox', checkbox4.checked);
-    });
+    checkbox4.checked = GM_getValue('hideNewsCheckbox', false);
+    checkbox4.addEventListener('change', () => GM_setValue('hideNewsCheckbox', checkbox4.checked));
 
 
     function processTextNode(node) {
@@ -340,30 +291,6 @@
         buttons.forEach(button => button.style.display = 'none');
     }
 
-    /* function scrollBars() {
-        var style = document.createElement('style');
-        style.type = 'text/css';
-        style.innerHTML = `
-        ::-webkit-scrollbar {
-            width: 10px;
-            height: 10px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background-color: #757575;
-            border-radius: 5px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background-color: #838383;
-        }
-        ::-webkit-scrollbar-track {
-            background-color: #2e2e2e;
-            border-radius: 5px;
-            box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-        }
-        `;
-        document.head.appendChild(style);
-    } */
-
     function hideNews() {
         var buttons = document.querySelectorAll('button');
         if (buttons.length > 0) {
@@ -403,7 +330,6 @@
                 if (GM_getValue('hideNewsCheckbox', false)) {
                     hideNews();
                 }
-                //hideCallButton();
         }
     });
 
