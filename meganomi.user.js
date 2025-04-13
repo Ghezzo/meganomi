@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Mega Nomi Script beta
 // @namespace    https://gzo.sh
-// @version      0.8.3
+// @version      0.8.4
 // @description  Everything in one :)
 // @author       Ghezzo
 // @match        https://beta.nomi.ai/nomis*
@@ -39,7 +39,7 @@
     settingsPanel.style.color = 'white'; // add padding to the panel
     settingsPanel.style.padding = '10px'; // add padding to the panel
     settingsPanel.innerHTML = `
-    <span>Version 0.8.3</span>
+    <span>Version 0.8.4</span>
     <h2>Settings</h2>
     <label>
         Asterisk Style:<br>
@@ -92,7 +92,7 @@
 
     // Create the settings button
     var settingsButton = document.createElement('button');
-    settingsButton.textContent = 'Settings';
+    settingsButton.textContent = 'MNS Settings';
     settingsButton.style.position = 'fixed';
     settingsButton.style.top = '10px';
     settingsButton.style.right = '10px';
