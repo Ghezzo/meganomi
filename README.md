@@ -17,13 +17,19 @@ Leave input empty to go back to default<br><br>
 .text{color:#fff;text-shadow:1px 1px 10px #fc03e3,1px 1px 10px #ccc;text-align:center};
 ``` 
 
-### Bubble Color (not group chat at the moment): 
+### Bubble Color: 
 
 ```
 #2a2c32
 ```
 
-### Font Size (in bubbles) (not group chat at the moment): 
+### Nomi Bubble Color: 
+
+```
+#2a2c32
+```
+
+### Font Size: 
 
 ```
 20
