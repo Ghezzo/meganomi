@@ -40,3 +40,8 @@ Check to hide call button
 
 Check to enable italic asterisk text
 
+### Toggle Asterisks: 
+
+
+Check to enable asterisks
+

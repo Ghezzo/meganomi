@@ -92,7 +92,7 @@
 
     // Create a label for the checkbox
     var label3 = document.createElement('label');
-    label3.textContent = 'Toggle Asterisks';
+    label3.textContent = 'Enable Asterisks';
     label3.htmlFor = 'asterisksCheckbox';
 
 
