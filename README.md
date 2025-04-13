@@ -2,6 +2,7 @@
 # Mega Nomi Script
 
 A userscript with several extra features for nomi.ai
+Settings are available using the button in the top right corner of the page
 
 Leave input empty to go back to default
 
