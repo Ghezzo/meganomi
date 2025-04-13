@@ -52,9 +52,9 @@
         Font Size:<br>
         <input type="text" id="fontSize" value="${GM_getValue('fontSize')}">
     </label>
-    <br><br>
-    <button id="saveSettingsButton">Save</button>
+    <br>
     `;
+    //<button id="saveSettingsButton">Save</button>
 
     // Create a checkbox
     var checkbox = document.createElement('input');
@@ -66,9 +66,25 @@
     label.textContent = 'Hide Call Button';
     label.htmlFor = 'hideCallBtn';
 
-    // Add the checkbox and label to the settings panel
-    settingsPanel.appendChild(checkbox);
-    settingsPanel.appendChild(label);
+    var br2 = document.createElement('br');
+
+
+    var checkbox2 = document.createElement('input');
+    checkbox2.type = 'checkbox';
+    checkbox2.id = 'italicTextCheckbox';
+
+    // Create a label for the checkbox
+    var label2 = document.createElement('label');
+    label2.textContent = 'Italic Asterisk Text';
+    label2.htmlFor = 'italicTextCheckbox';
+
+
+    var br = document.createElement('br');
+
+    // Create a save button
+    var saveButton = document.createElement('button');
+    saveButton.textContent = 'Save';
+    saveButton.id = 'saveSettingsButton';
 
     // Create the settings button
     var settingsButton = document.createElement('button');
@@ -76,6 +92,16 @@
     settingsButton.style.position = 'fixed';
     settingsButton.style.top = '10px';
     settingsButton.style.right = '10px';
+
+    // Add the checkbox and label to the settings panel
+    settingsPanel.appendChild(checkbox);
+    settingsPanel.appendChild(label);
+    settingsPanel.appendChild(br2);
+    settingsPanel.appendChild(checkbox2);
+    settingsPanel.appendChild(label2);
+    settingsPanel.appendChild(br);
+    
+    settingsPanel.appendChild(saveButton);
 
     // Create the settings panel
 
@@ -105,6 +131,7 @@
     console.log('Settings saved!');
     });
 
+    //addGlobalStyle("#hideCallBtn,#saveSettingsButton{display:block}#hideCallBtn{margin-bottom:20px}");
     var settings = {
         mySetting: {
           label: 'My Setting',
@@ -161,12 +188,36 @@
     GM_setValue('hideCallButton', checkbox.checked);
     });
 
+    // Get the current state of the checkbox
+    var checkboxState2 = GM_getValue('italicTextCheckbox', false);
+
+    // Set the state of the checkbox
+    checkbox2.checked = checkboxState2;
+
+    // Add an event listener to the checkbox
+    checkbox2.addEventListener('change', function() {
+    // Store the new state of the checkbox
+    GM_setValue('italicTextCheckbox', checkbox2.checked);
+    });
+
     //addGlobalStyle(await GM_getValue('asteriskColor'));
 
     function processTextNode(node) {
         const italicPattern = /\*(\S(.*?\S)?)\*/g;
 
-        const newHTML = node.textContent.replace(italicPattern, (match, p1) => `*<em class="text">${p1}</em>*`);
+    /*     if (GM_getValue('italicTextCheckbox', false)) {
+            const newHTML = node.textContent.replace(italicPattern, (match, p1) => `*<em class="text">${p1}</em>*`);
+        } else {
+            const newHTML = node.textContent.replace(italicPattern, (match, p1) => `*<span class="text">${p1}</span>*`);
+        } */
+        const newHTML = GM_getValue('italicTextCheckbox', false) ? 
+    node.textContent.replace(italicPattern, (match, p1) => `*<em class="text">${p1}</em>*`) : 
+    node.textContent.replace(italicPattern, (match, p1) => `*<span class="text">${p1}</span>*`);
+
+        //const newHTML = node.textContent.replace(italicPattern, (match, p1) => `*<em class="text">${p1}</em>*`);
+        
+
+        
 
         if (newHTML !== node.textContent) {
             const span = document.createElement('span');
