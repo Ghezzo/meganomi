@@ -1,6 +1,8 @@
 
 # MegaNomi
 
+A userscript with several extra features for nomi.ai
+
 ## Examples
 
 ### Asterisk Color:
