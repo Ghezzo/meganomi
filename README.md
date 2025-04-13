@@ -45,7 +45,7 @@ Check to enable italic asterisk text
 
 Check to enable asterisks
 
-### Hide New Bubbles: 
+### Hide News Bubbles: 
 
 
 Check to hide the news bubbles on the front page
