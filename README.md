@@ -31,12 +31,12 @@ Leave input empty to go back to default<br><br>
 
 ### Hide Call Button: 
 
-```
+
 Check to hide call button
-```
+
 
 ### Italic Asterisk Text: 
 
-```
+
 Check to enable italic asterisk text
-```
+
