@@ -1,20 +1,119 @@
 // ==UserScript==
-// @name         Mega Nomi Script
-// @namespace    https://ghezzo.net/
-// @version      0.6
+// @name         Mega Nomi Script beta
+// @namespace    https://gzo.sh
+// @version      0.7
 // @description  Everything in one :)
 // @author       Ghezzo
 // @match        https://beta.nomi.ai/nomis*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=nomi.ai
-// @grant        none
+// @require      https://openuserjs.org/src/libs/sizzle/GM_config.js
+// @grant        GM_setValue
+// @grant        GM_getValue
+// @grant        GM.getValue
+// @grant        GM.setValue
 // @downloadURL  https://github.com/Ghezzo/meganomi/raw/refs/heads/main/meganomi.user.js
 // @updateURL    https://github.com/Ghezzo/meganomi/raw/refs/heads/main/meganomi.user.js
 // ==/UserScript==
 
-(function() {
+(async function() {
     'use strict';
 
     console.log('Script started');
+  
+    //await window.localStorage.setItem('asteriskColor', '.text{color:#fff;text-shadow:1px 1px 10px #fc03e3,1px 1px 10px #ccc;text-align:center};');
+    var textColor = "";
+    GM_setValue('defaultAsteriskColor', '');
+    GM_setValue('defaultBubbleColor', '');
+    GM_setValue('defaultFontSize', '');
+    
+    // Create the settings panel
+    var settingsPanel = document.createElement('div');
+    settingsPanel.style.position = 'fixed';
+    settingsPanel.style.top = '40px';
+    settingsPanel.style.right = '10px';
+    settingsPanel.style.display = 'none';
+    settingsPanel.style.minWidth = '300px'; // add a width to the panel
+    settingsPanel.style.minHeight = '100px'; // add a height to the panel
+    settingsPanel.style.background = 'white'; // add a background color to the panel
+    settingsPanel.style.border = '1px solid black'; // add a border to the panel
+    settingsPanel.innerHTML = `
+    <h2>Settings</h2>
+    <label>
+        Asterisk Style:<br>
+        <input type="text" id="asteriskStyle" value="${GM_getValue('asteriskColor')}">
+    </label>
+    <br>
+    <label>
+        Bubble Color:<br>
+        <input type="text" id="bubbleStyle" value="${GM_getValue('bubbleColor')}">
+    </label>
+    <br>
+    <label>
+        Font Size:<br>
+        <input type="text" id="fontSize" value="${GM_getValue('fontSize')}">
+    </label>
+    <br><br>
+    <button id="saveSettingsButton">Save</button>
+    `;
+
+    // Create a checkbox
+    var checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.id = 'hideCallBtn';
+
+    // Create a label for the checkbox
+    var label = document.createElement('label');
+    label.textContent = 'Hide Call Button';
+    label.htmlFor = 'hideCallBtn';
+
+    // Add the checkbox and label to the settings panel
+    settingsPanel.appendChild(checkbox);
+    settingsPanel.appendChild(label);
+
+    // Create the settings button
+    var settingsButton = document.createElement('button');
+    settingsButton.textContent = 'Settings';
+    settingsButton.style.position = 'fixed';
+    settingsButton.style.top = '10px';
+    settingsButton.style.right = '10px';
+
+    // Create the settings panel
+
+
+    // Add the settings button and panel to the page
+    document.body.appendChild(settingsButton);
+    document.body.appendChild(settingsPanel);
+
+    // Add an event listener to the settings button
+    settingsButton.addEventListener('click', function() {
+    console.log('Button clicked!');
+    if (settingsPanel.style.display === 'none') {
+        settingsPanel.style.display = 'block';
+    } else {
+        settingsPanel.style.display = 'none';
+    }
+    });
+
+    // Add an event listener to the saveSettingsButton element
+    document.getElementById('saveSettingsButton').addEventListener('click', function() {
+    var astColor = document.getElementById('asteriskStyle').value;
+    var bubColor = document.getElementById('bubbleStyle').value;
+    var fontSize = document.getElementById('fontSize').value;
+    GM_setValue('asteriskColor', astColor);
+    GM_setValue('bubbleColor', bubColor);
+    GM_setValue('fontSize', fontSize);
+    console.log('Settings saved!');
+    });
+
+    var settings = {
+        mySetting: {
+          label: 'My Setting',
+          type: 'text',
+          default: 'defaultValue'
+        }
+      };
+
+    GM_config.init();
 
     function addGlobalStyle(css) {
         var head, style;
@@ -25,7 +124,44 @@
         style.innerHTML = css.replace(/;/g, ' !important;');
         head.appendChild(style);
     }
-    addGlobalStyle('.text{color:#fff;text-shadow:1px 1px 10px #fc03e3,1px 1px 10px #ccc;text-align:center};');
+    //addGlobalStyle('.text{color:#fff;text-shadow:1px 1px 10px #fc03e3,1px 1px 10px #ccc;text-align:center};');
+    if (await GM_getValue('asteriskColor') === "") {
+        GM_setValue('asteriskColor', GM_getValue('defaultAsteriskColor'));
+        addGlobalStyle(GM_getValue('asteriskColor'));
+    } else {
+        GM_setValue('asteriskColor', GM_getValue('asteriskColor'));
+        addGlobalStyle(GM_getValue('asteriskColor'));
+    }
+
+    if (await GM_getValue('bubbleColor') === "") {
+        GM_setValue('bubbleColor', GM_getValue('defaultBubbleColor'));
+        addGlobalStyle(GM_getValue('bubbleColor'));
+    } else {
+        GM_setValue('bubbleColor', GM_getValue('bubbleColor'));
+        addGlobalStyle(GM_getValue('bubbleColor'));
+    }
+
+    if (await GM_getValue('fontSize') === "") {
+        GM_setValue('fontSize', GM_getValue('defaultFontSize'));
+        addGlobalStyle(GM_getValue('fontSize'));
+    } else {
+        GM_setValue('fontSize', GM_getValue('fontSize'));
+        addGlobalStyle(GM_getValue('fontSize'));
+    }
+
+    // Get the current state of the checkbox
+    var checkboxState = GM_getValue('hideCallButton', false);
+
+    // Set the state of the checkbox
+    checkbox.checked = checkboxState;
+
+    // Add an event listener to the checkbox
+    checkbox.addEventListener('change', function() {
+    // Store the new state of the checkbox
+    GM_setValue('hideCallButton', checkbox.checked);
+    });
+
+    //addGlobalStyle(await GM_getValue('asteriskColor'));
 
     function processTextNode(node) {
         const italicPattern = /\*(\S(.*?\S)?)\*/g;
@@ -77,9 +213,10 @@
                 if (grandchildDiv) {
                     const ggrandchildDiv = grandchildDiv.querySelector('div');
                     if(ggrandchildDiv) {
-                        ggrandchildDiv.style.fontSize = '20px';
+                        //ggrandchildDiv.style.fontSize = '20px';
+                        ggrandchildDiv.style.fontSize = GM_getValue('fontSize')+'px';
                     }
-                    grandchildDiv.style.backgroundColor = '#35383f';
+                    //grandchildDiv.style.backgroundColor = '#35383f';
                 }
                 }
             } else if (regexEnd.test(style)) {
@@ -89,9 +226,10 @@
                 if (grandchildDivs.length > 1) {
                     const ggrandchildDivs = grandchildDivs[1].querySelector('div');
                     if(ggrandchildDivs) {
-                        ggrandchildDivs.style.fontSize = '20px';
+                        //ggrandchildDivs.style.fontSize = '20px';
+                        ggrandchildDivs.style.fontSize = GM_getValue('fontSize')+'px';
                     }
-                    grandchildDivs[1].style.backgroundColor = '#2a2c32';
+                    grandchildDivs[1].style.backgroundColor = GM_getValue('bubbleColor');
                 }
                 }
             }
@@ -153,8 +291,13 @@
     }
 
     chatBubbleColor();
-    hideCallButton();
-    scrollBars();
+    //hideCallButton();
+    //scrollBars();
+    if (GM_getValue('hideCallButton', false)) {
+        hideCallButton();
+    } else {
+    
+    }
     let lastCallTime = 0;
     const observer = new MutationObserver(mutations => {
         for (const mutation of mutations) {
@@ -162,7 +305,12 @@
                     walk(node);
                 });
                 chatBubbleColor();
-                hideCallButton();
+                if (GM_getValue('hideCallButton', false)) {
+                    hideCallButton();
+                } else {
+                    
+                }
+                //hideCallButton();
         }
     });
 
