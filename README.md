@@ -26,7 +26,7 @@ A userscript with several extra features for nomi.ai
 ### Hide Call Button: 
 
 ```
-Check to disable call button
+Check to hide call button
 ```
 
 ### Italic Asterisk Text: 
