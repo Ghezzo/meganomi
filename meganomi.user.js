@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Mega Nomi Script beta
 // @namespace    https://gzo.sh
-// @version      0.9.1
+// @version      0.9.2
 // @description  Everything in one :)
 // @author       Ghezzo
 // @match        https://beta.nomi.ai/nomis*
@@ -24,6 +24,7 @@
     var textColor = "";
     GM_setValue('defaultAsteriskColor', '');
     GM_setValue('defaultBubbleColor', '');
+    GM_setValue('defaultNomiBubbleColor', '');
     GM_setValue('defaultFontSize', '');
     
     // Create the settings panel
@@ -40,22 +41,27 @@
     settingsPanel.style.color = 'white'; // add padding to the panel
     settingsPanel.style.padding = '10px'; // add padding to the panel
     settingsPanel.innerHTML = `
-    <span>Version 0.9.1 | <a href="https://raw.githubusercontent.com/Ghezzo/meganomi/refs/heads/main/changelog.txt" target="_blank" class="changelogLink">Changelog (GitHub)</a></span>
+    <span>Version 0.9.2 | <a href="https://raw.githubusercontent.com/Ghezzo/meganomi/refs/heads/main/changelog.txt" target="_blank" class="changelogLink">Changelog (GitHub)</a></span>
     <h2>Settings</h2>
     <label>
         Asterisk Style:<br>
         
-        <textarea id="asteriskStyle" rows="5" class="textbox">${GM_getValue('asteriskColor')}</textarea>
+        <textarea id="asteriskStyle" rows="5" class="textbox">${GM_getValue('asteriskColor') ?? ''}</textarea>
     </label>
     <br>
     <label>
-        Bubble Color:<br>
-        <input type="text" id="bubbleStyle" class="textbox" value="${GM_getValue('bubbleColor')}">
+        User Bubble Color:<br>
+        <input type="text" id="bubbleStyle" class="textbox" value="${GM_getValue('bubbleColor') ?? ''}">
+    </label>
+    <br>
+    <label>
+        Nomi Bubble Color:<br>
+        <input type="text" id="nomiBubbleStyle" class="textbox" value="${GM_getValue('nomiBubbleColor') ?? ''}">
     </label>
     <br>
     <label>
         Font Size:<br>
-        <input type="text" id="fontSize" class="textbox" value="${GM_getValue('fontSize')}">
+        <input type="text" id="fontSize" class="textbox" value="${GM_getValue('fontSize') ?? ''}">
     </label>
     <br>
     `;
@@ -152,9 +158,11 @@
     document.getElementById('saveSettingsButton').addEventListener('click', function() {
     var astColor = document.getElementById('asteriskStyle').value;
     var bubColor = document.getElementById('bubbleStyle').value;
+    var nomiBubColor = document.getElementById('nomiBubbleStyle').value;
     var fontSize = document.getElementById('fontSize').value;
     GM_setValue('asteriskColor', astColor);
     GM_setValue('bubbleColor', bubColor);
+    GM_setValue('nomiBubbleColor', nomiBubColor);
     GM_setValue('fontSize', fontSize);
     console.log('Settings saved!');
     });
@@ -196,6 +204,14 @@
     } else {
         GM_setValue('bubbleColor', GM_getValue('bubbleColor'));
         addGlobalStyle(GM_getValue('bubbleColor'));
+    }
+
+    if (await GM_getValue('nomiBubbleColor') === "") {
+        GM_setValue('nomiBubbleColor', GM_getValue('defaultNomiBubbleColor'));
+        addGlobalStyle(GM_getValue('nomiBubbleColor'));
+    } else {
+        GM_setValue('nomiBubbleColor', GM_getValue('nomiBubbleColor'));
+        addGlobalStyle(GM_getValue('nomiBubbleColor'));
     }
 
     if (await GM_getValue('fontSize') === "") {
@@ -306,6 +322,7 @@
                     const childDiv = div.querySelector('div');
                     if (childDiv) {
                         childDiv.style.fontSize = GM_getValue('fontSize') + 'px';
+                        div.style.backgroundColor = GM_getValue('nomiBubbleColor');
                     }
                 } else if (type === 'User') {
                     const childDiv = div.querySelector('div');
