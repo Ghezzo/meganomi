@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Mega Nomi Script
 // @namespace    https://ghezzo.net/
-// @version      0.5
+// @version      0.6
 // @description  Everything in one :)
 // @author       Ghezzo
 // @match        https://beta.nomi.ai/nomis*
@@ -44,9 +44,9 @@
         let child, next;
 
         switch (node.nodeType) {
-            case 1: // Element node
-            case 9: // Document node
-            case 11: // Document fragment node
+            case 1:
+            case 9:
+            case 11:
                 child = node.firstChild;
                 while (child) {
                     next = child.nextSibling;
@@ -55,14 +55,11 @@
                 }
                 break;
 
-            case 3: // Text node
+            case 3:
                 processTextNode(node);
                 break;
         }
     }
-
-    // Initial run on the whole body
-    //walk(document.body);
 
     function chatBubbleColor() {
         const divs = document.querySelectorAll('div');
@@ -74,30 +71,24 @@
             const regexEnd = /align-self:\s*flex-end;/i;
 
             if (regexStart.test(style)) {
-                // Get the first child div
                 const childDiv = div.querySelector('div');
                 if (childDiv) {
-                // Get the first child div of the child div
                 const grandchildDiv = childDiv.querySelector('div');
                 if (grandchildDiv) {
                     const ggrandchildDiv = grandchildDiv.querySelector('div');
                     if(ggrandchildDiv) {
-                        //const grandchildDiv = childDiv.querySelector('div');
                         ggrandchildDiv.style.fontSize = '20px';
                     }
                     grandchildDiv.style.backgroundColor = '#35383f';
                 }
                 }
             } else if (regexEnd.test(style)) {
-                // Get the first child div
                 const childDiv = div.querySelector('div');
                 if (childDiv) {
-                // Get all child divs of the child div
                 const grandchildDivs = childDiv.querySelectorAll('div');
                 if (grandchildDivs.length > 1) {
                     const ggrandchildDivs = grandchildDivs[1].querySelector('div');
                     if(ggrandchildDivs) {
-                        //const grandchildDiv = childDiv.querySelector('div');
                         ggrandchildDivs.style.fontSize = '20px';
                     }
                     grandchildDivs[1].style.backgroundColor = '#2a2c32';
@@ -109,9 +100,7 @@
     }
 
     function hideCallButton() {
-        // Find all buttons with the title attribute "Call"
         const buttons = document.querySelectorAll('button[title="Call"]');
-        // Hide each button
         buttons.forEach(button => button.style.display = 'none');
     }
 
@@ -139,29 +128,24 @@
         document.head.appendChild(style);
     }
 
-    function setImageDimensions() {
+    /* function setImageDimensions() {
         var images = document.getElementsByTagName('img');
         for (var i = 0; i < images.length; i++) {
             images[i].style.height = '100%';
             images[i].style.width = '100%';
         }
-    }
+    } */
 
     function hideNews() {
         var buttons = document.querySelectorAll('button');
         if (buttons.length > 0) {
-            //console.log('Found ' + buttons.length + ' buttons');
             buttons.forEach(function(button) {
-                //console.log('Button text content: ' + button.textContent);
                 if (button.textContent === 'Show') {
-                    //console.log('Found button with text "Show"');
                     var parentDiv = button.parentNode.parentNode;
-                    //console.log('Parent div:', parentDiv);
                     if (parentDiv) {
                         parentDiv.style.display = 'none';
-                        //console.log('Hid parent div');
                     } else {
-                        //console.log('Parent div is null');
+                       
                     }
                 }
             });
@@ -171,23 +155,16 @@
     chatBubbleColor();
     hideCallButton();
     scrollBars();
-    //setImageDimensions();
-    //hideNews();
     let lastCallTime = 0;
     const observer = new MutationObserver(mutations => {
         for (const mutation of mutations) {
-            /* if (mutation.type === 'childList') { */
                 mutation.addedNodes.forEach(node => {
                     walk(node);
                 });
                 chatBubbleColor();
                 hideCallButton();
-                //setImageDimensions();
-                //hideNews();
-            /* } */
         }
     });
 
-    // Observe the document body for changes
     observer.observe(document.body, { childList: true, subtree: true });
 })();
