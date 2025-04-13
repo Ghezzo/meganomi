@@ -1,5 +1,5 @@
 
-# MegaNomi
+# Mega Nomi Script
 
 A userscript with several extra features for nomi.ai
 
