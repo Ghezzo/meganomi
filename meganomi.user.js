@@ -177,7 +177,7 @@
 
     GM_config.init();
 
-    function addGlobalStyle(css) {
+    /* function addGlobalStyle(css) {
         var head, style;
         head = document.getElementsByTagName('head')[0];
         if (!head) { return; }
@@ -185,41 +185,83 @@
         style.type = 'text/css';
         style.innerHTML = css.replace(/;/g, ' !important;');
         head.appendChild(style);
-    }
+    } */
+
+        function addGlobalStyle(css) {
+            if (css === undefined) {
+              css = '';
+            }
+            var head, style;
+            head = document.getElementsByTagName('head')[0];
+            if (!head) { return; }
+            style = document.createElement('style');
+            style.type = 'text/css';
+            style.innerHTML = css.replace(/;/g, ' !important;');
+            head.appendChild(style);
+          }
 
     addGlobalStyle('#saveSettingsButton,#settingsButton{background-color:#9610ff;padding:10px;cursor:pointer;color:#fff}#settingsButton{border-radius:5px;border:none;z-index:9999}#saveSettingsButton:hover,#settingsButton:hover{background-color:#fc03e3}#settingsPanel{display:none;position:absolute;top:50px;right:10px;background-color:#fff;border:1px solid #ccc;padding:10px;z-index:9999}#saveSettingsButton{border-radius:5px;border:none;margin-top:10px}.textbox{background-color:#2b2f3a;color:#fff;border:1px solid #000;border-radius:5px;padding:5px}.changelogLink{color:#fff;text-decoration:none}');
 
     if (await GM_getValue('asteriskColor') === "") {
         GM_setValue('asteriskColor', GM_getValue('defaultAsteriskColor'));
     }
-    addGlobalStyle(GM_getValue('asteriskColor'));
+    console.log(GM_getValue('asteriskColor'));
+    addGlobalStyle(GM_getValue('asteriskColor', ''));
 
     if (await GM_getValue('bubbleColor') === "") {
         GM_setValue('bubbleColor', GM_getValue('defaultBubbleColor'));
     }
-    addGlobalStyle(GM_getValue('bubbleColor'));
+    console.log(GM_getValue('bubbleColor'));
+    addGlobalStyle(GM_getValue('bubbleColor', ''));
 
     if (await GM_getValue('nomiBubbleColor') === "") {
         GM_setValue('nomiBubbleColor', GM_getValue('defaultNomiBubbleColor'));
     }
-    addGlobalStyle(GM_getValue('nomiBubbleColor'));
+    console.log(GM_getValue('nomiBubbleColor'));
+    addGlobalStyle(GM_getValue('nomiBubbleColor', ''));
 
     if (await GM_getValue('fontSize') === "") {
         GM_setValue('fontSize', GM_getValue('defaultFontSize'));
     }
-    addGlobalStyle(GM_getValue('fontSize'));
+    console.log(GM_getValue('fontSize'));
+    addGlobalStyle(GM_getValue('fontSize', ''));
+
 
     checkbox.checked = GM_getValue('hideCallButton', false);
-    checkbox.addEventListener('change', () => GM_setValue('hideCallButton', checkbox.checked));
+    checkbox.addEventListener('change', function() {
+        GM_setValue('hideCallButton', checkbox.checked);
+    });
+    // Trigger the event listener manually the first time
+    if (checkbox.checked) {
+        checkbox.dispatchEvent(new Event('change'));
+    }
 
     checkbox2.checked = GM_getValue('italicTextCheckbox', false);
-    checkbox2.addEventListener('change', () => GM_setValue('italicTextCheckbox', checkbox2.checked));
+    checkbox2.addEventListener('change', function() {
+        GM_setValue('italicTextCheckbox', checkbox2.checked);
+    });
+    // Trigger the event listener manually the first time
+    if (checkbox2.checked) {
+        checkbox2.dispatchEvent(new Event('change'));
+    }
 
-    checkbox3.checked = GM_getValue('asterisksCheckbox', false);
-    checkbox3.addEventListener('change', () => GM_setValue('asterisksCheckbox', checkbox3.checked));
+    checkbox3.checked = GM_getValue('asterisksCheckbox', true);
+    checkbox3.addEventListener('change', function() {
+        GM_setValue('asterisksCheckbox', checkbox3.checked);
+    });
+    // Trigger the event listener manually the first time
+    if (checkbox3.checked) {
+        checkbox3.dispatchEvent(new Event('change'));
+    }
 
     checkbox4.checked = GM_getValue('hideNewsCheckbox', false);
-    checkbox4.addEventListener('change', () => GM_setValue('hideNewsCheckbox', checkbox4.checked));
+    checkbox4.addEventListener('change', function() {
+        GM_setValue('hideNewsCheckbox', checkbox4.checked);
+    });
+    // Trigger the event listener manually the first time
+    if (checkbox4.checked) {
+        checkbox4.dispatchEvent(new Event('change'));
+    }
 
 
     function processTextNode(node) {
