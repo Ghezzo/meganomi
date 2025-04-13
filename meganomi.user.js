@@ -43,7 +43,8 @@
     <h2>Settings</h2>
     <label>
         Asterisk Style:<br>
-        <input type="text" id="asteriskStyle" value="${GM_getValue('asteriskColor')}">
+        
+        <textarea id="asteriskStyle" rows="5">${GM_getValue('asteriskColor')}</textarea>
     </label>
     <br>
     <label>
