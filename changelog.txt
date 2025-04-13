@@ -1,0 +1,6 @@
+TODO: Clean up ALL the code
+
+0.9
+
+Fixed group chat. Bubble color and font size should work in group chats now
+Added changelog

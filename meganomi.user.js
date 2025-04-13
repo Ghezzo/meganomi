@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Mega Nomi Script beta
 // @namespace    https://gzo.sh
-// @version      0.8.8
+// @version      0.9
 // @description  Everything in one :)
 // @author       Ghezzo
 // @match        https://beta.nomi.ai/nomis*
@@ -21,7 +21,6 @@
 
     console.log('Script started');
   
-    //await window.localStorage.setItem('asteriskColor', '.text{color:#fff;text-shadow:1px 1px 10px #fc03e3,1px 1px 10px #ccc;text-align:center};');
     var textColor = "";
     GM_setValue('defaultAsteriskColor', '');
     GM_setValue('defaultBubbleColor', '');
@@ -41,7 +40,7 @@
     settingsPanel.style.color = 'white'; // add padding to the panel
     settingsPanel.style.padding = '10px'; // add padding to the panel
     settingsPanel.innerHTML = `
-    <span>Version 0.8.8</span>
+    <span>Version 0.9 | <a href="https://raw.githubusercontent.com/Ghezzo/meganomi/refs/heads/main/changelog.txt" target="_blank" class="changelogLink">Changelog (GitHub)</a></span>
     <h2>Settings</h2>
     <label>
         Asterisk Style:<br>
@@ -60,8 +59,8 @@
     </label>
     <br>
     `;
-    //<button id="saveSettingsButton">Save</button>
 
+    var br = document.createElement('br');
     // Create a checkbox
     var checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
@@ -71,8 +70,6 @@
     var label = document.createElement('label');
     label.textContent = 'Hide Call Button';
     label.htmlFor = 'hideCallBtn';
-
-    var br2 = document.createElement('br');
 
 
     var checkbox2 = document.createElement('input');
@@ -84,7 +81,6 @@
     label2.textContent = 'Italic Asterisk Text';
     label2.htmlFor = 'italicTextCheckbox';
 
-    var br3 = document.createElement('br');
 
     var checkbox3 = document.createElement('input');
     checkbox3.type = 'checkbox';
@@ -96,7 +92,15 @@
     label3.htmlFor = 'asterisksCheckbox';
 
 
-    var br = document.createElement('br');
+    var checkbox4 = document.createElement('input');
+    checkbox4.type = 'checkbox';
+    checkbox4.id = 'hideNewsCheckbox';
+
+    // Create a label for the checkbox
+    var label4 = document.createElement('label');
+    label4.textContent = 'Hide News Bubbles';
+    label4.htmlFor = 'hideNewsCheckbox';
+
 
     // Create a save button
     var saveButton = document.createElement('button');
@@ -114,13 +118,16 @@
     // Add the checkbox and label to the settings panel
     settingsPanel.appendChild(checkbox);
     settingsPanel.appendChild(label);
-    settingsPanel.appendChild(br2);
+    settingsPanel.appendChild(br);
     settingsPanel.appendChild(checkbox2);
     settingsPanel.appendChild(label2);
-    settingsPanel.appendChild(br3);
+    settingsPanel.appendChild(br.cloneNode());
     settingsPanel.appendChild(checkbox3);
     settingsPanel.appendChild(label3);
-    settingsPanel.appendChild(br);
+    settingsPanel.appendChild(br.cloneNode());
+    settingsPanel.appendChild(checkbox4);
+    settingsPanel.appendChild(label4);
+    settingsPanel.appendChild(br.cloneNode());
     
     settingsPanel.appendChild(saveButton);
 
@@ -173,10 +180,8 @@
         head.appendChild(style);
     }
 
-    //addGlobalStyle('#settingsButton{background-color:#9610ff;color:#fff;border-radius:5px;border:none;padding:10px;cursor:pointer;z-index:9999}#settingsButton:hover{background-color:#fc03e3}#settingsPanel{display:none;position:absolute;top:50px;right:10px;background-color:#fff;border:1px solid #ccc;padding:10px;z-index:9999}#saveSettingsButton{background-color:#9610ff;color:#fff;border-radius:5px;border:none;padding:10px;cursor:pointer;margin-top:10px}#saveSettingsButton:hover{background-color:#fc03e3}');
-    addGlobalStyle('#saveSettingsButton,#settingsButton{background-color:#9610ff;padding:10px;cursor:pointer;color:#fff}#settingsButton{border-radius:5px;border:none;z-index:9999}#saveSettingsButton:hover,#settingsButton:hover{background-color:#fc03e3}#settingsPanel{display:none;position:absolute;top:50px;right:10px;background-color:#fff;border:1px solid #ccc;padding:10px;z-index:9999}#saveSettingsButton{border-radius:5px;border:none;margin-top:10px}.textbox{background-color:#2b2f3a;color:#fff;border:1px solid #000;border-radius:5px;padding:5px}');
+    addGlobalStyle('#saveSettingsButton,#settingsButton{background-color:#9610ff;padding:10px;cursor:pointer;color:#fff}#settingsButton{border-radius:5px;border:none;z-index:9999}#saveSettingsButton:hover,#settingsButton:hover{background-color:#fc03e3}#settingsPanel{display:none;position:absolute;top:50px;right:10px;background-color:#fff;border:1px solid #ccc;padding:10px;z-index:9999}#saveSettingsButton{border-radius:5px;border:none;margin-top:10px}.textbox{background-color:#2b2f3a;color:#fff;border:1px solid #000;border-radius:5px;padding:5px}.changelogLink{color:#fff;text-decoration:none}');
 
-    //addGlobalStyle('.text{color:#fff;text-shadow:1px 1px 10px #fc03e3,1px 1px 10px #ccc;text-align:center};');
     if (await GM_getValue('asteriskColor') === "") {
         GM_setValue('asteriskColor', GM_getValue('defaultAsteriskColor'));
         addGlobalStyle(GM_getValue('asteriskColor'));
@@ -237,19 +242,21 @@
     GM_setValue('asterisksCheckbox', checkbox3.checked);
     });
 
-    //addGlobalStyle(await GM_getValue('asteriskColor'));
+    // Get the current state of the checkbox
+    var checkboxState4 = GM_getValue('hideNewsCheckbox', false);
+
+    // Set the state of the checkbox
+    checkbox4.checked = checkboxState4;
+
+    // Add an event listener to the checkbox
+    checkbox4.addEventListener('change', function() {
+    // Store the new state of the checkbox
+    GM_setValue('hideNewsCheckbox', checkbox4.checked);
+    });
+
 
     function processTextNode(node) {
         const italicPattern = /\*(\S(.*?\S)?)\*/g;
-
-    /*     if (GM_getValue('italicTextCheckbox', false)) {
-            const newHTML = node.textContent.replace(italicPattern, (match, p1) => `*<em class="text">${p1}</em>*`);
-        } else {
-            const newHTML = node.textContent.replace(italicPattern, (match, p1) => `*<span class="text">${p1}</span>*`);
-        } */
-        /* const newHTML = GM_getValue('italicTextCheckbox', false) ? 
-    node.textContent.replace(italicPattern, (match, p1) => `*<em class="text">${p1}</em>*`) : 
-    node.textContent.replace(italicPattern, (match, p1) => `*<span class="text">${p1}</span>*`); */
 
         const useAsterisks = GM_getValue('asterisksCheckbox', true);
         const italicTextCheckbox = GM_getValue('italicTextCheckbox', false);
@@ -257,12 +264,7 @@
         const newHTML = node.textContent.replace(italicPattern, (match, p1) => {
         const italicizedText = italicTextCheckbox ? `<em class="text">${p1}</em>` : `<span class="text">${p1}</span>`;
         return useAsterisks ? `*${italicizedText}*` : italicizedText;
-        });
-
-        //const newHTML = node.textContent.replace(italicPattern, (match, p1) => `*<em class="text">${p1}</em>*`);
-        
-
-        
+        });        
 
         if (newHTML !== node.textContent) {
             const span = document.createElement('span');
@@ -295,40 +297,23 @@
 
     function chatBubbleColor() {
         const divs = document.querySelectorAll('div');
-
+    
         divs.forEach(div => {
-            if (div.getAttribute('style')) {
-            const style = div.getAttribute('style');
-            const regexStart = /align-self:\s*flex-start;/i;
-            const regexEnd = /align-self:\s*flex-end;/i;
-
-            if (regexStart.test(style)) {
-                const childDiv = div.querySelector('div');
-                if (childDiv) {
-                const grandchildDiv = childDiv.querySelector('div');
-                if (grandchildDiv) {
-                    const ggrandchildDiv = grandchildDiv.querySelector('div');
-                    if(ggrandchildDiv) {
-                        //ggrandchildDiv.style.fontSize = '20px';
-                        ggrandchildDiv.style.fontSize = GM_getValue('fontSize')+'px';
+            if (div.getAttribute('type')) {
+                const type = div.getAttribute('type');
+    
+                if (type === 'Nomi') {
+                    const childDiv = div.querySelector('div');
+                    if (childDiv) {
+                        childDiv.style.fontSize = GM_getValue('fontSize') + 'px';
                     }
-                    //grandchildDiv.style.backgroundColor = '#35383f';
-                }
-                }
-            } else if (regexEnd.test(style)) {
-                const childDiv = div.querySelector('div');
-                if (childDiv) {
-                const grandchildDivs = childDiv.querySelectorAll('div');
-                if (grandchildDivs.length > 1) {
-                    const ggrandchildDivs = grandchildDivs[1].querySelector('div');
-                    if(ggrandchildDivs) {
-                        //ggrandchildDivs.style.fontSize = '20px';
-                        ggrandchildDivs.style.fontSize = GM_getValue('fontSize')+'px';
+                } else if (type === 'User') {
+                    const childDiv = div.querySelector('div');
+                    if (childDiv) {
+                        childDiv.style.fontSize = GM_getValue('fontSize') + 'px';
+                        div.style.backgroundColor = GM_getValue('bubbleColor');
                     }
-                    grandchildDivs[1].style.backgroundColor = GM_getValue('bubbleColor');
                 }
-                }
-            }
             }
         });
     }
@@ -338,7 +323,7 @@
         buttons.forEach(button => button.style.display = 'none');
     }
 
-    function scrollBars() {
+    /* function scrollBars() {
         var style = document.createElement('style');
         style.type = 'text/css';
         style.innerHTML = `
@@ -347,27 +332,19 @@
             height: 10px;
         }
         ::-webkit-scrollbar-thumb {
-            background-color: #757575; /* blue */
+            background-color: #757575;
             border-radius: 5px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background-color: #838383; /* green */
+            background-color: #838383;
         }
         ::-webkit-scrollbar-track {
-            background-color: #2e2e2e; /* dark gray */
+            background-color: #2e2e2e;
             border-radius: 5px;
             box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
         }
         `;
         document.head.appendChild(style);
-    }
-
-    /* function setImageDimensions() {
-        var images = document.getElementsByTagName('img');
-        for (var i = 0; i < images.length; i++) {
-            images[i].style.height = '100%';
-            images[i].style.width = '100%';
-        }
     } */
 
     function hideNews() {
@@ -387,13 +364,14 @@
     }
 
     chatBubbleColor();
-    //hideCallButton();
-    //scrollBars();
     if (GM_getValue('hideCallButton', false)) {
         hideCallButton();
-    } else {
-    
     }
+
+    if (GM_getValue('hideNewsCheckbox', false)) {
+        hideNews();
+    }
+
     let lastCallTime = 0;
     const observer = new MutationObserver(mutations => {
         for (const mutation of mutations) {
@@ -403,8 +381,10 @@
                 chatBubbleColor();
                 if (GM_getValue('hideCallButton', false)) {
                     hideCallButton();
-                } else {
-                    
+                }
+
+                if (GM_getValue('hideNewsCheckbox', false)) {
+                    hideNews();
                 }
                 //hideCallButton();
         }
