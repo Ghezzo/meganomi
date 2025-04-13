@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Mega Nomi Script beta
 // @namespace    https://gzo.sh
-// @version      0.9
+// @version      0.9.1
 // @description  Everything in one :)
 // @author       Ghezzo
 // @match        https://beta.nomi.ai/nomis*
@@ -40,7 +40,7 @@
     settingsPanel.style.color = 'white'; // add padding to the panel
     settingsPanel.style.padding = '10px'; // add padding to the panel
     settingsPanel.innerHTML = `
-    <span>Version 0.9 | <a href="https://raw.githubusercontent.com/Ghezzo/meganomi/refs/heads/main/changelog.txt" target="_blank" class="changelogLink">Changelog (GitHub)</a></span>
+    <span>Version 0.9.1 | <a href="https://raw.githubusercontent.com/Ghezzo/meganomi/refs/heads/main/changelog.txt" target="_blank" class="changelogLink">Changelog (GitHub)</a></span>
     <h2>Settings</h2>
     <label>
         Asterisk Style:<br>
@@ -140,7 +140,7 @@
 
     // Add an event listener to the settings button
     settingsButton.addEventListener('click', function() {
-    console.log('Button clicked!');
+    console.log('Opened Settings Panel');
     if (settingsPanel.style.display === 'none') {
         settingsPanel.style.display = 'block';
     } else {
