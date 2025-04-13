@@ -29,13 +29,15 @@
     // Create the settings panel
     var settingsPanel = document.createElement('div');
     settingsPanel.style.position = 'fixed';
-    settingsPanel.style.top = '40px';
+    settingsPanel.style.top = '50px';
     settingsPanel.style.right = '10px';
     settingsPanel.style.display = 'none';
     settingsPanel.style.minWidth = '300px'; // add a width to the panel
     settingsPanel.style.minHeight = '100px'; // add a height to the panel
-    settingsPanel.style.background = 'white'; // add a background color to the panel
-    settingsPanel.style.border = '1px solid black'; // add a border to the panel
+    settingsPanel.style.background = '#181a20'; // add a background color to the panel
+    settingsPanel.style.border = '1px solid #979eb1'; // add a border to the panel
+    settingsPanel.style.color = 'white'; // add padding to the panel
+    settingsPanel.style.padding = '10px'; // add padding to the panel
     settingsPanel.innerHTML = `
     <h2>Settings</h2>
     <label>
@@ -92,6 +94,7 @@
     settingsButton.style.position = 'fixed';
     settingsButton.style.top = '10px';
     settingsButton.style.right = '10px';
+    settingsButton.id = 'settingsButton';
 
     // Add the checkbox and label to the settings panel
     settingsPanel.appendChild(checkbox);
@@ -151,6 +154,9 @@
         style.innerHTML = css.replace(/;/g, ' !important;');
         head.appendChild(style);
     }
+
+    addGlobalStyle('#settingsButton{background-color:#9610ff;color:#fff;border-radius:5px;border:none;padding:10px;cursor:pointer;z-index:9999}#settingsButton:hover{background-color:#fc03e3}#settingsPanel{display:none;position:absolute;top:50px;right:10px;background-color:#fff;border:1px solid #ccc;padding:10px;z-index:9999}#saveSettingsButton{background-color:#9610ff;color:#fff;border-radius:5px;border:none;padding:10px;cursor:pointer;margin-top:10px}#saveSettingsButton:hover{background-color:#fc03e3}');
+
     //addGlobalStyle('.text{color:#fff;text-shadow:1px 1px 10px #fc03e3,1px 1px 10px #ccc;text-align:center};');
     if (await GM_getValue('asteriskColor') === "") {
         GM_setValue('asteriskColor', GM_getValue('defaultAsteriskColor'));
