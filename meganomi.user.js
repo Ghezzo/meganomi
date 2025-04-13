@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Mega Nomi Script beta
 // @namespace    https://gzo.sh
-// @version      0.8.7
+// @version      0.8.8
 // @description  Everything in one :)
 // @author       Ghezzo
 // @match        https://beta.nomi.ai/nomis*
@@ -41,7 +41,7 @@
     settingsPanel.style.color = 'white'; // add padding to the panel
     settingsPanel.style.padding = '10px'; // add padding to the panel
     settingsPanel.innerHTML = `
-    <span>Version 0.8.7</span>
+    <span>Version 0.8.8</span>
     <h2>Settings</h2>
     <label>
         Asterisk Style:<br>
@@ -84,6 +84,17 @@
     label2.textContent = 'Italic Asterisk Text';
     label2.htmlFor = 'italicTextCheckbox';
 
+    var br3 = document.createElement('br');
+
+    var checkbox3 = document.createElement('input');
+    checkbox3.type = 'checkbox';
+    checkbox3.id = 'asterisksCheckbox';
+
+    // Create a label for the checkbox
+    var label3 = document.createElement('label');
+    label3.textContent = 'Toggle Asterisks';
+    label3.htmlFor = 'asterisksCheckbox';
+
 
     var br = document.createElement('br');
 
@@ -106,6 +117,9 @@
     settingsPanel.appendChild(br2);
     settingsPanel.appendChild(checkbox2);
     settingsPanel.appendChild(label2);
+    settingsPanel.appendChild(br3);
+    settingsPanel.appendChild(checkbox3);
+    settingsPanel.appendChild(label3);
     settingsPanel.appendChild(br);
     
     settingsPanel.appendChild(saveButton);
@@ -211,6 +225,18 @@
     GM_setValue('italicTextCheckbox', checkbox2.checked);
     });
 
+    // Get the current state of the checkbox
+    var checkboxState3 = GM_getValue('asterisksCheckbox', false);
+
+    // Set the state of the checkbox
+    checkbox3.checked = checkboxState3;
+
+    // Add an event listener to the checkbox
+    checkbox3.addEventListener('change', function() {
+    // Store the new state of the checkbox
+    GM_setValue('asterisksCheckbox', checkbox3.checked);
+    });
+
     //addGlobalStyle(await GM_getValue('asteriskColor'));
 
     function processTextNode(node) {
@@ -221,9 +247,17 @@
         } else {
             const newHTML = node.textContent.replace(italicPattern, (match, p1) => `*<span class="text">${p1}</span>*`);
         } */
-        const newHTML = GM_getValue('italicTextCheckbox', false) ? 
+        /* const newHTML = GM_getValue('italicTextCheckbox', false) ? 
     node.textContent.replace(italicPattern, (match, p1) => `*<em class="text">${p1}</em>*`) : 
-    node.textContent.replace(italicPattern, (match, p1) => `*<span class="text">${p1}</span>*`);
+    node.textContent.replace(italicPattern, (match, p1) => `*<span class="text">${p1}</span>*`); */
+
+        const useAsterisks = GM_getValue('asterisksCheckbox', true);
+        const italicTextCheckbox = GM_getValue('italicTextCheckbox', false);
+
+        const newHTML = node.textContent.replace(italicPattern, (match, p1) => {
+        const italicizedText = italicTextCheckbox ? `<em class="text">${p1}</em>` : `<span class="text">${p1}</span>`;
+        return useAsterisks ? `*${italicizedText}*` : italicizedText;
+        });
 
         //const newHTML = node.textContent.replace(italicPattern, (match, p1) => `*<em class="text">${p1}</em>*`);
         
