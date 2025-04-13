@@ -51,12 +51,12 @@
     <br>
     <label>
         User Bubble Color:<br>
-        <input type="text" id="bubbleStyle" class="textbox" value="${GM_getValue('bubbleColor') ?? ''}">
+        <input type="text" id="bubbleStyle" class="textbox" value="${GM_getValue('bubbleColor') ?? ''}" placeholder="#ffffff">
     </label>
     <br>
     <label>
         Nomi Bubble Color:<br>
-        <input type="text" id="nomiBubbleStyle" class="textbox" value="${GM_getValue('nomiBubbleColor') ?? ''}">
+        <input type="text" id="nomiBubbleStyle" class="textbox" value="${GM_getValue('nomiBubbleColor') ?? ''}" placeholder="#000000">
     </label>
     <br>
     <label>
