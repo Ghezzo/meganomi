@@ -7,7 +7,7 @@ Settings are available using the button in the top right corner of the page
 
 Leave input empty to go back to default<br><br>
 
-Refresh page after saving
+**Refresh page after saving**
 
 ## Examples
 
