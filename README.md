@@ -3,6 +3,8 @@
 
 A userscript with several extra features for nomi.ai
 
+Leave input empty to go back to default
+
 ## Examples
 
 ### Asterisk Color:
