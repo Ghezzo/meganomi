@@ -17,7 +17,7 @@ A userscript with several extra features for nomi.ai
 #2a2c32
 ```
 
-### Font Size: 
+### Font Size (in bubbles): 
 
 ```
 20
