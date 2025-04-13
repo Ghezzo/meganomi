@@ -1,10 +1,11 @@
 // ==UserScript==
 // @name         Mega Nomi Script beta
 // @namespace    https://gzo.sh
-// @version      0.8.5
+// @version      0.8.6
 // @description  Everything in one :)
 // @author       Ghezzo
 // @match        https://beta.nomi.ai/nomis*
+// @match        https://beta.nomi.ai/group-chats*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=nomi.ai
 // @require      https://openuserjs.org/src/libs/sizzle/GM_config.js
 // @grant        GM_setValue
@@ -40,22 +41,22 @@
     settingsPanel.style.color = 'white'; // add padding to the panel
     settingsPanel.style.padding = '10px'; // add padding to the panel
     settingsPanel.innerHTML = `
-    <span>Version 0.8.5</span>
+    <span>Version 0.8.6</span>
     <h2>Settings</h2>
     <label>
         Asterisk Style:<br>
         
-        <textarea id="asteriskStyle" rows="5">${GM_getValue('asteriskColor')}</textarea>
+        <textarea id="asteriskStyle" rows="5" class="textbox">${GM_getValue('asteriskColor')}</textarea>
     </label>
     <br>
     <label>
         Bubble Color:<br>
-        <input type="text" id="bubbleStyle" value="${GM_getValue('bubbleColor')}">
+        <input type="text" id="bubbleStyle" class="textbox" value="${GM_getValue('bubbleColor')}">
     </label>
     <br>
     <label>
         Font Size:<br>
-        <input type="text" id="fontSize" value="${GM_getValue('fontSize')}">
+        <input type="text" id="fontSize" class="textbox" value="${GM_getValue('fontSize')}">
     </label>
     <br>
     `;
@@ -158,7 +159,8 @@
         head.appendChild(style);
     }
 
-    addGlobalStyle('#settingsButton{background-color:#9610ff;color:#fff;border-radius:5px;border:none;padding:10px;cursor:pointer;z-index:9999}#settingsButton:hover{background-color:#fc03e3}#settingsPanel{display:none;position:absolute;top:50px;right:10px;background-color:#fff;border:1px solid #ccc;padding:10px;z-index:9999}#saveSettingsButton{background-color:#9610ff;color:#fff;border-radius:5px;border:none;padding:10px;cursor:pointer;margin-top:10px}#saveSettingsButton:hover{background-color:#fc03e3}');
+    //addGlobalStyle('#settingsButton{background-color:#9610ff;color:#fff;border-radius:5px;border:none;padding:10px;cursor:pointer;z-index:9999}#settingsButton:hover{background-color:#fc03e3}#settingsPanel{display:none;position:absolute;top:50px;right:10px;background-color:#fff;border:1px solid #ccc;padding:10px;z-index:9999}#saveSettingsButton{background-color:#9610ff;color:#fff;border-radius:5px;border:none;padding:10px;cursor:pointer;margin-top:10px}#saveSettingsButton:hover{background-color:#fc03e3}');
+    addGlobalStyle('#saveSettingsButton,#settingsButton{background-color:#9610ff;padding:10px;cursor:pointer;color:#fff}#settingsButton{border-radius:5px;border:none;z-index:9999}#saveSettingsButton:hover,#settingsButton:hover{background-color:#fc03e3}#settingsPanel{display:none;position:absolute;top:50px;right:10px;background-color:#fff;border:1px solid #ccc;padding:10px;z-index:9999}#saveSettingsButton{border-radius:5px;border:none;margin-top:10px}.textbox{background-color:#2b2f3a;color:#fff;border:1px solid #000;border-radius:5px;padding:5px}');
 
     //addGlobalStyle('.text{color:#fff;text-shadow:1px 1px 10px #fc03e3,1px 1px 10px #ccc;text-align:center};');
     if (await GM_getValue('asteriskColor') === "") {
