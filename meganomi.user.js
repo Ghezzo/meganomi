@@ -36,6 +36,7 @@
     settingsPanel.style.minHeight = '100px'; // add a height to the panel
     settingsPanel.style.background = '#181a20'; // add a background color to the panel
     settingsPanel.style.border = '1px solid #979eb1'; // add a border to the panel
+    settingsPanel.style.borderRadius = '5px'; // add a border radius to the panel
     settingsPanel.style.color = 'white'; // add padding to the panel
     settingsPanel.style.padding = '10px'; // add padding to the panel
     settingsPanel.innerHTML = `
