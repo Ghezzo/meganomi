@@ -1,5 +1,9 @@
 TODO: Clean up ALL the code
 
+0.9.3
+
+Move button and panel
+
 0.9.2
 
 Add Nomi bubble color
