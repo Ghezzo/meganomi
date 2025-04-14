@@ -14,7 +14,13 @@ Leave input empty to go back to default<br><br>
 ### Asterisk Color:
 
 ```
-.text{color:#fff};
+#fff
+``` 
+
+### Shadow Color 1 and 2 (both required for shadow to work):
+
+```
+#fff
 ``` 
 
 ### Bubble Color: 

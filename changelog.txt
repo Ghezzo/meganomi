@@ -1,5 +1,9 @@
 TODO: Clean up ALL the code
 
+0.9.5
+
+Changed how asterisk style works slightly, removing the need for .text{} etc
+
 0.9.3
 
 Move button and panel

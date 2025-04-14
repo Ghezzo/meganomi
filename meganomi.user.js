@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Mega Nomi Script beta
 // @namespace    https://gzo.sh
-// @version      0.9.3
+// @version      0.9.5
 // @description  Everything in one :)
 // @author       Ghezzo
 // @match        https://beta.nomi.ai/nomis*
@@ -23,6 +23,8 @@
   
     var textColor = "";
     GM_setValue('defaultAsteriskColor', '');
+    GM_setValue('defaultAsteriskShadow1', '');
+    GM_setValue('defaultAsteriskShadow2', '');
     GM_setValue('defaultBubbleColor', '');
     GM_setValue('defaultNomiBubbleColor', '');
     GM_setValue('defaultFontSize', '');
@@ -35,36 +37,40 @@
     settingsPanel.style.display = 'none';
     settingsPanel.style.minWidth = '300px'; // add a width to the panel
     settingsPanel.style.minHeight = '100px'; // add a height to the panel
+    settingsPanel.style.maxWidth = "400px"; // add a max width to the panel
     settingsPanel.style.background = '#181a20'; // add a background color to the panel
     settingsPanel.style.border = '1px solid #979eb1'; // add a border to the panel
     settingsPanel.style.borderRadius = '5px'; // add a border radius to the panel
     settingsPanel.style.color = 'white'; // add padding to the panel
     settingsPanel.style.padding = '10px'; // add padding to the panel
     settingsPanel.innerHTML = `
-    <span>Version 0.9.3 | <a href="https://raw.githubusercontent.com/Ghezzo/meganomi/refs/heads/main/changelog.txt" target="_blank" class="changelogLink">Changelog (GitHub)</a></span>
+    <span>Version 0.9.5 | <a href="https://raw.githubusercontent.com/Ghezzo/meganomi/refs/heads/main/changelog.txt" target="_blank" class="changelogLink">Changelog (GitHub)</a></span>
     <h2>Settings</h2>
     <label>
-        Asterisk Style:<br>
-        <textarea id="asteriskStyle" rows="5" class="textbox" placeholder=".text{color:#fff};">${GM_getValue('asteriskColor') ?? ''}</textarea>
+        Asterisk Color <input type="text" id="asteriskColor" class="textbox" value="${GM_getValue('asteriskColor') ?? ''}" placeholder="#ffffff">
+        <hr class="hr">
+        <span>Shadow (Optional)</span><br><br>
+        Color 1 <input type="text" id="asteriskShadow1" class="textbox" value="${GM_getValue('asteriskShadow1') ?? ''}" placeholder="#ffffff">
+        Color 2 <input type="text" id="asteriskShadow2" class="textbox" value="${GM_getValue('asteriskShadow2') ?? ''}" placeholder="#ffffff">
     </label>
-    <br>
+    <br><hr class="hr">
     <label>
-        User Bubble Color:<br>
+        User Bubble Color<br>
         <input type="text" id="bubbleStyle" class="textbox" value="${GM_getValue('bubbleColor') ?? ''}" placeholder="#ffffff">
     </label>
-    <br>
+    <br><hr class="hr">
     <label>
-        Nomi Bubble Color:<br>
+        Nomi Bubble Color<br>
         <input type="text" id="nomiBubbleStyle" class="textbox" value="${GM_getValue('nomiBubbleColor') ?? ''}" placeholder="#000000">
     </label>
-    <br>
+    <br><hr class="hr">
     <label>
-        Font Size:<br>
+        Font Size<br>
         <input type="text" id="fontSize" class="textbox" value="${GM_getValue('fontSize') ?? ''}" placeholder="20">
     </label>
-    <br>
+    <br><hr class="hr">
     `;
-
+    //color:#fff;text-shadow:1px 1px 10px #fc03e3,1px 1px 10px #ccc
     var br = document.createElement('br');
     // Create a checkbox
     var checkbox = document.createElement('input');
@@ -120,7 +126,7 @@
     settingsButton.style.left = '10px';
     settingsButton.id = 'settingsButton';
 
-    // Add the checkbox and label to the settings panel
+    // Add the checkboxes and labels to the settings panel
     settingsPanel.appendChild(checkbox);
     settingsPanel.appendChild(label);
     settingsPanel.appendChild(br);
@@ -142,7 +148,6 @@
 
     // Add an event listener to the settings button
     settingsButton.addEventListener('click', function() {
-    console.log('Opened Settings Panel');
     if (settingsPanel.style.display === 'none') {
         settingsPanel.style.display = 'block';
     } else {
@@ -152,14 +157,19 @@
 
     // Add an event listener to the saveSettingsButton element
     document.getElementById('saveSettingsButton').addEventListener('click', function() {
-        var astColor = document.getElementById('asteriskStyle').value;
+        var astColor = document.getElementById('asteriskColor').value;
+        var astShadow1 = document.getElementById('asteriskShadow1').value;
+        var astShadow2 = document.getElementById('asteriskShadow2').value;
         var bubColor = document.getElementById('bubbleStyle').value;
         var nomiBubColor = document.getElementById('nomiBubbleStyle').value;
         var fontSize = document.getElementById('fontSize').value;
         GM_setValue('asteriskColor', astColor);
+        GM_setValue('asteriskShadow1', astShadow1);
+        GM_setValue('asteriskShadow2', astShadow2);
         GM_setValue('bubbleColor', bubColor);
         GM_setValue('nomiBubbleColor', nomiBubColor);
         GM_setValue('fontSize', fontSize);
+
         console.log('Settings saved!');
     });
 
@@ -178,12 +188,49 @@
         head.appendChild(style);
     }
 
-    addGlobalStyle('#saveSettingsButton,#settingsButton{background-color:#9610ff;padding:10px;cursor:pointer;color:#fff}#settingsButton{border-radius:5px;border:none;z-index:9999}#saveSettingsButton:hover,#settingsButton:hover{background-color:#fc03e3}#settingsPanel{display:none;position:absolute;top:50px;right:10px;background-color:#fff;border:1px solid #ccc;padding:10px;z-index:9999}#saveSettingsButton{border-radius:5px;border:none;margin-top:10px}.textbox{background-color:#2b2f3a;color:#fff;border:1px solid #000;border-radius:5px;padding:5px}.changelogLink{color:#fff;text-decoration:none}');
+    addGlobalStyle('#saveSettingsButton,#settingsButton{background-color:#9610ff;padding:10px;cursor:pointer;color:#fff}#settingsButton{border-radius:5px;border:none;z-index:9999}#saveSettingsButton:hover,#settingsButton:hover{background-color:#fc03e3}#settingsPanel{display:none;position:absolute;top:50px;right:10px;background-color:#fff;border:1px solid #ccc;padding:10px;z-index:9999}#saveSettingsButton{border-radius:5px;border:none;margin-top:10px}.textbox{background-color:#2b2f3a;color:#fff;border:1px solid #000;border-radius:5px;padding:5px;width:100%}.changelogLink{color:#fff;text-decoration:none}.hr{border:0;height:1px;min-width:300px;background:#333;background-image:linear-gradient(to right,#ccc,#333,#ccc)}');
 
     if (await GM_getValue('asteriskColor') === "") {
         GM_setValue('asteriskColor', GM_getValue('defaultAsteriskColor'));
     }
-    addGlobalStyle(GM_getValue('asteriskColor', ''));
+
+    if (await GM_getValue('asteriskShadow1') === "") {
+        GM_setValue('asteriskShadow1', GM_getValue('defaultAsteriskShadow1'));
+    }
+
+    if (await GM_getValue('asteriskShadow2') === "") {
+        GM_setValue('asteriskShadow2', GM_getValue('defaultAsteriskShadow2'));
+    }
+
+    var style = '';
+
+    if (await GM_getValue('asteriskColor') === "" || !(await GM_getValue('asteriskColor'))) {
+        style = '';
+    } else if ((await GM_getValue('asteriskShadow1')) !== "" && (await GM_getValue('asteriskShadow1')) !== undefined && (await GM_getValue('asteriskShadow2')) !== "" && (await GM_getValue('asteriskShadow2')) !== undefined) {
+        style = '.text{color: '+GM_getValue('asteriskColor', '')+';text-shadow:1px 1px 10px '+GM_getValue('asteriskShadow1', '')+',1px 1px 10px '+GM_getValue('asteriskShadow2', '')+';}'
+    } else {
+        style = '.text{color: '+GM_getValue('asteriskColor', '')+';}'
+    }
+
+    console.log(style);
+    addGlobalStyle(style);
+
+    /* if (GM_getValue('asteriskShadow1') !== "" && GM_getValue('asteriskShadow2') !== "") {
+        var shadowStyle = 'text-shadow:1px 1px 10px '+GM_getValue('asteriskShadow1', '')+',1px 1px 10px '+GM_getValue('asteriskShadow2', '')+';';
+    } else {
+        var shadowStyle = '';
+    }
+    
+    console.log('.text{color: '+GM_getValue('asteriskColor', '')+';'+shadowStyle+'}');
+    addGlobalStyle('.text{color: '+GM_getValue('asteriskColor', '')+';'+shadowStyle+'}'); */
+
+    /* if (GM_getValue('asteriskShadow1') !== "" && GM_getValue('asteriskShadow2') !== "") {
+        console.log('.text{color: '+GM_getValue('asteriskColor', '')+';text-shadow:1px 1px 10px '+GM_getValue('asteriskShadow1', '')+',1px 1px 10px '+GM_getValue('asteriskShadow2', '')+'};');
+        addGlobalStyle('.text{color: '+GM_getValue('asteriskColor', '')+';text-shadow:1px 1px 10px '+GM_getValue('asteriskShadow1', '')+',1px 1px 10px '+GM_getValue('asteriskShadow2', '')+'};');
+    } else {
+        console.log('.text{color: '+GM_getValue('asteriskColor', '')+'};');
+        addGlobalStyle('.text{color: '+GM_getValue('asteriskColor', '')+'};');
+    } */
 
     if (await GM_getValue('bubbleColor') === "") {
         GM_setValue('bubbleColor', GM_getValue('defaultBubbleColor'));
