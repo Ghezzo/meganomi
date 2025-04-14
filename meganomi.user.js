@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Mega Nomi Script beta
 // @namespace    https://gzo.sh
-// @version      0.9.5
+// @version      0.9.5.1
 // @description  Everything in one :)
 // @author       Ghezzo
 // @match        https://beta.nomi.ai/nomis*
@@ -32,7 +32,7 @@
     // Create the settings panel
     var settingsPanel = document.createElement('div');
     settingsPanel.style.position = 'fixed';
-    settingsPanel.style.top = '50px';
+    settingsPanel.style.top = '90px';
     settingsPanel.style.left = '10px';
     settingsPanel.style.display = 'none';
     settingsPanel.style.minWidth = '300px'; // add a width to the panel
@@ -44,7 +44,7 @@
     settingsPanel.style.color = 'white'; // add padding to the panel
     settingsPanel.style.padding = '10px'; // add padding to the panel
     settingsPanel.innerHTML = `
-    <span>Version 0.9.5 | <a href="https://raw.githubusercontent.com/Ghezzo/meganomi/refs/heads/main/changelog.txt" target="_blank" class="changelogLink">Changelog (GitHub)</a></span>
+    <span>Version 0.9.5.1 | <a href="https://raw.githubusercontent.com/Ghezzo/meganomi/refs/heads/main/changelog.txt" target="_blank" class="changelogLink">Changelog (GitHub)</a></span>
     <h2>Settings</h2>
     <label>
         Asterisk Color <input type="text" id="asteriskColor" class="textbox" value="${GM_getValue('asteriskColor') ?? ''}" placeholder="#ffffff">
@@ -122,7 +122,7 @@
     var settingsButton = document.createElement('button');
     settingsButton.textContent = 'MNS Settings';
     settingsButton.style.position = 'fixed';
-    settingsButton.style.top = '10px';
+    settingsButton.style.top = '42px';
     settingsButton.style.left = '10px';
     settingsButton.id = 'settingsButton';
 
