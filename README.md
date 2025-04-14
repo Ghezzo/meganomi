@@ -14,7 +14,7 @@ Leave input empty to go back to default<br><br>
 ### Asterisk Color:
 
 ```
-.text{color:#fff;text-shadow:1px 1px 10px #fc03e3,1px 1px 10px #ccc;text-align:center};
+.text{color:#fff;text-shadow:1px 1px 10px #fc03e3,1px 1px 10px #ccc};
 ``` 
 
 ### Bubble Color: 
