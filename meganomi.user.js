@@ -19,7 +19,7 @@
 (async function() {
     'use strict';
 
-    console.log('Script started');
+    console.log('Mega Nomi Script loaded!');
   
     var textColor = "";
     GM_setValue('defaultAsteriskColor', '');
@@ -45,8 +45,7 @@
     <h2>Settings</h2>
     <label>
         Asterisk Style:<br>
-        
-        <textarea id="asteriskStyle" rows="5" class="textbox" placeholder=".text{color:#fff;text-shadow:1px 1px 10px #fc03e3,1px 1px 10px #ccc;text-align:center};">${GM_getValue('asteriskColor') ?? ''}</textarea>
+        <textarea id="asteriskStyle" rows="5" class="textbox" placeholder=".text{color:#fff};">${GM_getValue('asteriskColor') ?? ''}</textarea>
     </label>
     <br>
     <label>
@@ -137,9 +136,6 @@
     
     settingsPanel.appendChild(saveButton);
 
-    // Create the settings panel
-
-
     // Add the settings button and panel to the page
     document.body.appendChild(settingsButton);
     document.body.appendChild(settingsPanel);
@@ -156,28 +152,23 @@
 
     // Add an event listener to the saveSettingsButton element
     document.getElementById('saveSettingsButton').addEventListener('click', function() {
-    var astColor = document.getElementById('asteriskStyle').value;
-    var bubColor = document.getElementById('bubbleStyle').value;
-    var nomiBubColor = document.getElementById('nomiBubbleStyle').value;
-    var fontSize = document.getElementById('fontSize').value;
-    GM_setValue('asteriskColor', astColor);
-    GM_setValue('bubbleColor', bubColor);
-    GM_setValue('nomiBubbleColor', nomiBubColor);
-    GM_setValue('fontSize', fontSize);
-    console.log('Settings saved!');
+        var astColor = document.getElementById('asteriskStyle').value;
+        var bubColor = document.getElementById('bubbleStyle').value;
+        var nomiBubColor = document.getElementById('nomiBubbleStyle').value;
+        var fontSize = document.getElementById('fontSize').value;
+        GM_setValue('asteriskColor', astColor);
+        GM_setValue('bubbleColor', bubColor);
+        GM_setValue('nomiBubbleColor', nomiBubColor);
+        GM_setValue('fontSize', fontSize);
+        console.log('Settings saved!');
     });
-
-    var settings = {
-        mySetting: {
-          label: 'My Setting',
-          type: 'text',
-          default: 'defaultValue'
-        }
-      };
 
     GM_config.init();
 
-    /* function addGlobalStyle(css) {
+    function addGlobalStyle(css) {
+        if (css === undefined) {
+            css = '';
+        }
         var head, style;
         head = document.getElementsByTagName('head')[0];
         if (!head) { return; }
@@ -185,45 +176,28 @@
         style.type = 'text/css';
         style.innerHTML = css.replace(/;/g, ' !important;');
         head.appendChild(style);
-    } */
-
-        function addGlobalStyle(css) {
-            if (css === undefined) {
-              css = '';
-            }
-            var head, style;
-            head = document.getElementsByTagName('head')[0];
-            if (!head) { return; }
-            style = document.createElement('style');
-            style.type = 'text/css';
-            style.innerHTML = css.replace(/;/g, ' !important;');
-            head.appendChild(style);
-          }
+    }
 
     addGlobalStyle('#saveSettingsButton,#settingsButton{background-color:#9610ff;padding:10px;cursor:pointer;color:#fff}#settingsButton{border-radius:5px;border:none;z-index:9999}#saveSettingsButton:hover,#settingsButton:hover{background-color:#fc03e3}#settingsPanel{display:none;position:absolute;top:50px;right:10px;background-color:#fff;border:1px solid #ccc;padding:10px;z-index:9999}#saveSettingsButton{border-radius:5px;border:none;margin-top:10px}.textbox{background-color:#2b2f3a;color:#fff;border:1px solid #000;border-radius:5px;padding:5px}.changelogLink{color:#fff;text-decoration:none}');
 
     if (await GM_getValue('asteriskColor') === "") {
         GM_setValue('asteriskColor', GM_getValue('defaultAsteriskColor'));
     }
-    console.log(GM_getValue('asteriskColor'));
     addGlobalStyle(GM_getValue('asteriskColor', ''));
 
     if (await GM_getValue('bubbleColor') === "") {
         GM_setValue('bubbleColor', GM_getValue('defaultBubbleColor'));
     }
-    console.log(GM_getValue('bubbleColor'));
     addGlobalStyle(GM_getValue('bubbleColor', ''));
 
     if (await GM_getValue('nomiBubbleColor') === "") {
         GM_setValue('nomiBubbleColor', GM_getValue('defaultNomiBubbleColor'));
     }
-    console.log(GM_getValue('nomiBubbleColor'));
     addGlobalStyle(GM_getValue('nomiBubbleColor', ''));
 
     if (await GM_getValue('fontSize') === "") {
         GM_setValue('fontSize', GM_getValue('defaultFontSize'));
     }
-    console.log(GM_getValue('fontSize'));
     addGlobalStyle(GM_getValue('fontSize', ''));
 
 
