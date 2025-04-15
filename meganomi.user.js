@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Mega Nomi Script beta
 // @namespace    https://gzo.sh
-// @version      0.9.6
+// @version      0.9.6.1
 // @description  Everything in one :)
 // @author       Ghezzo
 // @match        https://beta.nomi.ai/nomis*
@@ -21,7 +21,7 @@
 
     console.log('Mega Nomi Script loaded!');
   
-    var version = '0.9.6';
+    var version = '0.9.6.1';
     var textColor = "";
     GM_setValue('defaultAsteriskColor', '');
     GM_setValue('defaultAsteriskShadow1', '');
