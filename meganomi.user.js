@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Mega Nomi Script beta
 // @namespace    https://gzo.sh
-// @version      0.9.6
+// @version      0.9.5.1
 // @description  Everything in one :)
 // @author       Ghezzo
 // @match        https://beta.nomi.ai/nomis*
@@ -21,7 +21,7 @@
 
     console.log('Mega Nomi Script loaded!');
   
-    var version = '0.9.6';
+    var version = '0.9.5.1';
     var textColor = "";
     GM_setValue('defaultAsteriskColor', '');
     GM_setValue('defaultAsteriskShadow1', '');
@@ -380,24 +380,20 @@
     }
 
     function checkVersion() {
-        var version = GM_getValue('version', '');
         fetch('https://raw.githubusercontent.com/Ghezzo/meganomi/refs/heads/main/version.txt')
             .then(response => response.text())
             .then(data => {
                 if (data !== version) {
                     console.log('New version available!');
-                    GM_setValue('version', data);
                     var settingsButton = document.getElementById('settingsButton');
-                    settingsButton.style.animation = 'pulse 1s infinite';
-                    settingsButton.style.border = '2px solid green';
+                    var originalText = settingsButton.textContent;
+                    settingsButton.innerHTML = originalText + ' <span style="color: #6cff00;"><b>&#129145;</b></span>';
                 } else {
                     console.log('Version is up to date.');
+                    settingsButton.textContent = originalText;
                 }
             });
     }
-
-    // @keyframes pulse{0%,100%{border-color:green}50%{border-color:#90ee90}}
-    addGlobalStyle('@keyframes pulse{0%,100%{border-color:green}50%{border-color:#90ee90}}');
     checkVersion();
 
     let lastCallTime = 0;
