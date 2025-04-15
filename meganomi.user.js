@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Mega Nomi Script beta
 // @namespace    https://gzo.sh
-// @version      0.9.6.1
+// @version      0.9.6.2
 // @description  Everything in one :)
 // @author       Ghezzo
 // @match        https://beta.nomi.ai/nomis*
@@ -21,7 +21,7 @@
 
     console.log('Mega Nomi Script loaded!');
   
-    var version = '0.9.6.1';
+    var version = '0.9.6.2';
     var textColor = "";
     GM_setValue('defaultAsteriskColor', '');
     GM_setValue('defaultAsteriskShadow1', '');
@@ -362,7 +362,7 @@
         hideNews();
     }
 
-    function checkVersion() {
+    /* function checkVersion() {
         var settingsButton = document.getElementById('settingsButton');
         var originalText = settingsButton.textContent;
         fetch('https://raw.githubusercontent.com/Ghezzo/meganomi/refs/heads/main/version.txt')
@@ -381,7 +381,7 @@
                 }
             });
     }
-    checkVersion();
+    checkVersion(); */
     //var buttonAdded = false;
 
     const observer = new MutationObserver(mutations => {
