@@ -215,23 +215,6 @@
 
     addGlobalStyle(style);
 
-    /* if (GM_getValue('asteriskShadow1') !== "" && GM_getValue('asteriskShadow2') !== "") {
-        var shadowStyle = 'text-shadow:1px 1px 10px '+GM_getValue('asteriskShadow1', '')+',1px 1px 10px '+GM_getValue('asteriskShadow2', '')+';';
-    } else {
-        var shadowStyle = '';
-    }
-    
-    console.log('.text{color: '+GM_getValue('asteriskColor', '')+';'+shadowStyle+'}');
-    addGlobalStyle('.text{color: '+GM_getValue('asteriskColor', '')+';'+shadowStyle+'}'); */
-
-    /* if (GM_getValue('asteriskShadow1') !== "" && GM_getValue('asteriskShadow2') !== "") {
-        console.log('.text{color: '+GM_getValue('asteriskColor', '')+';text-shadow:1px 1px 10px '+GM_getValue('asteriskShadow1', '')+',1px 1px 10px '+GM_getValue('asteriskShadow2', '')+'};');
-        addGlobalStyle('.text{color: '+GM_getValue('asteriskColor', '')+';text-shadow:1px 1px 10px '+GM_getValue('asteriskShadow1', '')+',1px 1px 10px '+GM_getValue('asteriskShadow2', '')+'};');
-    } else {
-        console.log('.text{color: '+GM_getValue('asteriskColor', '')+'};');
-        addGlobalStyle('.text{color: '+GM_getValue('asteriskColor', '')+'};');
-    } */
-
     if (await GM_getValue('bubbleColor') === "") {
         GM_setValue('bubbleColor', GM_getValue('defaultBubbleColor'));
     }
@@ -396,7 +379,6 @@
     }
     checkVersion();
 
-    let lastCallTime = 0;
     const observer = new MutationObserver(mutations => {
         for (const mutation of mutations) {
                 mutation.addedNodes.forEach(node => {
