@@ -21,6 +21,7 @@
 
     console.log('Mega Nomi Script loaded!');
   
+    var version = '0.9.5.1';
     var textColor = "";
     GM_setValue('defaultAsteriskColor', '');
     GM_setValue('defaultAsteriskShadow1', '');
@@ -44,7 +45,7 @@
     settingsPanel.style.color = 'white'; // add padding to the panel
     settingsPanel.style.padding = '10px'; // add padding to the panel
     settingsPanel.innerHTML = `
-    <span>Version 0.9.5.1 | <a href="https://raw.githubusercontent.com/Ghezzo/meganomi/refs/heads/main/changelog.txt" target="_blank" class="changelogLink">Changelog (GitHub)</a></span>
+    <span>Version ${version} | <a href="https://raw.githubusercontent.com/Ghezzo/meganomi/refs/heads/main/changelog.txt" target="_blank" class="changelogLink">Changelog (GitHub)</a></span>
     <h2>Settings</h2>
     <label>
         Asterisk Color <input type="text" id="asteriskColor" class="textbox" value="${GM_getValue('asteriskColor') ?? ''}" placeholder="#ffffff">
@@ -212,7 +213,6 @@
         style = '.text{color: '+GM_getValue('asteriskColor', '')+';}'
     }
 
-    console.log(style);
     addGlobalStyle(style);
 
     /* if (GM_getValue('asteriskShadow1') !== "" && GM_getValue('asteriskShadow2') !== "") {
@@ -378,6 +378,22 @@
     if (GM_getValue('hideNewsCheckbox', false)) {
         hideNews();
     }
+
+    function checkVersion() {
+        var version = GM_getValue('version', '');
+        fetch('https://raw.githubusercontent.com/Ghezzo/meganomi/refs/heads/main/version.txt')
+            .then(response => response.text())
+            .then(data => {
+                if (data !== version) {
+                    console.log('New version available!');
+                    GM_setValue('version', data);
+                } else {
+                    console.log('Version is up to date.');
+                }
+            });
+    }
+
+    checkVersion();
 
     let lastCallTime = 0;
     const observer = new MutationObserver(mutations => {
