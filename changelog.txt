@@ -1,5 +1,9 @@
 TODO: Clean up ALL the code
 
+0.9.6.3
+
+Changed button text
+
 0.9.6.2
 
 Disabled update indicator for now
