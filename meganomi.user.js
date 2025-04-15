@@ -121,7 +121,8 @@
 
     // Create the settings button
     var settingsButton = document.createElement('button');
-    settingsButton.textContent = 'MNS Settings';
+    //settingsButton.textContent = 'MNS Settings';
+    settingsButton.innerHTML = '<img src="https://raw.githubusercontent.com/Ghezzo/meganomi/refs/heads/main/assets/settings.svg" style="height: 17px; margin-bottom: -3px; filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(82deg) brightness(105%) contrast(105%);"> MNS';
     settingsButton.style.position = 'fixed';
     settingsButton.style.top = '42px';
     settingsButton.style.left = '10px';
