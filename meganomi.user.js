@@ -373,11 +373,14 @@
                     settingsButton.innerHTML = originalText + ' <span style="color: #6cff00;"><b>&#129145;</b></span>';
                 } else {
                     console.log('Version is up to date.');
+                    var settingsButton = document.getElementById('settingsButton');
+                    var originalText = settingsButton.textContent;
                     settingsButton.textContent = originalText;
                 }
             });
     }
     checkVersion();
+    //var buttonAdded = false;
 
     const observer = new MutationObserver(mutations => {
         for (const mutation of mutations) {
@@ -392,6 +395,26 @@
                 if (GM_getValue('hideNewsCheckbox', false)) {
                     hideNews();
                 }
+                /* setTimeout(function() {
+                    if (!buttonAdded) {
+                        var div = document.querySelector('nav[aria-label="Chats"] > div:nth-child(1) > div:nth-child(1) > div:nth-child(2)');
+                        if (div) {
+                          var button = document.createElement('button');
+                          button.id = 'settingsButton2';
+                          button.textContent = 'New Button';
+                          div.appendChild(button);
+                          buttonAdded = true;
+                          button.addEventListener('click', function() {
+                            console.log('Settings button clicked!');
+                            if (settingsPanel.style.display === 'none') {
+                                settingsPanel.style.display = 'block';
+                            } else {
+                                settingsPanel.style.display = 'none';
+                            }
+                            });
+                        }
+                    }
+                }, 500); */
         }
     });
 
