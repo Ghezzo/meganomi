@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Mega Nomi Script beta
 // @namespace    https://gzo.sh
-// @version      0.9.6.3
+// @version      0.9.6.4
 // @description  Everything in one :)
 // @author       Ghezzo
 // @match        https://beta.nomi.ai/nomis*
@@ -21,7 +21,7 @@
 
     console.log('Mega Nomi Script loaded!');
   
-    var version = '0.9.6.3';
+    var version = '0.9.6.4';
     var textColor = "";
     GM_setValue('defaultAsteriskColor', '');
     GM_setValue('defaultAsteriskShadow1', '');
@@ -119,6 +119,11 @@
     saveButton.textContent = 'Save';
     saveButton.id = 'saveSettingsButton';
 
+    var saveInfo = document.createElement('span');
+    saveInfo.textContent = 'Saved! Please refresh the page.';
+    saveInfo.style.display = 'none';
+    //saveButton.id = 'saveSettingsButton';
+
     // Create the settings button
     var settingsButton = document.createElement('button');
     //settingsButton.textContent = 'MNS Settings';
@@ -141,8 +146,8 @@
     settingsPanel.appendChild(checkbox4);
     settingsPanel.appendChild(label4);
     settingsPanel.appendChild(br.cloneNode());
-    
     settingsPanel.appendChild(saveButton);
+    settingsPanel.appendChild(saveInfo);
 
     // Add the settings button and panel to the page
     document.body.appendChild(settingsButton);
@@ -159,6 +164,7 @@
 
     // Add an event listener to the saveSettingsButton element
     document.getElementById('saveSettingsButton').addEventListener('click', function() {
+        saveInfo.style.display = 'inline-block';
         var astColor = document.getElementById('asteriskColor').value;
         var astShadow1 = document.getElementById('asteriskShadow1').value;
         var astShadow2 = document.getElementById('asteriskShadow2').value;
