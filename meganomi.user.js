@@ -363,18 +363,20 @@
     }
 
     function checkVersion() {
+        var settingsButton = document.getElementById('settingsButton');
+        var originalText = settingsButton.textContent;
         fetch('https://raw.githubusercontent.com/Ghezzo/meganomi/refs/heads/main/version.txt')
             .then(response => response.text())
             .then(data => {
                 if (data !== version) {
                     console.log('New version available!');
-                    var settingsButton = document.getElementById('settingsButton');
-                    var originalText = settingsButton.textContent;
+                    //var settingsButton = document.getElementById('settingsButton');
+                    //var originalText = settingsButton.textContent;
                     settingsButton.innerHTML = originalText + ' <span style="color: #6cff00;"><b>&#129145;</b></span>';
                 } else {
                     console.log('Version is up to date.');
-                    var settingsButton = document.getElementById('settingsButton');
-                    var originalText = settingsButton.textContent;
+                    //var settingsButton = document.getElementById('settingsButton');
+                    //var originalText = settingsButton.textContent;
                     settingsButton.textContent = originalText;
                 }
             });
