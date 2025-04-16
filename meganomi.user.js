@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Mega Nomi Script beta
 // @namespace    https://gzo.sh
-// @version      0.9.6.4
+// @version      0.9.6.5
 // @description  Everything in one :)
 // @author       Ghezzo
 // @match        https://beta.nomi.ai/nomis*
@@ -21,8 +21,7 @@
 
     console.log('Mega Nomi Script loaded!');
   
-    var version = '0.9.6.4';
-    var textColor = "";
+    var version = '0.9.6.5';
     GM_setValue('defaultAsteriskColor', '');
     GM_setValue('defaultAsteriskShadow1', '');
     GM_setValue('defaultAsteriskShadow2', '');
@@ -77,6 +76,7 @@
     var checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
     checkbox.id = 'hideCallBtn';
+    checkbox.className = 'cb';
 
     // Create a label for the checkbox
     var label = document.createElement('label');
@@ -87,6 +87,7 @@
     var checkbox2 = document.createElement('input');
     checkbox2.type = 'checkbox';
     checkbox2.id = 'italicTextCheckbox';
+    checkbox2.className = 'cb';
 
     // Create a label for the checkbox
     var label2 = document.createElement('label');
@@ -97,6 +98,7 @@
     var checkbox3 = document.createElement('input');
     checkbox3.type = 'checkbox';
     checkbox3.id = 'asterisksCheckbox';
+    checkbox3.className = 'cb';
 
     // Create a label for the checkbox
     var label3 = document.createElement('label');
@@ -107,6 +109,7 @@
     var checkbox4 = document.createElement('input');
     checkbox4.type = 'checkbox';
     checkbox4.id = 'hideNewsCheckbox';
+    checkbox4.className = 'cb';
 
     // Create a label for the checkbox
     var label4 = document.createElement('label');
@@ -196,7 +199,7 @@
         head.appendChild(style);
     }
 
-    addGlobalStyle('#saveSettingsButton,#settingsButton{background-color:#9610ff;padding:10px;cursor:pointer;color:#fff}#settingsButton{border-radius:5px;border:none;z-index:9999}#saveSettingsButton:hover,#settingsButton:hover{background-color:#fc03e3}#settingsPanel{display:none;position:absolute;top:50px;right:10px;background-color:#fff;border:1px solid #ccc;padding:10px;z-index:9999}#saveSettingsButton{border-radius:5px;border:none;margin-top:10px}.textbox{background-color:#2b2f3a;color:#fff;border:1px solid #000;border-radius:5px;padding:5px;width:100%}.changelogLink{color:#fff;text-decoration:none}.hr{border:0;height:1px;min-width:300px;background:#333;background-image:linear-gradient(to right,#ccc,#333,#ccc)}');
+    addGlobalStyle('#saveSettingsButton,#settingsButton{background-color:#9610ff;padding:10px;cursor:pointer;color:#fff}#settingsButton{border-radius:5px;border:none;z-index:9999}#saveSettingsButton:hover,#settingsButton:hover{background-color:#fc03e3}#settingsPanel{display:none;position:absolute;top:50px;right:10px;background-color:#fff;border:1px solid #ccc;padding:10px;z-index:9999}#saveSettingsButton{border-radius:5px;border:none;margin-top:10px}.textbox{background-color:#2b2f3a;color:#fff;border:1px solid #000;border-radius:5px;padding:5px;width:100%}.changelogLink{color:#fff;text-decoration:none}.hr{border:0;height:1px;min-width:300px;background:#333;background-image:linear-gradient(to right, #ccc, #333, #ccc)}.cb{accent-color:#9610ff;width:16px;height:16px;margin-bottom:-3px}');
 
     if (await GM_getValue('asteriskColor') === "") {
         GM_setValue('asteriskColor', GM_getValue('defaultAsteriskColor'));
