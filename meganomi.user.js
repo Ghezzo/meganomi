@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Mega Nomi Script beta
 // @namespace    https://gzo.sh
-// @version      0.9.6.5
+// @version      0.9.6.6
 // @description  Everything in one :)
 // @author       Ghezzo
 // @match        https://beta.nomi.ai/nomis*
@@ -21,13 +21,28 @@
 
     console.log('Mega Nomi Script loaded!');
   
-    var version = '0.9.6.5';
+    var version = '0.9.6.6';
     GM_setValue('defaultAsteriskColor', '');
     GM_setValue('defaultAsteriskShadow1', '');
     GM_setValue('defaultAsteriskShadow2', '');
     GM_setValue('defaultBubbleColor', '');
     GM_setValue('defaultNomiBubbleColor', '');
     GM_setValue('defaultFontSize', '');
+
+    function addGlobalStyle(css) {
+        if (css === undefined) {
+            css = '';
+        }
+        var head, style;
+        head = document.getElementsByTagName('head')[0];
+        if (!head) { return; }
+        style = document.createElement('style');
+        style.type = 'text/css';
+        style.innerHTML = css.replace(/;/g, ' !important;');
+        head.appendChild(style);
+    }
+
+    addGlobalStyle('#saveSettingsButton,#settingsButton{background-color:#9610ff;padding:10px;cursor:pointer;color:#fff}#settingsButton{border-radius:5px;border:none;z-index:9999}#saveSettingsButton:hover,#settingsButton:hover{background-color:#fc03e3}#settingsPanel{min-width:300px;min-height:100px;max-width:400px;background:#181a20;border:1px solid #44495a;border-radius:5px;color:white;padding:10px}#saveSettingsButton{border-radius:5px;border:none;margin-top:10px}.textbox{background-color:#2b2f3a;color:#fff;border:1px solid black;border-radius:5px;padding:5px;width:100%}.textbox:focus{background-color:#363b49;outline:none;border:1px solid #ccc}.changelogLink{color:#fff;text-decoration:none}.hr{border:0;height:1px;min-width:300px;background:#333;background-image:linear-gradient(to right, #ccc, #333, #ccc)}.cb{accent-color:#9610ff;width:16px;height:16px;margin-bottom:-3px}');
     
     // Create the settings panel
     var settingsPanel = document.createElement('div');
@@ -35,14 +50,7 @@
     settingsPanel.style.top = '90px';
     settingsPanel.style.left = '10px';
     settingsPanel.style.display = 'none';
-    settingsPanel.style.minWidth = '300px'; // add a width to the panel
-    settingsPanel.style.minHeight = '100px'; // add a height to the panel
-    settingsPanel.style.maxWidth = "400px"; // add a max width to the panel
-    settingsPanel.style.background = '#181a20'; // add a background color to the panel
-    settingsPanel.style.border = '1px solid #979eb1'; // add a border to the panel
-    settingsPanel.style.borderRadius = '5px'; // add a border radius to the panel
-    settingsPanel.style.color = 'white'; // add padding to the panel
-    settingsPanel.style.padding = '10px'; // add padding to the panel
+    settingsPanel.id = 'settingsPanel'; 
     settingsPanel.innerHTML = `
     <span>Version ${version} | <a href="https://raw.githubusercontent.com/Ghezzo/meganomi/refs/heads/main/changelog.txt" target="_blank" class="changelogLink">Changelog (GitHub)</a></span>
     <h2>Settings</h2>
@@ -186,20 +194,6 @@
 
     GM_config.init();
 
-    function addGlobalStyle(css) {
-        if (css === undefined) {
-            css = '';
-        }
-        var head, style;
-        head = document.getElementsByTagName('head')[0];
-        if (!head) { return; }
-        style = document.createElement('style');
-        style.type = 'text/css';
-        style.innerHTML = css.replace(/;/g, ' !important;');
-        head.appendChild(style);
-    }
-
-    addGlobalStyle('#saveSettingsButton,#settingsButton{background-color:#9610ff;padding:10px;cursor:pointer;color:#fff}#settingsButton{border-radius:5px;border:none;z-index:9999}#saveSettingsButton:hover,#settingsButton:hover{background-color:#fc03e3}#settingsPanel{display:none;position:absolute;top:50px;right:10px;background-color:#fff;border:1px solid #ccc;padding:10px;z-index:9999}#saveSettingsButton{border-radius:5px;border:none;margin-top:10px}.textbox{background-color:#2b2f3a;color:#fff;border:1px solid #000;border-radius:5px;padding:5px;width:100%}.changelogLink{color:#fff;text-decoration:none}.hr{border:0;height:1px;min-width:300px;background:#333;background-image:linear-gradient(to right, #ccc, #333, #ccc)}.cb{accent-color:#9610ff;width:16px;height:16px;margin-bottom:-3px}');
 
     if (await GM_getValue('asteriskColor') === "") {
         GM_setValue('asteriskColor', GM_getValue('defaultAsteriskColor'));
