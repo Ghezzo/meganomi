@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Mega Nomi Script beta
 // @namespace    https://gzo.sh
-// @version      0.9.7
+// @version      0.9.7.1
 // @description  Everything in one :)
 // @author       Ghezzo
 // @match        https://beta.nomi.ai/nomis*
@@ -21,7 +21,7 @@
 
     console.log('Mega Nomi Script loaded!');
   
-    var version = '0.9.7';
+    var version = '0.9.7.1';
     GM_setValue('defaultAsteriskColor', '');
     GM_setValue('defaultAsteriskShadow1', '');
     GM_setValue('defaultAsteriskShadow2', '');
@@ -81,49 +81,25 @@
     //color:#fff;text-shadow:1px 1px 10px #fc03e3,1px 1px 10px #ccc
     var br = document.createElement('br');
 
-    // Create a checkbox
-    var checkbox = document.createElement('input');
-    checkbox.type = 'checkbox';
-    checkbox.id = 'hideCallBtn';
-    checkbox.className = 'cb';
-
-    // Create a label for the checkbox
-    var label = document.createElement('label');
-    label.textContent = 'Hide Call Button';
-    label.htmlFor = 'hideCallBtn';
-
-
-    var checkbox2 = document.createElement('input');
-    checkbox2.type = 'checkbox';
-    checkbox2.id = 'italicTextCheckbox';
-    checkbox2.className = 'cb';
-
-    // Create a label for the checkbox
-    var label2 = document.createElement('label');
-    label2.textContent = 'Italic Asterisk Text';
-    label2.htmlFor = 'italicTextCheckbox';
-
-
-    var checkbox3 = document.createElement('input');
-    checkbox3.type = 'checkbox';
-    checkbox3.id = 'asterisksCheckbox';
-    checkbox3.className = 'cb';
-
-    // Create a label for the checkbox
-    var label3 = document.createElement('label');
-    label3.textContent = 'Enable Asterisks';
-    label3.htmlFor = 'asterisksCheckbox';
-
-
-    var checkbox4 = document.createElement('input');
-    checkbox4.type = 'checkbox';
-    checkbox4.id = 'hideNewsCheckbox';
-    checkbox4.className = 'cb';
-
-    // Create a label for the checkbox
-    var label4 = document.createElement('label');
-    label4.textContent = 'Hide News Bubbles';
-    label4.htmlFor = 'hideNewsCheckbox';
+    function createCheckbox(id, label) {
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.id = id;
+        checkbox.className = 'cb';
+      
+        const labelElement = document.createElement('label');
+        labelElement.textContent = label;
+        labelElement.htmlFor = id;
+      
+        return [checkbox, labelElement];
+    }
+      
+    const createcheckboxes = [
+        createCheckbox('hideCallBtn', 'Hide Call Button'),
+        createCheckbox('italicTextCheckbox', 'Italic Asterisk Text'),
+        createCheckbox('asterisksCheckbox', 'Enable Asterisks'),
+        createCheckbox('hideNewsCheckbox', 'Hide News Bubbles'),
+    ];
 
 
     // Create a save button
@@ -146,18 +122,12 @@
     settingsButton.id = 'settingsButton';
 
     // Add the checkboxes and labels to the settings panel
-    settingsPanel.appendChild(checkbox);
-    settingsPanel.appendChild(label);
-    settingsPanel.appendChild(br);
-    settingsPanel.appendChild(checkbox2);
-    settingsPanel.appendChild(label2);
-    settingsPanel.appendChild(br.cloneNode());
-    settingsPanel.appendChild(checkbox3);
-    settingsPanel.appendChild(label3);
-    settingsPanel.appendChild(br.cloneNode());
-    settingsPanel.appendChild(checkbox4);
-    settingsPanel.appendChild(label4);
-    settingsPanel.appendChild(br.cloneNode());
+    // Append the checkboxes to the settings panel
+    createcheckboxes.forEach(([checkbox, label]) => {
+        settingsPanel.appendChild(checkbox);
+        settingsPanel.appendChild(label);
+        settingsPanel.appendChild(br.cloneNode());
+    });
     settingsPanel.appendChild(saveButton);
     settingsPanel.appendChild(saveInfo);
 
@@ -218,14 +188,16 @@
         addGlobalStyle(GM_getValue(key, ''));
     });
 
-    const checkboxes = [
-        { id: 'hideCallButton', element: checkbox, default: false },
-        { id: 'italicTextCheckbox', element: checkbox2, default: false },
-        { id: 'asterisksCheckbox', element: checkbox3, default: true },
-        { id: 'hideNewsCheckbox', element: checkbox4, default: false }
+    const checkboxElements = createcheckboxes.map(([checkbox]) => checkbox);
+
+    const checkboxesData = [
+        { id: 'hideCallButton', element: checkboxElements[0], default: false },
+        { id: 'italicTextCheckbox', element: checkboxElements[1], default: false },
+        { id: 'asterisksCheckbox', element: checkboxElements[2], default: true },
+        { id: 'hideNewsCheckbox', element: checkboxElements[3], default: false }
     ];
 
-    checkboxes.forEach(({ id, element, default: defaultValue }) => {
+    checkboxesData.forEach(({ id, element, default: defaultValue }) => {
         element.checked = GM_getValue(id, defaultValue);
         element.addEventListener('change', () => {
             GM_setValue(id, element.checked);

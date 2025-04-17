@@ -1,5 +1,9 @@
 TODO: Clean up ALL the code
 
+0.9.7.1
+
+Refactored even more code. If something breaks let me know
+
 0.9.7
 
 Cleaned up some code. If something breaks let me know
