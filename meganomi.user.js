@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Mega Nomi Script beta
 // @namespace    https://gzo.sh
-// @version      0.9.6.7
+// @version      0.9.7
 // @description  Everything in one :)
 // @author       Ghezzo
 // @match        https://beta.nomi.ai/nomis*
@@ -21,7 +21,7 @@
 
     console.log('Mega Nomi Script loaded!');
   
-    var version = '0.9.6.7';
+    var version = '0.9.7';
     GM_setValue('defaultAsteriskColor', '');
     GM_setValue('defaultAsteriskShadow1', '');
     GM_setValue('defaultAsteriskShadow2', '');
@@ -47,8 +47,8 @@
     // Create the settings panel
     var settingsPanel = document.createElement('div');
     settingsPanel.style.position = 'fixed';
-    settingsPanel.style.top = '90px';
-    settingsPanel.style.left = '10px';
+    settingsPanel.style.top = '90px'; // 175
+    settingsPanel.style.left = '10px'; // 55
     settingsPanel.style.display = 'none';
     settingsPanel.id = 'settingsPanel'; 
     settingsPanel.innerHTML = `
@@ -80,6 +80,7 @@
     `;
     //color:#fff;text-shadow:1px 1px 10px #fc03e3,1px 1px 10px #ccc
     var br = document.createElement('br');
+
     // Create a checkbox
     var checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
@@ -194,18 +195,9 @@
 
     GM_config.init();
 
-
-    if (await GM_getValue('asteriskColor') === "") {
-        GM_setValue('asteriskColor', GM_getValue('defaultAsteriskColor'));
-    }
-
-    if (await GM_getValue('asteriskShadow1') === "") {
-        GM_setValue('asteriskShadow1', GM_getValue('defaultAsteriskShadow1'));
-    }
-
-    if (await GM_getValue('asteriskShadow2') === "") {
-        GM_setValue('asteriskShadow2', GM_getValue('defaultAsteriskShadow2'));
-    }
+    ;['asteriskColor', 'asteriskShadow1', 'asteriskShadow2'].forEach(key => {
+        if (GM_getValue(key) === "") GM_setValue(key, GM_getValue(`default${key}`));
+    });
 
     var style = '';
 
@@ -219,58 +211,29 @@
 
     addGlobalStyle(style);
 
-    if (await GM_getValue('bubbleColor') === "") {
-        GM_setValue('bubbleColor', GM_getValue('defaultBubbleColor'));
-    }
-    addGlobalStyle(GM_getValue('bubbleColor', ''));
-
-    if (await GM_getValue('nomiBubbleColor') === "") {
-        GM_setValue('nomiBubbleColor', GM_getValue('defaultNomiBubbleColor'));
-    }
-    addGlobalStyle(GM_getValue('nomiBubbleColor', ''));
-
-    if (await GM_getValue('fontSize') === "") {
-        GM_setValue('fontSize', GM_getValue('defaultFontSize'));
-    }
-    addGlobalStyle(GM_getValue('fontSize', ''));
-
-
-    checkbox.checked = GM_getValue('hideCallButton', false);
-    checkbox.addEventListener('change', function() {
-        GM_setValue('hideCallButton', checkbox.checked);
+    ['bubbleColor', 'nomiBubbleColor', 'fontSize'].forEach(async (key) => {
+        if (await GM_getValue(key) === "") {
+            GM_setValue(key, GM_getValue(`default${key.charAt(0).toUpperCase() + key.slice(1)}`));
+        }
+        addGlobalStyle(GM_getValue(key, ''));
     });
-    // Trigger the event listener manually the first time
-    if (checkbox.checked) {
-        checkbox.dispatchEvent(new Event('change'));
-    }
 
-    checkbox2.checked = GM_getValue('italicTextCheckbox', false);
-    checkbox2.addEventListener('change', function() {
-        GM_setValue('italicTextCheckbox', checkbox2.checked);
+    const checkboxes = [
+        { id: 'hideCallButton', element: checkbox, default: false },
+        { id: 'italicTextCheckbox', element: checkbox2, default: false },
+        { id: 'asterisksCheckbox', element: checkbox3, default: true },
+        { id: 'hideNewsCheckbox', element: checkbox4, default: false }
+    ];
+
+    checkboxes.forEach(({ id, element, default: defaultValue }) => {
+        element.checked = GM_getValue(id, defaultValue);
+        element.addEventListener('change', () => {
+            GM_setValue(id, element.checked);
+        });
+        if (element.checked) {
+            element.dispatchEvent(new Event('change'));
+        }
     });
-    // Trigger the event listener manually the first time
-    if (checkbox2.checked) {
-        checkbox2.dispatchEvent(new Event('change'));
-    }
-
-    checkbox3.checked = GM_getValue('asterisksCheckbox', true);
-    checkbox3.addEventListener('change', function() {
-        GM_setValue('asterisksCheckbox', checkbox3.checked);
-    });
-    // Trigger the event listener manually the first time
-    if (checkbox3.checked) {
-        checkbox3.dispatchEvent(new Event('change'));
-    }
-
-    checkbox4.checked = GM_getValue('hideNewsCheckbox', false);
-    checkbox4.addEventListener('change', function() {
-        GM_setValue('hideNewsCheckbox', checkbox4.checked);
-    });
-    // Trigger the event listener manually the first time
-    if (checkbox4.checked) {
-        checkbox4.dispatchEvent(new Event('change'));
-    }
-
 
     function processTextNode(node) {
         const italicPattern = /\*(\S(.*?\S)?)\*/g;
@@ -386,10 +349,40 @@
             });
     }
     checkVersion(); */
-    //var buttonAdded = false;
+    /* var buttonAdded = false;
+    function addSettingsButton() {
+        setTimeout(function() {
+            if (!buttonAdded) {
+                console.log('Adding settings button...');
+                var div = document.querySelector('nav[aria-label="Chats"] > div:nth-child(1) > div:nth-child(1) > div:nth-child(2)');
+                if (div) {
+                    var button = document.createElement('button');
+                    button.id = 'settingsButton2';
+                    button.innerHTML = '<img src="https://raw.githubusercontent.com/Ghezzo/meganomi/refs/heads/main/assets/settings.svg" style="height: 17px; margin-bottom: -3px; filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(82deg) brightness(105%) contrast(105%);"> MNS';
+                    addGlobalStyle('#settingsButton2{background-color:#9610ff;cursor:pointer;color:#fff}#settingsButton2{border-radius:5px;border:none;z-index:9999},#settingsButtons2:hover{background-color:#fc03e3}');
+                    div.appendChild(button);
+                    buttonAdded = true;
+                    button.addEventListener('click', function() {
+                    console.log('Settings button clicked!');
+                    if (settingsPanel.style.display === 'none') {
+                        settingsPanel.style.display = 'block';
+                    } else {
+                        settingsPanel.style.display = 'none';
+                    }
+                    });
+                    
+                }
+            }
+        }, 500);
+    } */
+    
 
     const observer = new MutationObserver(mutations => {
+        /* if (!document.getElementById('settingsButton2')) {
+            addSettingsButton();
+        } */
         for (const mutation of mutations) {
+            //addSettingsButton();
                 mutation.addedNodes.forEach(node => {
                     walk(node);
                 });
@@ -401,28 +394,11 @@
                 if (GM_getValue('hideNewsCheckbox', false)) {
                     hideNews();
                 }
-                /* setTimeout(function() {
-                    if (!buttonAdded) {
-                        var div = document.querySelector('nav[aria-label="Chats"] > div:nth-child(1) > div:nth-child(1) > div:nth-child(2)');
-                        if (div) {
-                          var button = document.createElement('button');
-                          button.id = 'settingsButton2';
-                          button.textContent = 'New Button';
-                          div.appendChild(button);
-                          buttonAdded = true;
-                          button.addEventListener('click', function() {
-                            console.log('Settings button clicked!');
-                            if (settingsPanel.style.display === 'none') {
-                                settingsPanel.style.display = 'block';
-                            } else {
-                                settingsPanel.style.display = 'none';
-                            }
-                            });
-                        }
-                    }
-                }, 500); */
+                
+                
         }
     });
 
     observer.observe(document.body, { childList: true, subtree: true });
+    //addSettingsButton();
 })();
