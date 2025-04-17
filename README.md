@@ -64,3 +64,8 @@ Check to enable asterisks
 
 Check to hide the news bubbles on the front page
 
+### Settings Light Mode: 
+
+
+Check to enable a light mode for the settings panel
+
