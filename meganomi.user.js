@@ -55,10 +55,14 @@
     <span>Version ${version} | <a href="https://raw.githubusercontent.com/Ghezzo/meganomi/refs/heads/main/changelog.txt" target="_blank" class="changelogLink">Changelog (GitHub)</a></span>
     <h2>Settings</h2>
     <label>
-        Asterisk Color <input type="text" id="asteriskColor" class="textbox" value="${GM_getValue('asteriskColor') ?? ''}" placeholder="#ffffff">
-        <hr class="hr">
-        <span>Shadow (Optional)</span><br><br>
+        Asterisk Color <input type="text" id="asteriskColor" class="textbox" value="${GM_getValue('asteriskColor') ?? ''}" placeholder="#ffffff">        
+    </label>
+    <br><hr class="hr">
+    Shadow (Optional)<br><br>
+    <label>
         Color 1 <input type="text" id="asteriskShadow1" class="textbox" value="${GM_getValue('asteriskShadow1') ?? ''}" placeholder="#ffffff">
+    </label>
+    <label>
         Color 2 <input type="text" id="asteriskShadow2" class="textbox" value="${GM_getValue('asteriskShadow2') ?? ''}" placeholder="#ffffff">
     </label>
     <br><hr class="hr">
