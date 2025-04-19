@@ -1,5 +1,9 @@
 TODO: Clean up ALL the code
 
+0.9.7.6
+
+Style tweaks
+
 0.9.7.5
 
 Changed settings button

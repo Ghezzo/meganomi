@@ -49,7 +49,7 @@
     settingsPanel.style.display = 'none';
     settingsPanel.id = 'settingsPanel'; 
     settingsPanel.innerHTML = `
-    <span>Version ${version} | <a href="https://raw.githubusercontent.com/Ghezzo/meganomi/refs/heads/main/changelog.txt" target="_blank" class="changelogLink">Changelog (GitHub)</a></span>
+    <span class="info">Version ${version} | <a href="https://raw.githubusercontent.com/Ghezzo/meganomi/refs/heads/main/changelog.txt" target="_blank" class="changelogLink">Changelog (GitHub)</a></span>
     <h2>Settings</h2>
     <label>
         Asterisk Color <input type="text" id="asteriskColor" class="textbox" value="${GM_getValue('asteriskColor') ?? ''}" placeholder="#ffffff">        
@@ -110,11 +110,6 @@
     saveButton.textContent = 'Save';
     saveButton.id = 'saveSettingsButton';
 
-    var saveInfo = document.createElement('span');
-    saveInfo.textContent = 'Saved!';
-    saveInfo.style.display = 'none';
-    saveInfo.id = 'saveInfo';
-
     var settingsButtonNew = document.createElement('button');
     settingsButtonNew.innerHTML = '<img src="https://raw.githubusercontent.com/Ghezzo/meganomi/refs/heads/main/assets/settings.svg" style="height: 17px; margin-bottom: -3px; filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(82deg) brightness(105%) contrast(105%);" class="cogIcon">';
     settingsButtonNew.style.position = 'fixed';
@@ -130,7 +125,6 @@
         settingsPanel.appendChild(br.cloneNode());
     });
     settingsPanel.appendChild(saveButton);
-    settingsPanel.appendChild(saveInfo);
 
     // Add the settings button and panel to the page
     document.body.appendChild(settingsButtonNew);
@@ -147,7 +141,6 @@
 
     // Add an event listener to the saveSettingsButton element
     document.getElementById('saveSettingsButton').addEventListener('click', function() {
-        saveInfo.style.display = 'inline-flex';
         var astColor = document.getElementById('asteriskColor').value;
         var astShadow1 = document.getElementById('asteriskShadow1').value;
         var astShadow2 = document.getElementById('asteriskShadow2').value;
@@ -161,6 +154,16 @@
         GM_setValue('nomiBubbleColor', nomiBubColor);
         GM_setValue('fontSize', fontSize);
 
+        const saveButton = document.getElementById('saveSettingsButton');
+        const originalText = saveButton.textContent;
+        saveButton.textContent = 'Saved!';
+        //saveButton.style.backgroundColor = 'green !important';
+        saveButton.style.setProperty('background-color', 'green', 'important');
+        setTimeout(() => {
+            saveButton.textContent = originalText;
+            saveButton.style.removeProperty('background-color');
+        }, 3000);
+        
         console.log('Settings saved!');
     });
 
@@ -212,9 +215,9 @@
     const isLightMode = GM_getValue('settingsLightMode', false);
 
     if (isLightMode) {
-        addGlobalStyle('#settingsButtonNew{background-color:#6200ea;cursor:pointer;color:#fff;border-radius:0px 0px 5px 5px;border:none;z-index:9999;padding:5px;width:50px}#settingsButtonNew:hover{background-color:#7c1eff}#settingsButtonNew:hover .cogIcon{animation:rotate 2s linear infinite}#saveSettingsButton,#settingsButton{background-color:#6200ea;transition:background-color .2s ease-out;padding:10px;cursor:pointer;color:#fff}#settingsButton{border-radius:5px;border:none;z-index:9999}#saveSettingsButton:hover,#settingsButton:hover{background-color:#7c1eff !important}#settingsButton:hover .cogIcon{animation:rotate 2s linear infinite}@keyframes rotate{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}#settingsPanel{min-width:300px;min-height:100px;max-width:400px;background:#ffffff;border:1px solid #d7d7d7;border-radius:5px;color:black;padding:10px;box-shadow:0 0 20px -7px #6200ea}#saveSettingsButton{border-radius:5px;border:none;margin-top:10px;color:white}.textbox{background-color:#fafafa;transition:background-color .2s ease-out;color:#000;border:1px solid #ccc;border-radius:5px;padding:5px;width:100%}.textbox:focus{background-color:#f2f2f2;outline:none;border:1px solid #666}.textbox:hover{background-color:#f2f2f2;outline:none;border:1px solid #666}.changelogLink{color:#6200ea;text-decoration:none;transition:color .2s ease-out}.changelogLink:hover{color:#7c1eff !important}.hr{border:0;height:1px;min-width:300px;background:#ccc;background-image:linear-gradient(to right, #333, #ccc, #333)}.cb{accent-color:#6200ea;width:16px;height:16px;margin-bottom:-3px}#saveInfo{padding:5px;border-radius:5px;background:#e6e6e6;margin-left:20px;border:1px solid #006700;box-shadow:0 0 20px -7px #006700}');
+        addGlobalStyle('#settingsButtonNew{background-color:#6200ea;cursor:pointer;color:#fff;border-radius:0px 0px 5px 5px;border:none;z-index:9999;padding:5px;width:50px}#settingsButtonNew:hover{background-color:#7c1eff}#settingsButtonNew:hover .cogIcon{animation:rotate 2s linear infinite}#saveSettingsButton,#settingsButton{background-color:#6200ea;transition:background-color .2s ease-out;padding:10px;cursor:pointer;color:#fff}#settingsButton{border-radius:5px;border:none;z-index:9999}#saveSettingsButton:hover,#settingsButton:hover{background-color:#7c1eff !important}#settingsButton:hover .cogIcon{animation:rotate 2s linear infinite}@keyframes rotate{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}#settingsPanel{min-width:300px;min-height:100px;max-width:400px;background:#ffffff;border:1px solid #d7d7d7;border-radius:5px;color:black;padding:10px;box-shadow:0 0 20px -7px #6200ea}#saveSettingsButton{border-radius:5px;border:none;margin-top:10px;color:white}.textbox{background-color:#fafafa;transition:background-color .2s ease-out;color:#000;border:1px solid #ccc;border-radius:5px;padding:5px;width:100%}.textbox:focus{background-color:#f2f2f2;outline:none;border:1px solid #666}.textbox:hover{background-color:#f2f2f2;outline:none;border:1px solid #666}.changelogLink{color:#6200ea;text-decoration:none;transition:color .2s ease-out}.changelogLink:hover{color:#7c1eff !important}.hr{border:0;height:1px;min-width:300px;background:#ccc;background-image:linear-gradient(to right, #333, #ccc, #333)}.cb{accent-color:#6200ea;width:16px;height:16px;margin-bottom:-3px}.info{font-size:13px}');
     } else {
-        addGlobalStyle('#settingsButtonNew{background-color:#9610ff;cursor:pointer;color:#fff;border-radius:0px 0px 5px 5px;border:none;z-index:9999;padding:5px;width:50px}#settingsButtonNew:hover{background-color:#ac43ff}#settingsButtonNew:hover .cogIcon{animation:rotate 2s linear infinite}#saveSettingsButton,#settingsButton{background-color:#9610ff;transition:background-color .2s ease-out;padding:10px;cursor:pointer;color:#fff}#settingsButton{border-radius:5px;border:none;z-index:9999}#saveSettingsButton:hover,#settingsButton:hover{background-color:#a12aff !important}#settingsButton:hover .cogIcon{animation:rotate 2s linear infinite}@keyframes rotate{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}#settingsPanel{min-width:300px;min-height:100px;max-width:400px;background:#181a20;border:1px solid #44495a;border-radius:5px;color:white;padding:10px;box-shadow:0 0 20px -7px #9610ff}#saveSettingsButton{border-radius:5px;border:none;margin-top:10px}.textbox{background-color:#2b2f3a;transition:background-color .2s ease-out;color:#fff;border:1px solid black;border-radius:5px;padding:5px;width:100%}.textbox:focus{background-color:#363b49;outline:none;border:1px solid #ccc}.textbox:hover{background-color:#363b49;outline:none;border:1px solid #ccc}.changelogLink{color:#9610ff;text-decoration:none;transition:color .2s ease-out}.changelogLink:hover{color:#a12aff !important}.hr{border:0;height:1px;min-width:300px;background:#333;background-image:linear-gradient(to right, #ccc, #333, #ccc)}.cb{accent-color:#9610ff;width:16px;height:16px;margin-bottom:-3px}#saveInfo{padding:5px;border-radius:5px;background:#23262f;margin-left:20px;border:1px solid green;box-shadow:0 0 20px -7px green}');
+        addGlobalStyle('#settingsButtonNew{background-color:#9610ff;cursor:pointer;color:#fff;border-radius:0px 0px 5px 5px;border:none;z-index:9999;padding:5px;width:50px}#settingsButtonNew:hover{background-color:#ac43ff}#settingsButtonNew:hover .cogIcon{animation:rotate 2s linear infinite}#saveSettingsButton,#settingsButton{background-color:#9610ff;transition:background-color .2s ease-out;padding:10px;cursor:pointer;color:#fff}#settingsButton{border-radius:5px;border:none;z-index:9999}#saveSettingsButton:hover,#settingsButton:hover{background-color:#a12aff !important}#settingsButton:hover .cogIcon{animation:rotate 2s linear infinite}@keyframes rotate{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}#settingsPanel{min-width:300px;min-height:100px;max-width:400px;background:#181a20;border:1px solid #44495a;border-radius:5px;color:white;padding:10px;box-shadow:0 0 20px -7px #9610ff}#saveSettingsButton{border-radius:5px;border:none;margin-top:10px}.textbox{background-color:#2b2f3a;transition:background-color .2s ease-out;color:#fff;border:1px solid black;border-radius:5px;padding:5px;width:100%}.textbox:focus{background-color:#363b49;outline:none;border:1px solid #ccc}.textbox:hover{background-color:#363b49;outline:none;border:1px solid #ccc}.changelogLink{color:#9610ff;text-decoration:none;transition:color .2s ease-out}.changelogLink:hover{color:#a12aff !important}.hr{border:0;height:1px;min-width:300px;background:#333;background-image:linear-gradient(to right, #ccc, #333, #ccc)}.cb{accent-color:#9610ff;width:16px;height:16px;margin-bottom:-3px}.info{font-size:13px}');
     }
 
 
