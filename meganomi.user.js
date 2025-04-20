@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Mega Nomi Script beta
 // @namespace    https://gzo.sh
-// @version      0.9.7.7
+// @version      0.9.7.8
 // @description  Everything in one :)
 // @author       Ghezzo
 // @match        https://beta.nomi.ai/nomis*
@@ -21,7 +21,7 @@
 
     console.log('Mega Nomi Script loaded!');
   
-    var version = '0.9.7.7';
+    var version = '0.9.7.8';
     GM_setValue('defaultAsteriskColor', '');
     GM_setValue('defaultAsteriskShadow1', '');
     GM_setValue('defaultAsteriskShadow2', '');
@@ -49,7 +49,7 @@
     settingsPanel.style.display = 'none';
     settingsPanel.id = 'settingsPanel'; 
     settingsPanel.innerHTML = `
-    <span class="info">Version ${version} | <a href="https://raw.githubusercontent.com/Ghezzo/meganomi/refs/heads/main/changelog.txt" target="_blank" class="changelogLink">Changelog (GitHub)</a> | <a href="https://gzo.sh/scripts.php" target="_blank">My Scripts</a></span>
+    <span class="info">Version ${version} | <a href="https://raw.githubusercontent.com/Ghezzo/meganomi/refs/heads/main/changelog.txt" target="_blank" class="changelogLink">Changelog (GitHub)</a> | <a href="https://gzo.sh/scripts.php" target="_blank" class="changelogLink">My Scripts</a></span>
     <h2>Settings</h2>
     <label>
         Asterisk Color <input type="text" id="asteriskColor" class="textbox" value="${GM_getValue('asteriskColor') ?? ''}" placeholder="#ffffff">        
