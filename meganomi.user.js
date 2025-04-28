@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Mega Nomi Script beta
 // @namespace    https://gzo.sh
-// @version      0.9.7.8
+// @version      0.9.7.9
 // @description  Everything in one :)
 // @author       Ghezzo
 // @match        https://beta.nomi.ai/nomis*
@@ -21,7 +21,7 @@
 
     console.log('Mega Nomi Script loaded!');
   
-    var version = '0.9.7.8';
+    var version = '0.9.7.9';
     GM_setValue('defaultAsteriskColor', '');
     GM_setValue('defaultAsteriskShadow1', '');
     GM_setValue('defaultAsteriskShadow2', '');
@@ -44,15 +44,13 @@
     // Create the settings panel
     var settingsPanel = document.createElement('div');
     settingsPanel.style.position = 'fixed';
-    settingsPanel.style.top = '35px'; // 90
-    settingsPanel.style.left = '100px'; // 10
     settingsPanel.style.display = 'none';
-    settingsPanel.id = 'settingsPanel'; 
+    settingsPanel.id = 'settingsPanel';
     settingsPanel.innerHTML = `
-    <span class="info">Version ${version} | <a href="https://raw.githubusercontent.com/Ghezzo/meganomi/refs/heads/main/changelog.txt" target="_blank" class="changelogLink">Changelog (GitHub)</a> | <a href="https://gzo.sh/scripts.php" target="_blank" class="changelogLink">My Scripts</a></span>
+    <span class="info">Version ${version} | <a href="https://raw.githubusercontent.com/Ghezzo/meganomi/refs/heads/main/changelog.txt" target="_blank" class="changelogLink">Changelog (GitHub)</a></span>
     <h2>Settings</h2>
     <label>
-        Asterisk Color <input type="text" id="asteriskColor" class="textbox" value="${GM_getValue('asteriskColor') ?? ''}" placeholder="#ffffff">        
+        Action Color <input type="text" id="asteriskColor" class="textbox" value="${GM_getValue('asteriskColor') ?? ''}" placeholder="#ffffff">        
     </label>
     <br><hr class="hr">
     Shadow (Optional)<br><br>
@@ -80,6 +78,8 @@
     <br><hr class="hr">
     `;
 
+    
+
     //color:#fff;text-shadow:1px 1px 10px #fc03e3,1px 1px 10px #ccc
     var br = document.createElement('br');
 
@@ -98,10 +98,10 @@
       
     const createcheckboxes = [
         createCheckbox('hideCallBtn', 'Hide Call Button'),
-        createCheckbox('italicTextCheckbox', 'Italic Asterisk Text'),
+        createCheckbox('italicTextCheckbox', 'Italic Action Text'),
         createCheckbox('asterisksCheckbox', 'Enable Asterisks'),
         createCheckbox('hideNewsCheckbox', 'Hide News Bubbles'),
-        createCheckbox('settingsLightMode', 'Settings Light Mode (Experimental)'),
+        /* createCheckbox('settingsLightMode', 'Settings Light Mode (Experimental)'), */
     ];
 
 
@@ -129,6 +129,8 @@
     // Add the settings button and panel to the page
     document.body.appendChild(settingsButtonNew);
     document.body.appendChild(settingsPanel);
+
+      
 
     // Add an event listener to the settings button
     settingsButtonNew.addEventListener('click', function() {
@@ -199,7 +201,7 @@
         { id: 'italicTextCheckbox', element: checkboxElements[1], default: false },
         { id: 'asterisksCheckbox', element: checkboxElements[2], default: true },
         { id: 'hideNewsCheckbox', element: checkboxElements[3], default: false },
-        { id: 'settingsLightMode', element: checkboxElements[4], default: false },
+        /* { id: 'settingsLightMode', element: checkboxElements[4], default: false }, */
     ];
 
     checkboxesData.forEach(({ id, element, default: defaultValue }) => {
@@ -214,11 +216,11 @@
 
     const isLightMode = GM_getValue('settingsLightMode', false);
 
-    if (isLightMode) {
+    /* if (isLightMode) {
         addGlobalStyle('#settingsButtonNew{background-color:#6200ea;cursor:pointer;color:#fff;border-radius:0px 0px 5px 5px;border:none;z-index:9999;padding:5px;width:50px}#settingsButtonNew:hover{background-color:#7c1eff}#settingsButtonNew:hover .cogIcon{animation:rotate 2s linear infinite}#saveSettingsButton,#settingsButton{background-color:#6200ea;transition:background-color .2s ease-out;padding:10px;cursor:pointer;color:#fff}#settingsButton{border-radius:5px;border:none;z-index:9999}#saveSettingsButton:hover,#settingsButton:hover{background-color:#7c1eff !important}#settingsButton:hover .cogIcon{animation:rotate 2s linear infinite}@keyframes rotate{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}#settingsPanel{min-width:300px;min-height:100px;max-width:400px;background:#ffffff;border:1px solid #d7d7d7;border-radius:5px;color:black;padding:10px;box-shadow:0 0 20px -7px #6200ea}#saveSettingsButton{border-radius:5px;border:none;margin-top:10px;color:white}.textbox{background-color:#fafafa;transition:background-color .2s ease-out;color:#000;border:1px solid #ccc;border-radius:5px;padding:5px;width:100%}.textbox:focus{background-color:#f2f2f2;outline:none;border:1px solid #666}.textbox:hover{background-color:#f2f2f2;outline:none;border:1px solid #666}.changelogLink{color:#6200ea;text-decoration:none;transition:color .2s ease-out}.changelogLink:hover{color:#7c1eff !important}.hr{border:0;height:1px;min-width:300px;background:#ccc;background-image:linear-gradient(to right, #333, #ccc, #333)}.cb{accent-color:#6200ea;width:16px;height:16px;margin-bottom:-3px}.info{font-size:13px}');
-    } else {
-        addGlobalStyle('#settingsButtonNew{background-color:#9610ff;cursor:pointer;color:#fff;border-radius:0px 0px 5px 5px;border:none;z-index:9999;padding:5px;width:50px}#settingsButtonNew:hover{background-color:#ac43ff}#settingsButtonNew:hover .cogIcon{animation:rotate 2s linear infinite}#saveSettingsButton,#settingsButton{background-color:#9610ff;transition:background-color .2s ease-out;padding:10px;cursor:pointer;color:#fff}#settingsButton{border-radius:5px;border:none;z-index:9999}#saveSettingsButton:hover,#settingsButton:hover{background-color:#a12aff !important}#settingsButton:hover .cogIcon{animation:rotate 2s linear infinite}@keyframes rotate{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}#settingsPanel{min-width:300px;min-height:100px;max-width:400px;background:#181a20;border:1px solid #44495a;border-radius:5px;color:white;padding:10px;box-shadow:0 0 20px -7px #9610ff}#saveSettingsButton{border-radius:5px;border:none;margin-top:10px}.textbox{background-color:#2b2f3a;transition:background-color .2s ease-out;color:#fff;border:1px solid black;border-radius:5px;padding:5px;width:100%}.textbox:focus{background-color:#363b49;outline:none;border:1px solid #ccc}.textbox:hover{background-color:#363b49;outline:none;border:1px solid #ccc}.changelogLink{color:#9610ff;text-decoration:none;transition:color .2s ease-out}.changelogLink:hover{color:#a12aff !important}.hr{border:0;height:1px;min-width:300px;background:#333;background-image:linear-gradient(to right, #ccc, #333, #ccc)}.cb{accent-color:#9610ff;width:16px;height:16px;margin-bottom:-3px}.info{font-size:13px}');
-    }
+    } else { */
+        addGlobalStyle('#settingsButtonNew{background-color:#9610ff;cursor:pointer;color:#fff;border-radius:0px 0px 5px 5px;border:none;z-index:9999;padding:5px;width:50px}#settingsButtonNew:hover{background-color:#ac43ff}#settingsButtonNew:hover .cogIcon{animation:rotate 2s linear infinite}#saveSettingsButton,#settingsButton{background-color:#9610ff;transition:background-color .2s ease-out;padding:10px;cursor:pointer;color:#fff}#settingsButton{border-radius:5px;border:none;z-index:9999}#saveSettingsButton:hover,#settingsButton:hover{background-color:#a12aff !important}#settingsButton:hover .cogIcon{animation:rotate 2s linear infinite}@keyframes rotate{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}#settingsPanel{min-width:200px;height:670px;max-height:calc(100% - 35px);max-width:300px;background:#181a20;border:1px solid #44495a;border-radius:5px;color:white;padding:10px;box-shadow:0 0 20px -7px #9610ff;top:35px;left:10px;overflow:scroll;scrollbar-width:none}#saveSettingsButton{border-radius:5px;border:none;margin-top:10px}.textbox{background-color:#2b2f3a;transition:background-color .2s ease-out;color:#fff;border:1px solid black;border-radius:5px;padding:5px;width:100%}.textbox:focus{background-color:#363b49;outline:none;border:1px solid #ccc}.textbox:hover{background-color:#363b49;outline:none;border:1px solid #ccc}.changelogLink{color:#9610ff;text-decoration:none;transition:color .2s ease-out}.changelogLink:hover{color:#a12aff !important}.hr{border:0;height:1px;min-width:300px;background:#333;background-image:linear-gradient(to right, #ccc, #333, #ccc)}.cb{accent-color:#9610ff;width:16px;height:16px;margin-bottom:-3px}.info{font-size:13px}');
+    /* } */
 
 
     function processTextNode(node) {
@@ -306,6 +308,31 @@
         }
     }
 
+    function scrollBars() {
+        var style = document.createElement('style');
+        style.type = 'text/css';
+        style.innerHTML = `
+            ::-webkit-scrollbar {
+                width: 10px;
+                height: 10px;
+            }
+            ::-webkit-scrollbar-thumb {
+                background-color: #757575;
+                border-radius: 5px;
+            }
+            ::-webkit-scrollbar-thumb:hover {
+                background-color: #838383;
+            }
+            ::-webkit-scrollbar-track {
+                background-color: #2e2e2e;
+                border-radius: 5px;
+                box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+            }
+        `;
+        document.head.appendChild(style);
+    }
+
+    scrollBars();
     chatBubbleColor();
     if (GM_getValue('hideCallButton', false)) {
         hideCallButton();
@@ -314,61 +341,10 @@
     if (GM_getValue('hideNewsCheckbox', false)) {
         hideNews();
     }
-
-    /* function checkVersion() {
-        var settingsButton = document.getElementById('settingsButton');
-        var originalText = settingsButton.textContent;
-        fetch('https://raw.githubusercontent.com/Ghezzo/meganomi/refs/heads/main/version.txt')
-            .then(response => response.text())
-            .then(data => {
-                if (data !== version) {
-                    console.log('New version available!');
-                    //var settingsButton = document.getElementById('settingsButton');
-                    //var originalText = settingsButton.textContent;
-                    settingsButton.innerHTML = originalText + ' <span style="color: #6cff00;"><b>&#129145;</b></span>';
-                } else {
-                    console.log('Version is up to date.');
-                    //var settingsButton = document.getElementById('settingsButton');
-                    //var originalText = settingsButton.textContent;
-                    settingsButton.textContent = originalText;
-                }
-            });
-    }
-    checkVersion(); */
-    /* var buttonAdded = false;
-    function addSettingsButton() {
-        setTimeout(function() {
-            if (!buttonAdded) {
-                console.log('Adding settings button...');
-                var div = document.querySelector('nav[aria-label="Chats"] > div:nth-child(1) > div:nth-child(1) > div:nth-child(2)');
-                if (div) {
-                    var button = document.createElement('button');
-                    button.id = 'settingsButton2';
-                    button.innerHTML = '<img src="https://raw.githubusercontent.com/Ghezzo/meganomi/refs/heads/main/assets/settings.svg" style="height: 17px; margin-bottom: -3px; filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(82deg) brightness(105%) contrast(105%);"> MNS';
-                    addGlobalStyle('#settingsButton2{background-color:#9610ff;cursor:pointer;color:#fff}#settingsButton2{border-radius:5px;border:none;z-index:9999},#settingsButtons2:hover{background-color:#fc03e3}');
-                    div.appendChild(button);
-                    buttonAdded = true;
-                    button.addEventListener('click', function() {
-                    console.log('Settings button clicked!');
-                    if (settingsPanel.style.display === 'none') {
-                        settingsPanel.style.display = 'block';
-                    } else {
-                        settingsPanel.style.display = 'none';
-                    }
-                    });
-                    
-                }
-            }
-        }, 500);
-    } */
     
 
     const observer = new MutationObserver(mutations => {
-        /* if (!document.getElementById('settingsButton2')) {
-            addSettingsButton();
-        } */
         for (const mutation of mutations) {
-            //addSettingsButton();
                 mutation.addedNodes.forEach(node => {
                     walk(node);
                 });
@@ -380,11 +356,8 @@
                 if (GM_getValue('hideNewsCheckbox', false)) {
                     hideNews();
                 }
-                
-                
         }
     });
 
     observer.observe(document.body, { childList: true, subtree: true });
-    //addSettingsButton();
 })();
