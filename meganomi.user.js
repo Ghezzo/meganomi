@@ -65,7 +65,7 @@
         Nomi Action Text Color <input type="text" id="asteriskColor2" class="textbox" value="${GM_getValue('asteriskColor2') ?? ''}" placeholder="#ffffff">
     </label>
     <br><hr class="hr">
-    Glow<br><br>
+    Action Text Glow<br><br>
     <table>
         <tr>
             <th>User</th>
