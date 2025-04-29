@@ -227,31 +227,6 @@
         let css = '';
     
         // Build .user styles
-        /* if (asteriskColor) {
-            css += `.user { 
-                color: ${asteriskColor}; 
-                background-color: ${bubbleColor};
-                font-size: ${fontSize};
-                transition: color 0.5s ease, text-shadow 0.5s ease, background-color 0.5s ease, font-size 0.3s ease;`;
-            if (shadow1 && shadow2) {
-                css += ` text-shadow: 1px 1px 10px ${shadow1}, 1px 1px 10px ${shadow2};`;
-            }
-            css += ` }`;
-        }
-    
-        // Build .nomi styles
-        if (asteriskColor2) {
-            css += `.nomi { 
-                color: ${asteriskColor2}; 
-                background-color: ${nomiBubbleColor};
-                font-size: ${fontSize};
-                transition: color 0.5s ease, text-shadow 0.5s ease, background-color 0.5s ease, font-size 0.3s ease;`;
-            if (shadow3 && shadow4) {
-                css += ` text-shadow: 1px 1px 10px ${shadow3}, 1px 1px 10px ${shadow4};`;
-            }
-            css += ` }`;
-        } */
-       // Build .user styles
         css += `.user { 
             ${asteriskColor ? `color: ${asteriskColor};` : ''}
             background-color: ${bubbleColor};
