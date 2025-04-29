@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Mega Nomi Script beta
 // @namespace    https://gzo.sh
-// @version      0.9.9
+// @version      0.9.9.1
 // @description  Everything in one :)
 // @author       Ghezzo
 // @match        https://beta.nomi.ai/nomis*
@@ -27,7 +27,7 @@
     /* document.head.appendChild(styleElement); */
     document.head.appendChild(dynamicStyle);
   
-    var version = '0.9.9';
+    var version = '0.9.9.1';
     GM_setValue('defaultAsteriskColor', '');
     GM_setValue('defaultAsteriskColor2', '');
     GM_setValue('defaultAsteriskShadow1', '');
@@ -65,7 +65,7 @@
         Nomi Action Text Color <input type="text" id="asteriskColor2" class="textbox" value="${GM_getValue('asteriskColor2') ?? ''}" placeholder="#ffffff">
     </label>
     <br><hr class="hr">
-    Shadow<br><br>
+    Glow<br><br>
     <table>
         <tr>
             <th>User</th>
@@ -227,7 +227,7 @@
         let css = '';
     
         // Build .user styles
-        if (asteriskColor) {
+        /* if (asteriskColor) {
             css += `.user { 
                 color: ${asteriskColor}; 
                 background-color: ${bubbleColor};
@@ -250,7 +250,25 @@
                 css += ` text-shadow: 1px 1px 10px ${shadow3}, 1px 1px 10px ${shadow4};`;
             }
             css += ` }`;
-        }
+        } */
+       // Build .user styles
+        css += `.user { 
+            ${asteriskColor ? `color: ${asteriskColor};` : ''}
+            background-color: ${bubbleColor};
+            font-size: ${fontSize};
+            transition: color 0.5s ease, text-shadow 0.5s ease, background-color 0.5s ease, font-size 0.3s ease;
+            ${shadow1 && shadow2 ? `text-shadow: 1px 1px 10px ${shadow1}, 1px 1px 10px ${shadow2};` : ''}
+        }`;
+
+        // Build .nomi styles
+        css += `.nomi { 
+            ${asteriskColor2 ? `color: ${asteriskColor2};` : ''}
+            background-color: ${nomiBubbleColor};
+            font-size: ${fontSize};
+            transition: color 0.5s ease, text-shadow 0.5s ease, background-color 0.5s ease, font-size 0.3s ease;
+            ${shadow3 && shadow4 ? `text-shadow: 1px 1px 10px ${shadow3}, 1px 1px 10px ${shadow4};` : ''}
+        }`;
+
     
         // Update the <style> content
         dynamicStyle.textContent = css;
