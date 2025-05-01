@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Mega Nomi Script beta
 // @namespace    https://gzo.sh
-// @version      0.9.9.2
+// @version      0.9.9.3
 // @description  Everything in one :)
 // @author       Ghezzo
 // @match        https://beta.nomi.ai/nomis*
@@ -25,7 +25,7 @@
     /* document.head.appendChild(styleElement); */
     document.head.appendChild(dynamicStyle);
   
-    var version = '0.9.9.2';
+    var version = '0.9.9.3';
     GM_setValue('defaultAsteriskColor', '');
     GM_setValue('defaultAsteriskColor2', '');
     GM_setValue('defaultAsteriskShadow1', '');
@@ -54,7 +54,7 @@
     settingsPanel.style.display = 'none';
     settingsPanel.id = 'settingsPanel';
     settingsPanel.innerHTML = `
-    <h2 class="settingstitle">Settings</h2>
+    <h2 class="settingstitle">Settings</h2><span class="info">${version}</span>
     <hr class="hr">
     <h4 class="h4">Action Text Color</h4>
     <table>
@@ -154,7 +154,7 @@
         settingsPanel.appendChild(br.cloneNode());
     });
     settingsPanel.appendChild(saveButton);
-    settingsPanel.appendChild(versionText);
+    //settingsPanel.appendChild(versionText);
 
     // Add the settings button and panel to the page
     document.body.appendChild(settingsButtonNew);
@@ -343,7 +343,7 @@
     /* if (isLightMode) {
         addGlobalStyle('#settingsButtonNew{background-color:#6200ea;cursor:pointer;color:#fff;border-radius:0px 0px 5px 5px;border:none;z-index:9999;padding:5px;width:50px}#settingsButtonNew:hover{background-color:#7c1eff}#settingsButtonNew:hover .cogIcon{animation:rotate 2s linear infinite}#saveSettingsButton,#settingsButton{background-color:#6200ea;transition:background-color .2s ease-out;padding:10px;cursor:pointer;color:#fff}#settingsButton{border-radius:5px;border:none;z-index:9999}#saveSettingsButton:hover,#settingsButton:hover{background-color:#7c1eff !important}#settingsButton:hover .cogIcon{animation:rotate 2s linear infinite}@keyframes rotate{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}#settingsPanel{min-width:300px;min-height:100px;max-width:400px;background:#ffffff;border:1px solid #d7d7d7;border-radius:5px;color:black;padding:10px;box-shadow:0 0 20px -7px #6200ea}#saveSettingsButton{border-radius:5px;border:none;margin-top:10px;color:white}.textbox{background-color:#fafafa;transition:background-color .2s ease-out;color:#000;border:1px solid #ccc;border-radius:5px;padding:5px;width:100%}.textbox:focus{background-color:#f2f2f2;outline:none;border:1px solid #666}.textbox:hover{background-color:#f2f2f2;outline:none;border:1px solid #666}.changelogLink{color:#6200ea;text-decoration:none;transition:color .2s ease-out}.changelogLink:hover{color:#7c1eff !important}.hr{border:0;height:1px;min-width:300px;background:#ccc;background-image:linear-gradient(to right, #333, #ccc, #333)}.cb{accent-color:#6200ea;width:16px;height:16px;margin-bottom:-3px}.info{font-size:13px}');
     } else { */
-        addGlobalStyle('#settingsButtonNew{background-color:#9610ff;cursor:pointer;color:#fff;border-radius:0px 0px 5px 5px;border:none;z-index:9999;padding:5px;width:50px}#settingsButtonNew:hover{background-color:#ac43ff}#settingsButtonNew:hover .cogIcon{animation:rotate 2s linear infinite}#saveSettingsButton,#settingsButton{background-color:#9610ff;transition:background-color .2s ease-out;padding:10px;cursor:pointer;color:#fff}#settingsButton{border-radius:5px;border:none;z-index:9999}#saveSettingsButton:hover,#settingsButton:hover{background-color:#a12aff !important}#settingsButton:hover .cogIcon{animation:rotate 2s linear infinite}@keyframes rotate{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}#settingsPanel{min-width:200px;height:670px;max-height:calc(100% - 35px);max-width:300px;background:#181a20;border:1px solid #44495a;border-radius:5px;color:white;padding:10px;box-shadow:0 0 20px -7px #9610ff;top:35px;left:10px;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;touch-action:pan-y;scrollbar-width:none}#saveSettingsButton{border-radius:5px;border:none;margin-top:10px;width:100%}.textbox{background-color:#2b2f3a;transition:background-color .2s ease-out;color:#fff;border:1px solid black;border-radius:5px;padding:5px;width:100%}.textbox:focus{background-color:#363b49;outline:none;border:1px solid #ccc}.textbox:hover{background-color:#363b49;outline:none;border:1px solid #ccc}.changelogLink{color:#9610ff;text-decoration:none;transition:color .2s ease-out}.changelogLink:hover{color:#a12aff !important}.hr{border:0;height:1px;background:#44495a}.cb{accent-color:#9610ff;width:16px;height:16px;margin-bottom:-3px}.info{font-size:13px;color:#666;margin-top:-10px}.bold{font-weight:bold}.italic{font-style:italic}.h4{margin-top:0px;margin-bottom:10px;text-align:center;color:#ac43ff}.settingstitle{text-align:center;margin-top:0px;margin-bottom:5px}');
+        addGlobalStyle('#settingsButtonNew{background-color:#9610ff;cursor:pointer;color:#fff;border-radius:0px 0px 5px 5px;border:none;z-index:9999;padding:5px;width:50px}#settingsButtonNew:hover{background-color:#ac43ff}#settingsButtonNew:hover .cogIcon{animation:rotate 2s linear infinite}#saveSettingsButton,#settingsButton{background-color:#9610ff;transition:background-color .2s ease-out;padding:10px;cursor:pointer;color:#fff}#settingsButton{border-radius:5px;border:none;z-index:9999}#saveSettingsButton:hover,#settingsButton:hover{background-color:#a12aff !important}#settingsButton:hover .cogIcon{animation:rotate 2s linear infinite}@keyframes rotate{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}#settingsPanel{min-width:200px;height:655px;max-height:calc(100% - 35px);max-width:300px;background:#181a20;border:1px solid #44495a;border-radius:5px;color:white;padding:10px;box-shadow:0 0 20px -7px #9610ff;top:35px;left:10px;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;touch-action:pan-y;scrollbar-width:none}#saveSettingsButton{border-radius:5px;border:none;margin-top:10px;width:100%}.textbox{background-color:#2b2f3a;transition:background-color .2s ease-out;color:#fff;border:1px solid black;border-radius:5px;padding:5px;width:100%}.textbox:focus{background-color:#363b49;outline:none;border:1px solid #ccc}.textbox:hover{background-color:#363b49;outline:none;border:1px solid #ccc}.changelogLink{color:#9610ff;text-decoration:none;transition:color .2s ease-out}.changelogLink:hover{color:#a12aff !important}.hr{border:0;height:1px;background:#44495a}.cb{accent-color:#9610ff;width:16px;height:16px;margin-bottom:-3px}.info{font-size:13px;color:#666;float:right;margin-top:-25px}.bold{font-weight:bold}.italic{font-style:italic}.h4{margin-top:0px;margin-bottom:10px;text-align:center;color:#ac43ff}.settingstitle{text-align:center;margin-top:0px;margin-bottom:5px}');
     /* } */
 
 
