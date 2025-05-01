@@ -1,15 +1,19 @@
 // ==UserScript==
 // @name         Mega Nomi Script beta
 // @namespace    https://gzo.sh
-// @version      0.9.9.3
+// @version      0.9.9.4
 // @description  Everything in one :)
 // @author       Ghezzo
 // @match        https://beta.nomi.ai/nomis*
 // @match        https://beta.nomi.ai/group-chats*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=nomi.ai
 // @require      https://openuserjs.org/src/libs/sizzle/GM_config.js
+// @resource     REMOTE_CSS https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.css
+// @require      https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.js
 // @grant        GM_setValue
 // @grant        GM_getValue
+// @grant        GM_addStyle
+// @grant        GM_getResourceText
 // @grant        GM_addValueChangeListener
 // @downloadURL  https://github.com/Ghezzo/meganomi/raw/refs/heads/main/meganomi.user.js
 // @updateURL    https://github.com/Ghezzo/meganomi/raw/refs/heads/main/meganomi.user.js
@@ -24,8 +28,16 @@
     const dynamicStyle = document.createElement('style');
     /* document.head.appendChild(styleElement); */
     document.head.appendChild(dynamicStyle);
+    const myCss = GM_getResourceText("REMOTE_CSS");
+    GM_addStyle(myCss);
+    Coloris({
+        themeMode: 'dark',
+        alpha: false,
+        closeButton: true,
+        clearButton: true,
+      });
   
-    var version = '0.9.9.3';
+    var version = '0.9.9.4';
     GM_setValue('defaultAsteriskColor', '');
     GM_setValue('defaultAsteriskColor2', '');
     GM_setValue('defaultAsteriskShadow1', '');
@@ -63,8 +75,8 @@
             <th><label for="asteriskColor2">Nomi</label></th>
         </tr>
         <tr>
-            <td><input type="text" id="asteriskColor" class="textbox" value="${GM_getValue('asteriskColor') ?? ''}" placeholder="#ffffff"></td>
-            <td><input type="text" id="asteriskColor2" class="textbox" value="${GM_getValue('asteriskColor2') ?? ''}" placeholder="#ffffff"></td>
+            <td><input type="text" id="asteriskColor" class="textbox" value="${GM_getValue('asteriskColor') ?? ''}" placeholder="#ffffff" data-coloris></td>
+            <td><input type="text" id="asteriskColor2" class="textbox" value="${GM_getValue('asteriskColor2') ?? ''}" placeholder="#ffffff" data-coloris></td>
         </tr>
     </table>
     <hr class="hr">
@@ -75,12 +87,12 @@
             <th>Nomi</th>
         </tr>
         <tr>
-            <td><input type="text" id="asteriskShadow1" class="textbox" value="${GM_getValue('asteriskShadow1') ?? ''}" placeholder="#ffffff"></td>
-            <td><input type="text" id="asteriskShadow3" class="textbox" value="${GM_getValue('asteriskShadow3') ?? ''}" placeholder="#ffffff"></td>
+            <td><input type="text" id="asteriskShadow1" class="textbox" value="${GM_getValue('asteriskShadow1') ?? ''}" placeholder="#ffffff" data-coloris></td>
+            <td><input type="text" id="asteriskShadow3" class="textbox" value="${GM_getValue('asteriskShadow3') ?? ''}" placeholder="#ffffff" data-coloris></td>
         </tr>
         <tr>
-            <td><input type="text" id="asteriskShadow2" class="textbox" value="${GM_getValue('asteriskShadow2') ?? ''}" placeholder="#ffffff"></td>
-            <td><input type="text" id="asteriskShadow4" class="textbox" value="${GM_getValue('asteriskShadow4') ?? ''}" placeholder="#ffffff"></td>
+            <td><input type="text" id="asteriskShadow2" class="textbox" value="${GM_getValue('asteriskShadow2') ?? ''}" placeholder="#ffffff" data-coloris></td>
+            <td><input type="text" id="asteriskShadow4" class="textbox" value="${GM_getValue('asteriskShadow4') ?? ''}" placeholder="#ffffff" data-coloris></td>
             <td></td>
         </tr>
     </table>
@@ -92,8 +104,8 @@
             <th><label for="nomiBubbleStyle">Nomi</label></th>
         </tr>
         <tr>
-            <td><input type="text" id="bubbleStyle" class="textbox" value="${GM_getValue('bubbleColor') ?? ''}" placeholder="#ffffff"></td>
-            <td><input type="text" id="nomiBubbleStyle" class="textbox" value="${GM_getValue('nomiBubbleColor') ?? ''}" placeholder="#000000"></td>
+            <td><input type="text" id="bubbleStyle" class="textbox" value="${GM_getValue('bubbleColor') ?? ''}" placeholder="#ffffff" data-coloris></td>
+            <td><input type="text" id="nomiBubbleStyle" class="textbox" value="${GM_getValue('nomiBubbleColor') ?? ''}" placeholder="#000000" data-coloris></td>
         </tr>
     </table>
     <hr class="hr">
@@ -139,6 +151,10 @@
     saveButton.textContent = 'Save';
     saveButton.id = 'saveSettingsButton';
 
+    var closeButton = document.createElement('button');
+    closeButton.textContent = 'Close';
+    closeButton.id = 'closeSettingsButton';
+
     var settingsButtonNew = document.createElement('button');
     settingsButtonNew.innerHTML = '<img src="https://raw.githubusercontent.com/Ghezzo/meganomi/refs/heads/main/assets/settings.svg" style="height: 17px; margin-bottom: -3px; filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(82deg) brightness(105%) contrast(105%);" class="cogIcon">';
     settingsButtonNew.style.position = 'fixed';
@@ -153,8 +169,14 @@
         settingsPanel.appendChild(label);
         settingsPanel.appendChild(br.cloneNode());
     });
-    settingsPanel.appendChild(saveButton);
+    const buttonWrapper = document.createElement('div');
+    //settingsPanel.appendChild(saveButton);
+    buttonWrapper.appendChild(saveButton);
+    //settingsPanel.appendChild(closeButton);
+    buttonWrapper.appendChild(closeButton);
     //settingsPanel.appendChild(versionText);
+    buttonWrapper.className = "buttonWrapper";
+    settingsPanel.appendChild(buttonWrapper);
 
     // Add the settings button and panel to the page
     document.body.appendChild(settingsButtonNew);
@@ -165,6 +187,12 @@
         if (settingsPanel.style.display === 'none') {
             settingsPanel.style.display = 'block';
         } else {
+            settingsPanel.style.display = 'none';
+        }
+    });
+
+    closeButton.addEventListener('click', function() {
+        if (settingsPanel.style.display === 'block') {
             settingsPanel.style.display = 'none';
         }
     });
@@ -258,7 +286,7 @@
         updateTextClasses(italicTextCheckbox, boldActionText);
         updateCallButtonVisibility(hideCallButton);
         reprocessTextNodes();
-        console.log('Updating styles...');
+        console.log('Applying changes!');
     }
 
     function reprocessTextNodes() {
@@ -314,7 +342,8 @@
         if (await GM_getValue(key) === "") {
             GM_setValue(key, GM_getValue(`default${key.charAt(0).toUpperCase() + key.slice(1)}`));
         }
-        addGlobalStyle(GM_getValue(key, ''));
+        //addGlobalStyle(GM_getValue(key, ''));
+        GM_addStyle(GM_getValue(key, ''));
     });
 
     const checkboxElements = createcheckboxes.map(([checkbox]) => checkbox);
@@ -343,8 +372,9 @@
     /* if (isLightMode) {
         addGlobalStyle('#settingsButtonNew{background-color:#6200ea;cursor:pointer;color:#fff;border-radius:0px 0px 5px 5px;border:none;z-index:9999;padding:5px;width:50px}#settingsButtonNew:hover{background-color:#7c1eff}#settingsButtonNew:hover .cogIcon{animation:rotate 2s linear infinite}#saveSettingsButton,#settingsButton{background-color:#6200ea;transition:background-color .2s ease-out;padding:10px;cursor:pointer;color:#fff}#settingsButton{border-radius:5px;border:none;z-index:9999}#saveSettingsButton:hover,#settingsButton:hover{background-color:#7c1eff !important}#settingsButton:hover .cogIcon{animation:rotate 2s linear infinite}@keyframes rotate{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}#settingsPanel{min-width:300px;min-height:100px;max-width:400px;background:#ffffff;border:1px solid #d7d7d7;border-radius:5px;color:black;padding:10px;box-shadow:0 0 20px -7px #6200ea}#saveSettingsButton{border-radius:5px;border:none;margin-top:10px;color:white}.textbox{background-color:#fafafa;transition:background-color .2s ease-out;color:#000;border:1px solid #ccc;border-radius:5px;padding:5px;width:100%}.textbox:focus{background-color:#f2f2f2;outline:none;border:1px solid #666}.textbox:hover{background-color:#f2f2f2;outline:none;border:1px solid #666}.changelogLink{color:#6200ea;text-decoration:none;transition:color .2s ease-out}.changelogLink:hover{color:#7c1eff !important}.hr{border:0;height:1px;min-width:300px;background:#ccc;background-image:linear-gradient(to right, #333, #ccc, #333)}.cb{accent-color:#6200ea;width:16px;height:16px;margin-bottom:-3px}.info{font-size:13px}');
     } else { */
-        addGlobalStyle('#settingsButtonNew{background-color:#9610ff;cursor:pointer;color:#fff;border-radius:0px 0px 5px 5px;border:none;z-index:9999;padding:5px;width:50px}#settingsButtonNew:hover{background-color:#ac43ff}#settingsButtonNew:hover .cogIcon{animation:rotate 2s linear infinite}#saveSettingsButton,#settingsButton{background-color:#9610ff;transition:background-color .2s ease-out;padding:10px;cursor:pointer;color:#fff}#settingsButton{border-radius:5px;border:none;z-index:9999}#saveSettingsButton:hover,#settingsButton:hover{background-color:#a12aff !important}#settingsButton:hover .cogIcon{animation:rotate 2s linear infinite}@keyframes rotate{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}#settingsPanel{min-width:200px;height:655px;max-height:calc(100% - 35px);max-width:300px;background:#181a20;border:1px solid #44495a;border-radius:5px;color:white;padding:10px;box-shadow:0 0 20px -7px #9610ff;top:35px;left:10px;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;touch-action:pan-y;scrollbar-width:none}#saveSettingsButton{border-radius:5px;border:none;margin-top:10px;width:100%}.textbox{background-color:#2b2f3a;transition:background-color .2s ease-out;color:#fff;border:1px solid black;border-radius:5px;padding:5px;width:100%}.textbox:focus{background-color:#363b49;outline:none;border:1px solid #ccc}.textbox:hover{background-color:#363b49;outline:none;border:1px solid #ccc}.changelogLink{color:#9610ff;text-decoration:none;transition:color .2s ease-out}.changelogLink:hover{color:#a12aff !important}.hr{border:0;height:1px;background:#44495a}.cb{accent-color:#9610ff;width:16px;height:16px;margin-bottom:-3px}.info{font-size:13px;color:#666;float:right;margin-top:-25px}.bold{font-weight:bold}.italic{font-style:italic}.h4{margin-top:0px;margin-bottom:10px;text-align:center;color:#ac43ff}.settingstitle{text-align:center;margin-top:0px;margin-bottom:5px}');
+        //addGlobalStyle('#settingsButtonNew{background-color:#9610ff;cursor:pointer;color:#fff;border-radius:0px 0px 5px 5px;border:none;z-index:9999;padding:5px;width:50px}#settingsButtonNew:hover{background-color:#ac43ff}#settingsButtonNew:hover .cogIcon{animation:rotate 2s linear infinite}#saveSettingsButton,#settingsButton,#closeSettingsButton{background-color:#9610ff;transition:background-color .2s ease-out;padding:10px;cursor:pointer;color:#fff}#settingsButton{border-radius:5px;border:none;z-index:9999}#saveSettingsButton:hover,#settingsButton:hover,#closeSettingsButton:hover{background-color:#a12aff !important}#settingsButton:hover .cogIcon{animation:rotate 2s linear infinite}@keyframes rotate{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}#settingsPanel{min-width:200px;height:655px;max-height:calc(100% - 35px);max-width:300px;background:#181a20;border:1px solid #44495a;border-radius:5px;color:white;padding:10px;box-shadow:0 0 20px -7px #9610ff;top:35px;left:10px;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;touch-action:pan-y;scrollbar-width:none}#saveSettingsButton{border-radius:5px;border:none;margin-top:10px;width:100%;float:left;margin-right:10px}#closeSettingsButton{border-radius:5px;border:none;margin-top:10px;width:65px;float:left}.buttonWrapper{display:flex}.textbox{background-color:#2b2f3a;transition:background-color .2s ease-out;color:#fff;border:1px solid black;border-radius:5px;padding:5px;width:100%}.textbox:focus{background-color:#363b49;outline:none;border:1px solid #ccc}.textbox:hover{background-color:#363b49;outline:none;border:1px solid #ccc}.changelogLink{color:#9610ff;text-decoration:none;transition:color .2s ease-out}.changelogLink:hover{color:#a12aff !important}.hr{border:0;height:1px;background:#44495a}.cb{accent-color:#9610ff;width:16px;height:16px;margin-bottom:-3px}.info{font-size:13px;color:#666;float:right;margin-top:-25px}.bold{font-weight:bold}.italic{font-style:italic}.h4{margin-top:0px;margin-bottom:10px;text-align:center;color:#ac43ff}.settingstitle{text-align:center;margin-top:0px;margin-bottom:5px}');
     /* } */
+    GM_addStyle('#settingsButtonNew{background-color:#9610ff;cursor:pointer;color:#fff;border-radius:0px 0px 5px 5px;border:none;z-index:9999;padding:5px;width:50px}#settingsButtonNew:hover{background-color:#ac43ff}#settingsButtonNew:hover .cogIcon{animation:rotate 2s linear infinite}#saveSettingsButton,#settingsButton,#closeSettingsButton{background-color:#9610ff;transition:background-color .2s ease-out;padding:10px;cursor:pointer;color:#fff}#settingsButton{border-radius:5px;border:none;z-index:9999}#saveSettingsButton:hover,#settingsButton:hover,#closeSettingsButton:hover{background-color:#a12aff !important}#settingsButton:hover .cogIcon{animation:rotate 2s linear infinite}@keyframes rotate{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}#settingsPanel{min-width:200px;height:655px;max-height:calc(100% - 35px);max-width:300px;background:#181a20;border:1px solid #44495a;border-radius:5px;color:white;padding:10px;box-shadow:0 0 20px -7px #9610ff;top:35px;left:10px;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;touch-action:pan-y;scrollbar-width:none}#saveSettingsButton{border-radius:5px;border:none;margin-top:10px;width:100%;float:left;margin-right:10px}#closeSettingsButton{border-radius:5px;border:none;margin-top:10px;width:65px;float:left}.buttonWrapper{display:flex}.textbox{background-color:#2b2f3a;transition:background-color .2s ease-out;color:#fff;border:1px solid black;border-radius:5px;padding:5px;width:100%}.textbox:focus{background-color:#363b49;outline:none;border:1px solid #ccc}.textbox:hover{background-color:#363b49;outline:none;border:1px solid #ccc}.changelogLink{color:#9610ff;text-decoration:none;transition:color .2s ease-out}.changelogLink:hover{color:#a12aff !important}.hr{border:0;height:1px;background:#44495a}.cb{accent-color:#9610ff;width:16px;height:16px;margin-bottom:-3px}.info{font-size:13px;color:#666;float:right;margin-top:-25px}.bold{font-weight:bold}.italic{font-style:italic}.h4{margin-top:0px;margin-bottom:10px;text-align:center;color:#ac43ff}.settingstitle{text-align:center;margin-top:0px;margin-bottom:5px}');
 
 
     //function processTextNode(node) {
