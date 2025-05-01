@@ -31,7 +31,7 @@
     const myCss = GM_getResourceText("REMOTE_CSS");
     GM_addStyle(myCss);
     Coloris({
-        el: '.textbox',
+        el: '.clr',
         themeMode: 'dark',
         alpha: false,
         closeButton: true,
