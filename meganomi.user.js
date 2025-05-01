@@ -10,8 +10,6 @@
 // @require      https://openuserjs.org/src/libs/sizzle/GM_config.js
 // @grant        GM_setValue
 // @grant        GM_getValue
-// @grant        GM.getValue
-// @grant        GM.setValue
 // @grant        GM_addValueChangeListener
 // @downloadURL  https://github.com/Ghezzo/meganomi/raw/refs/heads/main/meganomi.user.js
 // @updateURL    https://github.com/Ghezzo/meganomi/raw/refs/heads/main/meganomi.user.js
