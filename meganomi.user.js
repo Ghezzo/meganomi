@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Mega Nomi Script beta
 // @namespace    https://gzo.sh
-// @version      0.9.9.4
+// @version      0.9.9.5
 // @description  Everything in one :)
 // @author       Ghezzo
 // @match        https://beta.nomi.ai/nomis*
@@ -31,13 +31,16 @@
     const myCss = GM_getResourceText("REMOTE_CSS");
     GM_addStyle(myCss);
     Coloris({
+        el: '.textbox',
         themeMode: 'dark',
         alpha: false,
         closeButton: true,
         clearButton: true,
+        wrap: true,
       });
+    
   
-    var version = '0.9.9.4';
+    var version = '0.9.9.5';
     GM_setValue('defaultAsteriskColor', '');
     GM_setValue('defaultAsteriskColor2', '');
     GM_setValue('defaultAsteriskShadow1', '');
@@ -48,7 +51,7 @@
     GM_setValue('defaultNomiBubbleColor', '');
     GM_setValue('defaultFontSize', '');
 
-    function addGlobalStyle(css) {
+    /* function addGlobalStyle(css) {
         if (css === undefined) {
             css = '';
         }
@@ -59,7 +62,7 @@
         style.type = 'text/css';
         style.innerHTML = css.replace(/;/g, ' !important;');
         head.appendChild(style);
-    }
+    } */
     // Create the settings panel
     var settingsPanel = document.createElement('div');
     settingsPanel.style.position = 'fixed';
@@ -75,8 +78,8 @@
             <th><label for="asteriskColor2">Nomi</label></th>
         </tr>
         <tr>
-            <td><input type="text" id="asteriskColor" class="textbox" value="${GM_getValue('asteriskColor') ?? ''}" placeholder="#ffffff" data-coloris></td>
-            <td><input type="text" id="asteriskColor2" class="textbox" value="${GM_getValue('asteriskColor2') ?? ''}" placeholder="#ffffff" data-coloris></td>
+            <td><input type="text" id="asteriskColor" class="textbox clr" value="${GM_getValue('asteriskColor') ?? ''}" placeholder="#ffffff" data-coloris></td>
+            <td><input type="text" id="asteriskColor2" class="textbox clr" value="${GM_getValue('asteriskColor2') ?? ''}" placeholder="#ffffff" data-coloris></td>
         </tr>
     </table>
     <hr class="hr">
@@ -87,12 +90,12 @@
             <th>Nomi</th>
         </tr>
         <tr>
-            <td><input type="text" id="asteriskShadow1" class="textbox" value="${GM_getValue('asteriskShadow1') ?? ''}" placeholder="#ffffff" data-coloris></td>
-            <td><input type="text" id="asteriskShadow3" class="textbox" value="${GM_getValue('asteriskShadow3') ?? ''}" placeholder="#ffffff" data-coloris></td>
+            <td><input type="text" id="asteriskShadow1" class="textbox clr" value="${GM_getValue('asteriskShadow1') ?? ''}" placeholder="#ffffff" data-coloris></td>
+            <td><input type="text" id="asteriskShadow3" class="textbox clr" value="${GM_getValue('asteriskShadow3') ?? ''}" placeholder="#ffffff" data-coloris></td>
         </tr>
         <tr>
-            <td><input type="text" id="asteriskShadow2" class="textbox" value="${GM_getValue('asteriskShadow2') ?? ''}" placeholder="#ffffff" data-coloris></td>
-            <td><input type="text" id="asteriskShadow4" class="textbox" value="${GM_getValue('asteriskShadow4') ?? ''}" placeholder="#ffffff" data-coloris></td>
+            <td><input type="text" id="asteriskShadow2" class="textbox clr" value="${GM_getValue('asteriskShadow2') ?? ''}" placeholder="#ffffff" data-coloris></td>
+            <td><input type="text" id="asteriskShadow4" class="textbox clr" value="${GM_getValue('asteriskShadow4') ?? ''}" placeholder="#ffffff" data-coloris></td>
             <td></td>
         </tr>
     </table>
@@ -104,8 +107,8 @@
             <th><label for="nomiBubbleStyle">Nomi</label></th>
         </tr>
         <tr>
-            <td><input type="text" id="bubbleStyle" class="textbox" value="${GM_getValue('bubbleColor') ?? ''}" placeholder="#ffffff" data-coloris></td>
-            <td><input type="text" id="nomiBubbleStyle" class="textbox" value="${GM_getValue('nomiBubbleColor') ?? ''}" placeholder="#000000" data-coloris></td>
+            <td><input type="text" id="bubbleStyle" class="textbox clr" value="${GM_getValue('bubbleColor') ?? ''}" placeholder="#ffffff" data-coloris></td>
+            <td><input type="text" id="nomiBubbleStyle" class="textbox clr" value="${GM_getValue('nomiBubbleColor') ?? ''}" placeholder="#000000" data-coloris></td>
         </tr>
     </table>
     <hr class="hr">
@@ -374,7 +377,7 @@
     } else { */
         //addGlobalStyle('#settingsButtonNew{background-color:#9610ff;cursor:pointer;color:#fff;border-radius:0px 0px 5px 5px;border:none;z-index:9999;padding:5px;width:50px}#settingsButtonNew:hover{background-color:#ac43ff}#settingsButtonNew:hover .cogIcon{animation:rotate 2s linear infinite}#saveSettingsButton,#settingsButton,#closeSettingsButton{background-color:#9610ff;transition:background-color .2s ease-out;padding:10px;cursor:pointer;color:#fff}#settingsButton{border-radius:5px;border:none;z-index:9999}#saveSettingsButton:hover,#settingsButton:hover,#closeSettingsButton:hover{background-color:#a12aff !important}#settingsButton:hover .cogIcon{animation:rotate 2s linear infinite}@keyframes rotate{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}#settingsPanel{min-width:200px;height:655px;max-height:calc(100% - 35px);max-width:300px;background:#181a20;border:1px solid #44495a;border-radius:5px;color:white;padding:10px;box-shadow:0 0 20px -7px #9610ff;top:35px;left:10px;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;touch-action:pan-y;scrollbar-width:none}#saveSettingsButton{border-radius:5px;border:none;margin-top:10px;width:100%;float:left;margin-right:10px}#closeSettingsButton{border-radius:5px;border:none;margin-top:10px;width:65px;float:left}.buttonWrapper{display:flex}.textbox{background-color:#2b2f3a;transition:background-color .2s ease-out;color:#fff;border:1px solid black;border-radius:5px;padding:5px;width:100%}.textbox:focus{background-color:#363b49;outline:none;border:1px solid #ccc}.textbox:hover{background-color:#363b49;outline:none;border:1px solid #ccc}.changelogLink{color:#9610ff;text-decoration:none;transition:color .2s ease-out}.changelogLink:hover{color:#a12aff !important}.hr{border:0;height:1px;background:#44495a}.cb{accent-color:#9610ff;width:16px;height:16px;margin-bottom:-3px}.info{font-size:13px;color:#666;float:right;margin-top:-25px}.bold{font-weight:bold}.italic{font-style:italic}.h4{margin-top:0px;margin-bottom:10px;text-align:center;color:#ac43ff}.settingstitle{text-align:center;margin-top:0px;margin-bottom:5px}');
     /* } */
-    GM_addStyle('#settingsButtonNew{background-color:#9610ff;cursor:pointer;color:#fff;border-radius:0px 0px 5px 5px;border:none;z-index:9999;padding:5px;width:50px}#settingsButtonNew:hover{background-color:#ac43ff}#settingsButtonNew:hover .cogIcon{animation:rotate 2s linear infinite}#saveSettingsButton,#settingsButton,#closeSettingsButton{background-color:#9610ff;transition:background-color .2s ease-out;padding:10px;cursor:pointer;color:#fff}#settingsButton{border-radius:5px;border:none;z-index:9999}#saveSettingsButton:hover,#settingsButton:hover,#closeSettingsButton:hover{background-color:#a12aff !important}#settingsButton:hover .cogIcon{animation:rotate 2s linear infinite}@keyframes rotate{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}#settingsPanel{min-width:200px;height:655px;max-height:calc(100% - 35px);max-width:300px;background:#181a20;border:1px solid #44495a;border-radius:5px;color:white;padding:10px;box-shadow:0 0 20px -7px #9610ff;top:35px;left:10px;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;touch-action:pan-y;scrollbar-width:none}#saveSettingsButton{border-radius:5px;border:none;margin-top:10px;width:100%;float:left;margin-right:10px}#closeSettingsButton{border-radius:5px;border:none;margin-top:10px;width:65px;float:left}.buttonWrapper{display:flex}.textbox{background-color:#2b2f3a;transition:background-color .2s ease-out;color:#fff;border:1px solid black;border-radius:5px;padding:5px;width:100%}.textbox:focus{background-color:#363b49;outline:none;border:1px solid #ccc}.textbox:hover{background-color:#363b49;outline:none;border:1px solid #ccc}.changelogLink{color:#9610ff;text-decoration:none;transition:color .2s ease-out}.changelogLink:hover{color:#a12aff !important}.hr{border:0;height:1px;background:#44495a}.cb{accent-color:#9610ff;width:16px;height:16px;margin-bottom:-3px}.info{font-size:13px;color:#666;float:right;margin-top:-25px}.bold{font-weight:bold}.italic{font-style:italic}.h4{margin-top:0px;margin-bottom:10px;text-align:center;color:#ac43ff}.settingstitle{text-align:center;margin-top:0px;margin-bottom:5px}#clr-color-value{font-size:16px}');
+    GM_addStyle('#settingsButtonNew{background-color:#9610ff;cursor:pointer;color:#fff;border-radius:0px 0px 5px 5px;border:none;z-index:9999;padding:5px;width:50px}#settingsButtonNew:hover{background-color:#ac43ff}#settingsButtonNew:hover .cogIcon{animation:rotate 2s linear infinite}#saveSettingsButton,#settingsButton,#closeSettingsButton{background-color:#9610ff;transition:background-color .2s ease-out;padding:10px;cursor:pointer;color:#fff}#settingsButton{border-radius:5px;border:none;z-index:9999}#saveSettingsButton:hover,#settingsButton:hover,#closeSettingsButton:hover{background-color:#a12aff !important}#settingsButton:hover .cogIcon{animation:rotate 2s linear infinite}@keyframes rotate{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}#settingsPanel{min-width:200px;height:655px;max-height:calc(100% - 35px);max-width:300px;background:#181a20;border:1px solid #44495a;border-radius:5px;color:white;padding:10px;box-shadow:0 0 20px -7px #9610ff;top:35px;left:10px;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;touch-action:pan-y;scrollbar-width:none}#saveSettingsButton{border-radius:5px;border:none;margin-top:10px;width:100%;float:left;margin-right:10px}#closeSettingsButton{border-radius:5px;border:none;margin-top:10px;width:65px;float:left}.buttonWrapper{display:flex}.textbox{background-color:#2b2f3a;transition:background-color .2s ease-out;color:#fff;border:1px solid black;border-radius:5px;padding:5px;width:100%}.textbox:focus{background-color:#363b49;outline:none;border:1px solid #ccc}.textbox:hover{background-color:#363b49;outline:none;border:1px solid #ccc}.changelogLink{color:#9610ff;text-decoration:none;transition:color .2s ease-out}.changelogLink:hover{color:#a12aff !important}.hr{border:0;height:1px;background:#44495a}.cb{accent-color:#9610ff;width:16px;height:16px;margin-bottom:-3px}.info{font-size:13px;color:#666;float:right;margin-top:-25px}.bold{font-weight:bold}.italic{font-style:italic}.h4{margin-top:0px;margin-bottom:10px;text-align:center;color:#ac43ff}.settingstitle{text-align:center;margin-top:0px;margin-bottom:5px}.clr-field button{width:22px;height:22px;left:5px;right:auto;border-radius:5px;border:1px solid black}.clr-field input{padding-left:36px}#clr-color-value{font-size:16px}');
 
 
     //function processTextNode(node) {
@@ -531,7 +534,7 @@
     if (GM_getValue('hideNewsCheckbox', false)) {
         hideNews();
     }
-    
+    Coloris.wrap('.clr');
     const observer = new MutationObserver(mutations => {
         for (const mutation of mutations) {
                 mutation.addedNodes.forEach(node => {
