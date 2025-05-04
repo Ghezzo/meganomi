@@ -1,0 +1,237 @@
+// compress: true
+
+@mainColor: #9610ff;
+
+#settingsButtonNew {
+    background-color: @mainColor;
+    cursor: pointer;
+    color: #fff;
+    border-radius: 0px 0px 5px 5px;
+    border: none;
+    z-index: 9999;
+    padding: 5px;
+    width: 50px;
+}
+#settingsButtonNew:hover {
+    background-color: lighten(@mainColor, 10%);
+}
+#settingsButtonNew:hover .cogIcon {
+    animation: rotate 2s linear infinite;
+}
+#saveSettingsButton,
+#settingsButton,
+#closeSettingsButton {
+    background-color: @mainColor;
+    transition: background-color .2s ease-out;
+    padding: 10px;
+    cursor: pointer;
+    color: #fff;
+}
+#settingsButton {
+    border-radius: 5px;
+    border: none;
+    z-index: 9999;
+}
+#saveSettingsButton:hover,
+#settingsButton:hover,
+#closeSettingsButton:hover {
+    background-color: lighten(@mainColor, 5%) !important;
+}
+#settingsButton:hover .cogIcon {
+    animation: rotate 2s linear infinite;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+#settingsPanel {
+    min-width: 200px;
+    height: 655px;
+    max-height: calc(100% - 35px);
+    //min-height: 100px;
+    max-width: 300px;
+    background: #181a20;
+    border: 1px solid lighten(#181a20, 20%);
+    border-radius: 5px;
+    color: white;
+    padding: 10px;
+    box-shadow: 0px 0px 20px -7px @mainColor; // #3f424d
+    top: 35px;
+    left: 10px;
+    overflow-y: auto; /* Only vertical scroll */
+    overflow-x: hidden; /* Prevent horizontal scroll */
+    -webkit-overflow-scrolling: touch; /* Smooth momentum scrolling on iOS */
+    touch-action: pan-y; /* Allow only vertical scrolling */
+    scrollbar-width: none;
+}
+#saveSettingsButton {
+    border-radius: 5px;
+    border: none;
+    margin-top: 10px;
+    width: 100%;
+    float: left;
+    margin-right: 10px;
+}
+#closeSettingsButton {
+    border-radius: 5px;
+    border: none;
+    margin-top: 10px;
+    width: 65px;
+    float: left;
+}
+.buttonWrapper {
+    display: flex;
+}
+.textbox {
+    background-color: #2b2f3a; //#2b2f3a
+    transition: background-color .2s ease-out;
+    color: #fff;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px;
+    width: 100%;
+    font-size: 16px;
+    &:focus {
+        background-color: lighten(#2b2f3a, 5%); //#2b2f3a
+        outline: none;
+        border: 1px solid #ccc;
+    }
+    &:hover {
+        background-color: lighten(#2b2f3a, 5%); //#2b2f3a
+        outline: none;
+        border: 1px solid #ccc;
+    }
+}
+.changelogLink {
+    color: @mainColor;
+    text-decoration: none;
+    transition: color .2s ease-out;
+    &:hover {
+        color: lighten(@mainColor, 5%) !important;
+    }
+}
+.hr {
+    border: 0;
+    height: 1px;
+    //min-width: 300px;
+    background: lighten(#181a20, 20%);
+    //background-image: linear-gradient(to right, #ccc, #333, #ccc);
+}
+.cb {
+    accent-color: @mainColor;
+    width: 16px;
+    height: 16px;
+    margin-bottom: -3px;
+}
+.info {
+    font-size: 13px;
+    color: rgb(102, 102, 102);
+    float: right; 
+    margin-top: -25px;
+}
+.bold {
+    font-weight: bold;
+}
+.italic {
+    font-style: italic;
+}
+.h4 {
+    /* margin: 0;
+    padding: 0; */
+    margin-top: 0px;
+    margin-bottom: 10px;
+    text-align: center;
+    color: lighten(@mainColor, 10%);
+}
+.settingstitle {
+    text-align: center;
+    margin-top: 0px;
+    margin-bottom: 5px;
+}
+.clr-field button {
+    width: 22px;
+    height: 22px;
+    left: 5px;
+    right: auto;
+    border-radius: 5px;
+    border: 1px solid black;
+}
+.clr-field input {
+    padding-left: 36px;
+}
+#clr-color-value {
+    font-size: 16px;
+}
+/* .accordion {
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.accordion-item {
+    border-bottom: 1px solid #ccc;
+}
+
+.accordion-item:last-child {
+    border-bottom: none;
+}
+
+.accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: #f7f7f7;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.accordion-header:hover {
+    background: #e0e0e0;
+}
+
+.accordion-header svg {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.3s ease;
+    fill: #333;
+}
+
+.accordion-header.active svg {
+    transform: rotate(90deg);
+}
+
+.accordion-header .arrow {
+    transition: transform 0.3s ease;
+    font-size: 1.2em;
+}
+
+.accordion-content {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.4s ease;
+    background: #fff;
+}
+
+.accordion-content.show {
+    max-height: 500px;
+}
+
+.accordion-content-inner {
+    padding: 15px;
+}
+
+.accordion-content-inner p,
+.accordion-content-inner input {
+    margin: 10px 0;
+    width: 100%;
+    box-sizing: border-box;
+} */
