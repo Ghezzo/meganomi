@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Mega Nomi Script beta
 // @namespace    https://gzo.sh
-// @version      0.9.9.6
+// @version      0.9.9.7
 // @description  Everything in one :)
 // @author       Ghezzo
 // @match        https://beta.nomi.ai/nomis*
@@ -40,7 +40,7 @@
       });
     
   
-    var version = '0.9.9.6';
+    var version = '0.9.9.7';
     GM_setValue('defaultAsteriskColor', '');
     GM_setValue('defaultAsteriskColor2', '');
     GM_setValue('defaultAsteriskShadow1', '');
@@ -256,8 +256,8 @@
         const shadow3 = await GM_getValue('asteriskShadow3', '');
         const shadow4 = await GM_getValue('asteriskShadow4', '');
         const fontSize = await GM_getValue('fontSize', '16px');
-        const bubbleColor = await GM_getValue('bubbleColor', '#ffffff');
-        const nomiBubbleColor = await GM_getValue('nomiBubbleColor', '#eeeeee');
+        const bubbleColor = await GM_getValue('bubbleColor', '');
+        const nomiBubbleColor = await GM_getValue('nomiBubbleColor', '');
         const italicTextCheckbox = await GM_getValue('italicTextCheckbox', false);
         const boldActionText = await GM_getValue('boldActionText', false);
         const hideCallButton = await GM_getValue('hideCallButton', false);
