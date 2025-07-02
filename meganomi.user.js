@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Mega Nomi Script beta
 // @namespace    https://gzo.sh
-// @version      1.0.1
+// @version      1.0.2
 // @description  Everything in one :)
 // @author       Ghezzo
 // @match        https://beta.nomi.ai/nomis*
@@ -18,7 +18,7 @@
 // @downloadURL  https://github.com/Ghezzo/meganomi/raw/refs/heads/main/meganomi.user.js
 // @updateURL    https://github.com/Ghezzo/meganomi/raw/refs/heads/main/meganomi.user.js
 // ==/UserScript==
-alert('Mega Nomi Script is most likely dead. Please disable it.');
+//alert('Mega Nomi Script is most likely dead. Please disable it.');
 (async function() {
     
     'use strict';
@@ -41,7 +41,7 @@ alert('Mega Nomi Script is most likely dead. Please disable it.');
       });
     
   
-    var version = '1.0.1';
+    var version = '1.0.2';
     GM_setValue('defaultAsteriskColor', '');
     GM_setValue('defaultAsteriskColor2', '');
     GM_setValue('defaultAsteriskShadow1', '');
