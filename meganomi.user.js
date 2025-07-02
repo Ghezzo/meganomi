@@ -41,7 +41,7 @@ alert('Mega Nomi Script is most likely dead. Please disable it.');
       });
     
   
-    var version = '0.9.9.8';
+    var version = '1.0.0';
     GM_setValue('defaultAsteriskColor', '');
     GM_setValue('defaultAsteriskColor2', '');
     GM_setValue('defaultAsteriskShadow1', '');
