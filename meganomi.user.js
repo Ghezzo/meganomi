@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Mega Nomi Script beta
 // @namespace    https://gzo.sh
-// @version      1.0.2
+// @version      1.0.3
 // @description  Everything in one :)
 // @author       Ghezzo
 // @match        https://beta.nomi.ai/nomis*
@@ -41,7 +41,7 @@
       });
     
   
-    var version = '1.0.2';
+    var version = '1.0.3';
     GM_setValue('defaultAsteriskColor', '');
     GM_setValue('defaultAsteriskColor2', '');
     GM_setValue('defaultAsteriskShadow1', '');
@@ -501,10 +501,15 @@
         const enabled = GM_getValue('birthdayCheckbox', false); // default: true
         if (!enabled) return;
 
-        const formatDate = iso => {
+        /* const formatDate = iso => {
             const d = new Date(iso);
             return `${d.getFullYear()}-${(d.getMonth() + 1).toString().padStart(2, '0')}-${d.getDate().toString().padStart(2, '0')} ${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}`;
+        }; */
+        const formatDate = iso => {
+            const d = new Date(iso);
+            return `${d.getUTCFullYear()}-${(d.getUTCMonth()+1).toString().padStart(2,'0')}-${d.getUTCDate().toString().padStart(2,'0')} ${d.getUTCHours().toString().padStart(2,'0')}:${d.getUTCMinutes().toString().padStart(2,'0')}`;
         };
+
 
         const getId = () => {
             const parts = location.pathname.split('/');
