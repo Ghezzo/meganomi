@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Mega Nomi Script beta
 // @namespace    https://gzo.sh
-// @version      1.0.4
+// @version      1.0.5
 // @description  Everything in one :)
 // @author       Ghezzo
 // @match        https://beta.nomi.ai/nomis*
@@ -41,7 +41,7 @@
       });
     
   
-    var version = '1.0.4';
+    var version = '1.0.5';
     GM_setValue('defaultAsteriskColor', '');
     GM_setValue('defaultAsteriskColor2', '');
     GM_setValue('defaultAsteriskShadow1', '');
@@ -441,7 +441,7 @@
     }
         
     function hideCallButton() {
-        const buttons = document.querySelectorAll('button[title="Call"]');
+        const buttons = document.querySelectorAll('button[aria-label="Call"]');
         buttons.forEach(button => button.style.display = 'none');
     }
 
@@ -537,7 +537,7 @@
                 const res = await fetch(`https://beta.nomi.ai/api/nomis/${id}`);
                 const data = await res.json();
                 if (!data?.created) return;
-                const btn = await waitFor('button[title="Memory Indicator"]');
+                const btn = await waitFor('button[aria-label="Memory Indicator"]');
                 const parent = btn.parentElement;
                 if (!parent.querySelector('.nomi-birthday')) {
                     const span = document.createElement('span');
