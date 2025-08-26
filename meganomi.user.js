@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Mega Nomi Script beta
 // @namespace    https://gzo.sh
-// @version      1.0.6
+// @version      1.0.6.1
 // @description  Everything in one :)
 // @author       Ghezzo
 // @match        https://beta.nomi.ai/nomis*
@@ -44,7 +44,7 @@
       });
     
   
-    var version = '1.0.6';
+    var version = '1.0.6.1';
     GM_setValue('defaultAsteriskColor', '');
     GM_setValue('defaultAsteriskColor2', '');
     GM_setValue('defaultAsteriskShadow1', '');
@@ -89,7 +89,6 @@
             <tr>
                 <td><input type="text" id="asteriskShadow2" class="textbox clr" value="${GM_getValue('asteriskShadow2') ?? ''}" placeholder="#ffffff" data-coloris></td>
                 <td><input type="text" id="asteriskShadow4" class="textbox clr" value="${GM_getValue('asteriskShadow4') ?? ''}" placeholder="#ffffff" data-coloris></td>
-                <td></td>
             </tr>
         </table>
     </div>
