@@ -51,11 +51,10 @@
     }
 }
 #settingsPanel {
-    min-width: 210px;
-    height: 705px;
+    width: 335px;
+    //height: 705px;
     max-height: calc(100% - 40px);
     //min-height: 100px;
-    max-width: 300px;
     //background: #181a20;
     background: @mainColor2;
     //border: 1px solid lighten(#181a20, 20%);
@@ -180,18 +179,41 @@
     padding-right: 10px;
 }
 .section {
-    background-color: darken(@mainColor2, 3%);
-    border: 1px solid lighten(@mainColor2, 7%);
-    padding: 7px;
+    /* background-color: darken(@mainColor2, 3%);
+    border: 1px solid lighten(@mainColor2, 7%); */
+    padding-left: 7px;
+    padding-right: 7px;
     border-radius: 5px;
     margin-top: 7px;
     margin-bottom: 7px;
 }
-.summary {
+summary {
+    //background-color: darken(@mainColor2, 3%);
+    //border: 1px solid lighten(@mainColor2, 7%);
+    //padding: 5px;
+    border-radius: 5px;
+    font-weight: bold;
+    margin: -0.5em -0.5em 0;
+    padding: 0.5em;
+    display: flex;
+    align-items: center;
+}
+details {
+    padding: 0.5em 0.5em 0;
     background-color: darken(@mainColor2, 3%);
     border: 1px solid lighten(@mainColor2, 7%);
-    padding: 5px;
-    border-radius: 5px;
+    margin-bottom: 5px;
+}
+summary img.arrow {
+    width: 14px;
+    height: 14px;
+    margin-right: 3px;
+    margin-bottom: -1px;
+    transition: transform 0.2s ease;
+    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(211deg) brightness(107%) contrast(101%);
+}
+details[open] summary img.arrow {
+    transform: rotate(90deg); /* or swap the image */
 }
 /* .accordion {
     width: 100%;
