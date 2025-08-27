@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Mega Nomi Script beta
 // @namespace    https://gzo.sh
-// @version      1.0.7
+// @version      1.0.8
 // @description  Everything in one :)
 // @author       Ghezzo
 // @match        https://beta.nomi.ai/nomis*
@@ -44,7 +44,7 @@
       });
     
   
-    var version = '1.0.7';
+    var version = '1.0.8';
     GM_setValue('defaultAsteriskColor', '');
     GM_setValue('defaultAsteriskColor2', '');
     GM_setValue('defaultAsteriskShadow1', '');
@@ -554,16 +554,18 @@
             const id = getId();
             if (!id) return;
             try {
-                const res = await fetch(`https://beta.nomi.ai/api/nomis/${id}`);
-                const data = await res.json();
-                if (!data?.created) return;
-                const btn = await waitFor('button[aria-label="Memory Indicator"]');
-                const parent = btn.parentElement;
-                if (!parent.querySelector('.nomi-birthday')) {
-                    const span = document.createElement('span');
-                    span.className = 'nomi-birthday';
-                    span.textContent = formatDate(data.created);
-                    parent.appendChild(span);
+                if(id == 'nomis') {} else {
+                    const res = await fetch(`https://beta.nomi.ai/api/nomis/${id}`);
+                    const data = await res.json();
+                    if (!data?.created) return;
+                    const btn = await waitFor('button[aria-label="Memory Indicator"]');
+                    const parent = btn.parentElement;
+                    if (!parent.querySelector('.nomi-birthday')) {
+                        const span = document.createElement('span');
+                        span.className = 'nomi-birthday';
+                        span.textContent = formatDate(data.created);
+                        parent.appendChild(span);
+                    }
                 }
             } catch (e) {
                 console.error('Nomi script error:', e);
