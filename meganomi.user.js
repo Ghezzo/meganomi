@@ -1,14 +1,13 @@
 // ==UserScript==
 // @name         Mega Nomi Script beta
 // @namespace    https://gzo.sh
-// @version      1.0.8
+// @version      1.0.8.1
 // @description  Everything in one :)
 // @author       Ghezzo
 // @match        https://beta.nomi.ai/nomis*
 // @match        https://beta.nomi.ai/group-chats*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=nomi.ai
 // @require      https://openuserjs.org/src/libs/sizzle/GM_config.js
-// @resource     REMOTE_CSS2 https://raw.githubusercontent.com/Ghezzo/meganomi/refs/heads/main/style.css
 // @resource     REMOTE_CSS https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.css
 // @require      https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.js
 // @grant        GM_setValue
@@ -16,24 +15,20 @@
 // @grant        GM_addStyle
 // @grant        GM_getResourceText
 // @grant        GM_addValueChangeListener
+// @grant        GM_xmlhttpRequest
 // @downloadURL  https://github.com/Ghezzo/meganomi/raw/refs/heads/main/meganomi.user.js
 // @updateURL    https://github.com/Ghezzo/meganomi/raw/refs/heads/main/meganomi.user.js
 // ==/UserScript==
-//alert('Mega Nomi Script is most likely dead. Please disable it.');
 (async function() {
     
     'use strict';
 
     console.log('MNS loaded!');
 
-    /* const styleElement = document.createElement('style'); */
     const dynamicStyle = document.createElement('style');
-    /* document.head.appendChild(styleElement); */
     document.head.appendChild(dynamicStyle);
     const myCss = GM_getResourceText("REMOTE_CSS");
-    const myCss2 = GM_getResourceText("REMOTE_CSS2");
     GM_addStyle(myCss);
-    GM_addStyle(myCss2);
     Coloris({
         el: '.clr',
         themeMode: 'dark',
@@ -42,9 +37,17 @@
         clearButton: true,
         wrap: true,
       });
+
+    GM_xmlhttpRequest({
+        method: "GET",
+        url: "https://raw.githubusercontent.com/Ghezzo/meganomi/refs/heads/main/style.css",
+        onload: function(response) {
+            GM_addStyle(response.responseText);
+        }
+    });
     
   
-    var version = '1.0.8';
+    var version = '1.0.8.1';
     GM_setValue('defaultAsteriskColor', '');
     GM_setValue('defaultAsteriskColor2', '');
     GM_setValue('defaultAsteriskShadow1', '');
@@ -155,7 +158,7 @@
     ];
 
     var versionText = document.createElement('span');
-    versionText.textContent = 'Version ' + version;
+    versionText.textContent = version;
     versionText.className = 'info';
 
     // Create a save button
@@ -377,7 +380,7 @@
         }
     });
 
-    //GM_addStyle('#settingsButtonNew{background-color:#484848;cursor:pointer;color:#fff;border-radius:0px 0px 5px 5px;border:none;z-index:9999;padding:5px;width:50px}#settingsButtonNew:hover{background-color:#545454}#settingsButtonNew:hover .cogIcon{animation:rotate 2s linear infinite}#saveSettingsButton,#settingsButton,#closeSettingsButton{background-color:#545454;transition:background-color .2s ease-out;padding:10px;cursor:pointer;color:#fff}#settingsButton{border-radius:5px;border:none;z-index:9999}#saveSettingsButton:hover,#settingsButton:hover,#closeSettingsButton:hover{background-color:#616161 !important}#settingsButton:hover .cogIcon{animation:rotate 2s linear infinite}@keyframes rotate{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}#settingsPanel{width:335px;max-height:calc(100% - 40px);background:#2e2e2e;border-radius:5px;color:white;padding:10px;top:40px;left:10px;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;touch-action:pan-y;scrollbar-width:none}#saveSettingsButton{border-radius:5px;border:none;margin-top:10px;width:100%;float:left;margin-right:10px}#closeSettingsButton{border-radius:5px;border:none;margin-top:10px;width:65px;float:left}.buttonWrapper{display:flex}.textbox{background-color:#35383f;transition:background-color .2s ease-out;color:#fff;border:1px solid #545963;border-radius:5px;padding:5px;width:100%;font-size:16px}.textbox::placeholder{color:#bbb}.textbox:focus{background-color:#292c31;outline:none}.textbox:hover{background-color:#292c31;outline:none}.changelogLink{color:#9610ff;text-decoration:none;transition:color .2s ease-out}.changelogLink:hover{color:#a12aff !important}.hr{border:0;height:1px;background:#44495a}.cb{accent-color:#545454;width:16px;height:16px;margin-bottom:-3px}.info{font-size:13px;color:#777;float:right;margin-top:-30px}.bold{font-weight:bold}.italic{font-style:italic}.h4{margin-top:0px;margin-bottom:10px;text-align:center;color:#fff}.settingstitle{text-align:center;margin-top:0px;margin-bottom:5px}.clr-field button{width:22px;height:22px;left:5px;right:auto;border-radius:5px;border:1px solid black}.clr-field input{padding-left:36px}#clr-color-value{font-size:16px}.nomi-birthday{margin-left:8px;font-weight:bold;background:#2e2e2e;border-radius:15px;padding-left:10px;padding-right:10px}.section{padding-left:7px;padding-right:7px;border-radius:5px;margin-top:7px;margin-bottom:7px}summary{border-radius:5px;font-weight:bold;margin:-0.5em -0.5em 0;padding:.5em;display:flex;align-items:center}details{padding:.5em .5em 0;background-color:#262626;border:1px solid #404040;margin-bottom:5px}summary img.arrow{width:14px;height:14px;margin-right:3px;margin-bottom:-1px;transition:transform .2s ease;filter:invert(100%) sepia(100%) saturate(0%) hue-rotate(211deg) brightness(107%) contrast(101%)}details[open] summary img.arrow{transform:rotate(90deg)}');
+    //GM_addStyle('#settingsButtonNew{background-color:#484848;cursor:pointer;color:#fff;border-radius:0px 0px 5px 5px;border:none;z-index:9999;padding:5px;width:50px}#settingsButtonNew:hover{background-color:#545454}#settingsButtonNew:hover .cogIcon{animation:rotate 2s linear infinite}#saveSettingsButton,#settingsButton,#closeSettingsButton{background-color:#545454;transition:background-color .2s ease-out;padding:10px;cursor:pointer;color:#fff}#settingsButton{border-radius:5px;border:none;z-index:9999}#saveSettingsButton:hover,#settingsButton:hover,#closeSettingsButton:hover{background-color:#616161 !important}#settingsButton:hover .cogIcon{animation:rotate 2s linear infinite}@keyframes rotate{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}#settingsPanel{width:335px;max-height:calc(100% - 40px);background:#2e2e2e;border-radius:5px;color:white;padding:10px;top:40px;left:10px;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;touch-action:pan-y;scrollbar-width:none}#saveSettingsButton{border-radius:5px;border:none;margin-top:10px;width:100%;float:left;margin-right:10px}#closeSettingsButton{border-radius:5px;border:none;margin-top:10px;width:65px;float:left}.buttonWrapper{display:flex}.textbox{background-color:#35383f;transition:background-color .2s ease-out;color:#fff;border:1px solid #545963;border-radius:5px;padding:5px;width:100%;font-size:16px}.textbox::placeholder{color:#bbb}.textbox:focus{background-color:#292c31;outline:none}.textbox:hover{background-color:#292c31;outline:none}.changelogLink{color:#9610ff;text-decoration:none;transition:color .2s ease-out}.changelogLink:hover{color:#a12aff !important}.hr{border:0;height:1px;background:#44495a}.cb{accent-color:#545454;width:16px;height:16px;margin-bottom:-3px}.info{font-size:13px;color:#777;float:right;margin-top:-30px}.bold{font-weight:bold}.italic{font-style:italic}.h4{margin-top:0px;margin-bottom:10px;text-align:center;color:#fff}.settingstitle{text-align:center;margin-top:0px;margin-bottom:5px}.clr-field button{width:22px;height:22px;left:5px;right:auto;border-radius:5px;border:1px solid black}.clr-field input{padding-left:36px}#clr-color-value{font-size:16px}.nomi-birthday{margin-left:8px;font-weight:bold;background:#2e2e2e;border-radius:15px;padding-left:10px;padding-right:10px;color:white}.section{padding-left:7px;padding-right:7px;border-radius:5px;margin-top:7px;margin-bottom:7px}summary{border-radius:5px;font-weight:bold;margin:-0.5em -0.5em 0;padding:.5em;display:flex;align-items:center}details{padding:.5em .5em 0;background-color:#262626;border:1px solid #404040;margin-bottom:5px}summary img.arrow{width:14px;height:14px;margin-right:3px;margin-bottom:-1px;transition:transform .2s ease;filter:invert(100%) sepia(100%) saturate(0%) hue-rotate(211deg) brightness(107%) contrast(101%)}details[open] summary img.arrow{transform:rotate(90deg)}');
 
     async function processTextNode(node) {
         const italicPattern = /\*(\S(.*?\S)?)\*/g;
