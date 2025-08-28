@@ -1,13 +1,14 @@
 // ==UserScript==
 // @name         Mega Nomi Script beta
 // @namespace    https://gzo.sh
-// @version      1.0.8.1
+// @version      1.0.8.2
 // @description  Everything in one :)
 // @author       Ghezzo
 // @match        https://beta.nomi.ai/nomis*
 // @match        https://beta.nomi.ai/group-chats*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=nomi.ai
 // @require      https://openuserjs.org/src/libs/sizzle/GM_config.js
+// @resource     REMOTE_CSS2 https://raw.githubusercontent.com/Ghezzo/meganomi/refs/heads/main/style.css
 // @resource     REMOTE_CSS https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.css
 // @require      https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.js
 // @grant        GM_setValue
@@ -15,7 +16,6 @@
 // @grant        GM_addStyle
 // @grant        GM_getResourceText
 // @grant        GM_addValueChangeListener
-// @grant        GM_xmlhttpRequest
 // @downloadURL  https://github.com/Ghezzo/meganomi/raw/refs/heads/main/meganomi.user.js
 // @updateURL    https://github.com/Ghezzo/meganomi/raw/refs/heads/main/meganomi.user.js
 // ==/UserScript==
@@ -28,7 +28,9 @@
     const dynamicStyle = document.createElement('style');
     document.head.appendChild(dynamicStyle);
     const myCss = GM_getResourceText("REMOTE_CSS");
+    const myCss2 = GM_getResourceText("REMOTE_CSS2");
     GM_addStyle(myCss);
+    GM_addStyle(myCss2);
     Coloris({
         el: '.clr',
         themeMode: 'dark',
@@ -38,16 +40,16 @@
         wrap: true,
       });
 
-    GM_xmlhttpRequest({
+    /* GM_xmlhttpRequest({
         method: "GET",
         url: "https://raw.githubusercontent.com/Ghezzo/meganomi/refs/heads/main/style.css",
         onload: function(response) {
             GM_addStyle(response.responseText);
         }
-    });
+    }); */
     
   
-    var version = '1.0.8.1';
+    var version = '1.0.8.2';
     GM_setValue('defaultAsteriskColor', '');
     GM_setValue('defaultAsteriskColor2', '');
     GM_setValue('defaultAsteriskShadow1', '');
