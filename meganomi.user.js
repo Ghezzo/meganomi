@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Mega Nomi Script beta
 // @namespace    https://gzo.sh
-// @version      1.0.8.2
+// @version      1.0.9
 // @description  Everything in one :)
 // @author       Ghezzo
 // @match        https://beta.nomi.ai/nomis*
@@ -49,7 +49,7 @@
     }); */
     
   
-    var version = '1.0.8.2';
+    var version = '1.0.9';
     GM_setValue('defaultAsteriskColor', '');
     GM_setValue('defaultAsteriskColor2', '');
     GM_setValue('defaultAsteriskShadow1', '');
@@ -59,6 +59,10 @@
     GM_setValue('defaultBubbleColor', '');
     GM_setValue('defaultNomiBubbleColor', '');
     GM_setValue('defaultFontSize', '');
+
+    if (GM_getValue('italicTextCheckbox') === true) {
+        GM_setValue('italicTextCheckbox', false);
+    }
 
     // Create the settings panel
     var settingsPanel = document.createElement('div');
@@ -150,7 +154,6 @@
       
     const createcheckboxes = [
         createCheckbox('hideCallBtn', 'Hide Call Button'),
-        createCheckbox('italicTextCheckbox', 'Italic Action Text'),
         createCheckbox('boldActionText', 'Bold Action Text'),
         createCheckbox('asterisksCheckbox', 'Enable Asterisks (Refresh to apply)'),
         createCheckbox('hideNewsCheckbox', 'Hide News Bubbles'),
@@ -341,8 +344,7 @@
             'asteriskColor', 'asteriskColor2',
             'asteriskShadow1', 'asteriskShadow2',
             'asteriskShadow3', 'asteriskShadow4',
-            'fontSize', 'bubbleColor', 'nomiBubbleColor',
-            'italicTextCheckbox', 'boldActionText',
+            'fontSize', 'bubbleColor', 'nomiBubbleColor', 'boldActionText',
             'hideCallButton', 'asterisksCheckbox',
             'birthDayCheckbox'
         ];
@@ -364,12 +366,10 @@
 
     const checkboxesData = [
         { id: 'hideCallButton', element: checkboxElements[0], default: false },
-        { id: 'italicTextCheckbox', element: checkboxElements[1], default: false },
-        { id: 'boldActionText', element: checkboxElements[2], default: false },
-        { id: 'asterisksCheckbox', element: checkboxElements[3], default: true },
-        { id: 'hideNewsCheckbox', element: checkboxElements[4], default: false },
-        { id: 'birthdayCheckbox', element: checkboxElements[5], default: false },
-        /* { id: 'settingsLightMode', element: checkboxElements[4], default: false }, */
+        { id: 'boldActionText', element: checkboxElements[1], default: false },
+        { id: 'asterisksCheckbox', element: checkboxElements[2], default: true },
+        { id: 'hideNewsCheckbox', element: checkboxElements[3], default: false },
+        { id: 'birthdayCheckbox', element: checkboxElements[4], default: false },
     ];
 
     checkboxesData.forEach(({ id, element, default: defaultValue }) => {
@@ -388,14 +388,12 @@
         const italicPattern = /\*(\S(.*?\S)?)\*/g;
     
         const useAsterisks = await GM_getValue('asterisksCheckbox', true);
-        const italicTextCheckbox = await GM_getValue('italicTextCheckbox', false);
         const boldActionText = await GM_getValue('boldActionText', false);
     
         const originalText = node.textContent;
     
         const newHTML = originalText.replace(italicPattern, (match, p1) => {
             const classes = ['text'];
-            if (italicTextCheckbox) classes.push('italic');
             if (boldActionText) classes.push('bold');
     
             const formattedText = `<span class="${classes.join(' ')}">${p1}</span>`;
