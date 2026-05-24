@@ -11,7 +11,7 @@ Leave input empty to go back to default<br><br>
 
 ## Examples
 
-<img src="https://gzo.sh/img/mns.png" alt="example" width="300"/>
+<img src="https://gzo.sh/mns/mns.png" alt="example" width="300"/>
 
 ### Asterisk Color:
 
