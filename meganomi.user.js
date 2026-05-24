@@ -1,9 +1,10 @@
 // ==UserScript==
 // @name         Mega Nomi Script beta
 // @namespace    https://gzo.sh
-// @version      1.0.9
+// @version      1.1.0
 // @description  Everything in one :)
 // @author       Ghezzo
+// @match        https://beta.nomi.ai/*
 // @match        https://beta.nomi.ai/nomis*
 // @match        https://beta.nomi.ai/group-chats*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=nomi.ai
@@ -49,7 +50,7 @@
     }); */
     
   
-    var version = '1.0.9';
+    var version = '1.1.0';
     GM_setValue('defaultAsteriskColor', '');
     GM_setValue('defaultAsteriskColor2', '');
     GM_setValue('defaultAsteriskShadow1', '');
@@ -403,7 +404,7 @@
         if (newHTML !== originalText) {
             const span = document.createElement('span');
             span.innerHTML = newHTML;
-            span.dataset.original = originalText; // <-- Save original text
+            span.dataset.original = originalText;
             node.replaceWith(span);
         }
     }
@@ -430,35 +431,32 @@
     }
 
     function chatBubbleColor() {
-        const divs = document.querySelectorAll('div');
-    
-        divs.forEach(div => {
-            if (div.getAttribute('type')) {
-                const type = div.getAttribute('type');
-    
-                if (type === 'Nomi') {
-                    const childDiv = div.querySelector('div');
-                    if (childDiv) {
-                        childDiv.style.fontSize = GM_getValue('fontSize') + 'px';
-                        div.style.backgroundColor = GM_getValue('nomiBubbleColor');
-    
-                        const textSpans = div.querySelectorAll('span.text'); // <-- FIXED
-                        textSpans.forEach(span => {
-                            span.classList.add('nomi');
-                        });
-                    }
-                } else if (type === 'User') {
-                    const childDiv = div.querySelector('div');
-                    if (childDiv) {
-                        childDiv.style.fontSize = GM_getValue('fontSize') + 'px';
-                        div.style.backgroundColor = GM_getValue('bubbleColor');
-    
-                        const textSpans = div.querySelectorAll('span.text'); // <-- FIXED
-                        textSpans.forEach(span => {
-                            span.classList.add('user');
-                        });
-                    }
-                }
+        const nomiBubbles = document.querySelectorAll('[class*="MessageBubble_nomiRoot__"]');
+        const userBubbles = document.querySelectorAll('[class*="MessageBubble_userRoot__"]');
+
+        nomiBubbles.forEach(div => {
+            const childDiv = div.querySelector('div');
+            if (childDiv) {
+                childDiv.style.fontSize = GM_getValue('fontSize') + 'px';
+                div.style.backgroundColor = GM_getValue('nomiBubbleColor');
+
+                const textSpans = div.querySelectorAll('span.text');
+                textSpans.forEach(span => {
+                    span.classList.add('nomi');
+                });
+            }
+        });
+
+        userBubbles.forEach(div => {
+            const childDiv = div.querySelector('div');
+            if (childDiv) {
+                childDiv.style.fontSize = GM_getValue('fontSize') + 'px';
+                div.style.backgroundColor = GM_getValue('bubbleColor');
+
+                const textSpans = div.querySelectorAll('span.text');
+                textSpans.forEach(span => {
+                    span.classList.add('user');
+                });
             }
         });
     }
